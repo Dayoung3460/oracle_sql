@@ -131,6 +131,7 @@ select employee_id,
        concat (first_name, last_name) name,
        job_id,
        length (last_name),
+       -- last_name에 a가 몇번째 단어에 있는지. 1부터 시작. 없으면 0 반환
        instr(last_name, 'a') "Contains 'a'?"
 from employees
 where substr(job_id, 4) = 'REP';
@@ -174,6 +175,8 @@ select trunc(45.923, 2),
        trunc(45.923, -1),
        trunc(45.923)
 from dual;
+
+-- 여기서부터 복습 20240918
 
 -- mod({first}, {second}): first를 second로 나눴을 때 나머지
 -- modulo = 나머지 연산

@@ -3,12 +3,13 @@ select last_name,
         salary
 from employees
 where job_id = 'SA_REP' or job_id = 'AD_PRES' and salary > 15000;
-select * from employees;
+
 select last_name,
        job_id,
         salary
 from employees
-where (job_id = 'SA_REP' or job_id = 'AD_PRES') and salary > 15000;
+where job_id in ('SA_REP', 'AD_PRES') and salary > 15000;
+--where (job_id = 'SA_REP' or job_id = 'AD_PRES') and salary > 15000;
 
 -- _: 한글자 뜻함. 진짜 텍스트로 사용하려면 escape
 select job_id
@@ -60,28 +61,7 @@ where manager_id is null;
 
 select job_id
 from employees
-where job_id like '%*%' escape '\';
-
-select job_id
-from employees
-where job_id like '%\*%' escape '\';
-
-select job_id
-from employees
-where job_id like '%*%';
-
-select job_id
-from employees
-where job_id like '%SA*%' escape '\';
-
-select job_id
-from employees
-where job_id like '%SA\*%' escape '\';
-
-select last_name,
-        job_id
-from employees
-where job_id like '%*%';
+where job_id like '%SA%' escape '\';
 
 select last_name
 from employees
@@ -104,18 +84,6 @@ from employees
 where last_name in ('Hartstein');
 
 select employee_id,
-        manager_id,
-        department_id
-from employees
-where last_name in ('Hartstein');
-
-select employee_id,
-        manager_id,
-        department_id
-from employees
-where last_name in ('Hartsein');
-
-select employee_id,
         last_name,
         salary,
         manager_id
@@ -136,26 +104,14 @@ where last_name between 'S' and 'Tzzzzzz';
 
 select last_name
 from employees
-where last_name between 'S' and 'Tzzzzz';
-
-select last_name
-from employees
-where last_name between 'King' and 'Smith';
-
-select distinct last_name
-from employees
 where last_name between 'King' and 'Smith';
 
 -- low, high값도 포함임
 select last_name,
         salary
 from employees
-where salary between 3500 and 2500;
-
-select last_name,
-        salary
-from employees
-where salary between 2500 and 3500;
+where salary between 2500 and 3500
+order by salary;
 
 select last_name,
         salary
@@ -174,27 +130,9 @@ select DEPARTMENT_ID,
         LOCATION_ID
 from departments;
 
-select *
-from departments;
-
-select department_id,
-        location_id
-from departments;
-
-select location_id,
-        department_id
-from departments;
-
-select location_id,
-        location_id
-from departments;
-
 select last_name,
         salary,
         salary + 300
-from employees;
-
-select *
 from employees;
 
 select last_name,
@@ -202,18 +140,15 @@ select last_name,
         12 * salary + 100
 from employees;
 
-select last_name,
-        salary,
-        12 * (salary + 100)
-from employees;
-
+--order by: 오름차순일 때 널값은 젤 마지
 select last_name,
         job_id,
         salary,
-        commission_pct
-from employees;
+        commission_pct막
+from employees
+order by commission_pct;
 
-- - 함수 NVL(널값, 바꿀값): 널값을 0으로 변경해서 반환
+-- 함수 NVL(널값, 바꿀값): 널값을 0으로 변경해서 반환
 select last_name,
         commission_pct,
         12 * salary * NVL(commission_pct, 0)
@@ -251,6 +186,9 @@ from employees;
 
 /* distinct: 중복값 제거 */
 select distinct department_id
+from employees;
+
+select department_id
 from employees;
 
 /* [department_id와 job_id] 가 중복되는 값(row) 제거(같은 부서 안에서 같은 직업인 사람 중복 제거)*/
@@ -307,9 +245,9 @@ from employees
 where last_name = 'Whalen';
 
 --날짜(yy_mm_dd) 작은 따옴표로 묶어
-select last_name
+select last_name, hire_date
 from employees
-where hire_date = '06_01_03';
+where hire_date = '94_08_16';
 
 select last_name,
         salary
@@ -369,7 +307,7 @@ where first_name like 'S%';
 select last_name,
     hire_date
 from employees
-where hire_date like '06%';
+where hire_date like '95%';
 
 -- like '_o%': 두번째 문자가 o인 이름 가진 사원들 출력
 select last_name
@@ -388,37 +326,12 @@ select last_name,
 from employees
 where last_name = 'Whalen';
 
-select last_name,
-        job_id,
-        department_id
-from employees
-where last_name = 'whalen';
-
-select last_name
-from employees
-where hire_date = '06_01_03';
-
-select *
-from employees
-where hire_date = '06_01_03';
-
-select last_name
-from employees
-where hire_date = '06_01_03';
-
 select employee_id,
         last_name,
         job_id,
         department_id
 from employees
 where department_id = 110;
-
-select employee_id,
-        last_name,
-        job_id,
-        department_id
-from employees
-where department_id = 1100;
 
 select employee_id,
         last_name,
@@ -434,9 +347,6 @@ select department_id, job_id
 from employees;
 
 select job_id || ', ' || last_name "Employee and Title"
-from employees;
-
-select job_id || last_name || ', ' "Employee and Title"
 from employees;
 
 select employee_id "Emp #",
@@ -467,14 +377,6 @@ select last_name||' is '||job_id||' '||333333
 as introduce
 from employees;
 
-select last_name||' is '||job_id|| 333333
-as introduce
-from employees;
-
-select last_name||' is '||job_id||333333
-as introduce
-from employees;
-
 select last_name||'is '||job_id||333333
 as introduce
 from employees;
@@ -483,30 +385,9 @@ select last_name||'의 직업은 '||job_id||'입니다'
 as introduce
 from employees;
 
-select last_name||'의 직업ID는 '||job_id||'입니다'
-as introduce
-from employees;
-
-select last_name||'의 직업ID는'||job_id||'입니다'
-as introduce
-from employees;
-
 select last_name||'('||job_id||')' "Employees",
         last_name,
         job_id
-from employees;
-
-select last_name || job_id as "Employees",
-        last_name,
-        job_id
-from employees;
-
-select last_name||job_id "Employees",
-        last_name,
-        job_id
-from employees;
-
-select last_name||job_id "Employees"
 from employees;
 
 select last_name as name,
@@ -520,57 +401,12 @@ from employees;
 
 select last_name as name,
 commission_pct,
-12 * salary * NVL(commission_pct, 0) as commC
-from employees;
-
-select last_name as name,
-commission_pct,
-12 * salary * NVL(commission_pct, 0) as "comm!"
-from employees;
-
-select last_name as name,
-commission_pct,
 12 * salary * NVL(commission_pct, 0) as comm
 from employees;
 
 select last_name,
 commission_pct,
-12 * salary * NVL(commission_pct, 0) as no_null
-from employees;
-
-select last_name,
-commission_pct,
-12 * salary * NVL(commission_pct, 10) as no_null
-from employees;
-
-select last_name,
-commission_pct,
-12 * salary * NVL(commission_pct, 0) no_null
-from employees;
-
-select last_name,
-commission_pct,
-12 * salary * NVL(commission_pct, 0)  no_null
-from employees;
-
-select last_name,
-commission_pct,
 12 * salary * nvl(commission_pct, 0) as no_null
-from employees;
-
-select last_name,
-commission_pct,
-12 * salary * NVL(commission_pct, 0) AS no_null
-from employees;
-
-select last_name,
-commission_pct,
-12 * salary * NVL(commission_pct, 0) AS calculated
-from employees;
-
-select last_name,
-commission_pct,
-12 * salary * NVL(commission_pct, 0)
 from employees;
 
 select last_name,
@@ -582,18 +418,6 @@ select last_name,
 job_id,
 salary,
 commission_pct
-from employees;
-
-select *
-from employees;
-select last_name,
-salary,
-12 * (salary + 100)
-from employees;
-
-select last_name,
-salary,
-12 * salary + 100
 from employees;
 
 select last_name,
@@ -609,10 +433,6 @@ select location_id,
 department_id
 from departments;
 
-select department_id,
-location_id
-from departments;
-
 select DEPARTMENT_ID,
 DEPARTMENT_NAME,
 MANAGER_ID,
@@ -621,6 +441,7 @@ from departments;
 
 select *
 from  tab;
+
 select DEPARTMENT_Id,
 DEPARTMENT_NAME,
 MANAGER_ID,
@@ -629,9 +450,6 @@ from departments;
 
 select department_id
 from departments;
-
-select *
-from employees;
 
 grant connect, resource to hr;
 SELECT *
@@ -664,13 +482,13 @@ FROM   employees;
 --1. 급여가 12,000를 넘는 사원의 이름과 급여를 표시하는 질의를 실행하시오.
 select last_name,
        salary
-from employees;
-where salary > 15000;
+from employees
+where salary > 12000;
 
 --2. 사원 번호가 176인 사원의 이름과 부서 번호를 표시하는 질의를 실행하시오.
-select last_name
+select last_name, department_id
 from employees
-where job_id = 176;
+where employee_id = 176;
 
 
 --3. 급여가 5,000에서 12,000 사이에 포함되지 않는 
@@ -691,8 +509,9 @@ where last_name in ('Matos', 'Taylor');
 
 --6. 급여가 5,000와 12,000 사이이고 부서 번호가 20 또는 50인 사원의 이름과 급여를 나열하도록 질의를 작성하시오. 
 --   열 레이블은 Employee와 Monthly Salary로 각각 지정하시오.
-select last_name 'Employee',
-       salary 'Monthly Salary'
+select last_name "Employee",
+       salary "Monthly Salary",
+       department_id
 from employees
 where salary between 5000 and 12000
   and (department_id = 20 
@@ -720,13 +539,23 @@ where last_name like '__a%';
 select last_name
 from employees
 where last_name like '%a%' and last_name like '%e%';
+--where {col name} in (): checks for exact matches rather than patterns.
+--where last_name in ( '%a%',  '%e%');
 
 --12. 업무가 영업 사원(SA_REP) 또는 사무원(ST_CLERK)이면서 
     --급여가 2,500, 3,500, 7,000이 아닌 모든 사원의 이름, 업무 및 급여를 표시하시오.
-    
+select last_name, job_id, salary
+from employees
+where job_id in ('SA_REP', 'ST_CLERK')
+and salary not in (2500, 3500, 7000);
 
 --13. 커미션 비율(commission_pct)이 20%인 모든 사원의 이름, 급여 및 커미션을 표시하도록 
     --명령문을 작성하여 실행하시오.
+select last_name, salary, commission_pct
+from employees
+--The IS operator is used to check for NULL values, not for equality comparisons.
+--where commission_pct is 0.2
+where commission_pct = 0.2;
 
 
 
