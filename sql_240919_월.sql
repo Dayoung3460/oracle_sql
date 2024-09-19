@@ -311,16 +311,240 @@ insert into departments(department_id,
                         department_name,
                         manager_id,
                         location_id)
-values (70, 'Public Relations', 100, 1700);
+values (70, 
+        'Public Relations', 
+        100, 
+        1700);
 
+-- 테이블의 모든 칼럼에 값을 입력할 땐 칼럼명 안적어줘도 됨.(지양)
+insert into departments
+values (71, 'Public Relations', 100, 1700);
 
+-- 특정 칼럼에만 데이터 넣으면 나머지 칸엔 널값 들어감(암시적 널 삽입)
+insert into departments(department_id,
+                        department_name)
+values (30, 'Purchasing');
 
+-- 명시적 널입력. 두가지 방법: null or ''
+insert into departments
+values (100, 'Finance', null, '');
 
+insert into employees
+values (113,
+       'Louis',
+       'Popp',
+       'LPOPP',
+       '515.124.4567',
+       sysdate,
+       'AC_ACCOUNT',
+       6900,
+       null,
+       205,
+       110);
+       
+select * from employees;
 
+insert into employees
+values (114,
+       'Den',
+       'Raphealy',
+       'DRAPHEAL',
+       '515.127.4561',
+       to_date('02 03, 1999', 'MM DD, YYYY'),
+       'SA_REP',
+       11000,
+       .2,
+       100,
+       60);
+       
+-- sales_reps.sql 실행하기
+select * from sales_reps;
 
+-- insert 칼럼 개수와 select 해오는 칼럼 개수 같아야함
+-- 개발서버에서 더미 데이터 넣을 때 이 방식 사용함(다른 테이블꺼 복붙해서)
+-- pk 지정안해서 중복 데이터 삽입 가능
+insert into sales_reps(id,
+                       name,
+                       salary,
+                       commission_pct)
+                       select employee_id,
+                              last_name,
+                              salary,
+                              commission_pct
+                       from employees
+                       where job_id like '%REP%';
 
+-- update 구문
+update employees
+set department_id = 50
+where employee_id = 113;
 
+insert into copy_emp
+    select *
+    from employees;
+    
+select * from copy_emp;
 
+-- update시 where절이 없으면 set 절의 칼럼 데이터가 모두 변경됨
+-- 모든 사원의 department_id를 100으로 변경함
+update copy_emp
+set department_id = 100;
+
+update employees
+set job_id = (select job_id
+              from employees
+              where employee_id = 205),
+    salary = (select salary
+              from employees
+              where employee_id = 205)
+where employee_id = 113;
+
+--위와 같음
+update employees
+set (job_id, salary) = (select job_id,
+                               salary
+                        from employees
+                        where employee_id = 205)
+where employee_id = 113;
+
+select * from employees
+where employee_id in (113, 205);
+
+select * from departments;
+
+-- Delete 특정 행을 삭제할 때. 그냥 셀의 데이터를 삭제하려면 update로 널을 넣어줘야함
+delete departments
+where department_name = 'Finance';
+
+-- 테이블 삭제(데이터가 rollback segment 안에 들어감)
+-- data는 지워지지만 테이블 용량은 그대로.
+-- 복구 가능
+delete copy_emp;
+
+-- 위와 같음 but rollback segment로 가지 않음. 복구 불가능
+-- truncate: DDL: 데이터 정의어, Data Definition Language
+-- 삭제 후 용량 줄어듦
+-- 테이블이 삭제되지는 않고 데이터만 삭제됨
+truncate table copy_emp;
+
+select * from copy_emp;
+
+rollback;
+
+commit;
+
+-- 현재 사용자 아닌 다른 사용자는 dml문 결과를 볼 수 없음. 커밋 전에는.
+insert into copy_emp
+    select *
+    from employees;
+    
+select * from copy_emp;
+
+-- 커밋 후에는 이전 상태의 데이터로 돌아갈 수 없음
+commit;
+
+update copy_emp
+set salary = 9999
+where employee_id = 176;
+
+-- 다른 사용자가 셀렉트로 결과를 보면 salary 업데이트 안되어 있음
+-- 아직 커밋전이니까
+select salary
+from copy_emp
+where employee_id = 176;
+
+-- 지금 상태에서 다른 사용자가 employee_id = 176의 salary를 8888로 업데이트해보면 무한 루프돎
+
+-- 롤백해주면 루프 끝나고 다시 원래의 salary로 돌아옴
+-- 다른 사용자의 해당 사원의 salary는 8888로 바껴있음
+rollback;
+
+-- 보통 응용 프로그램 안에 자동 커밋 해주는 기능이 있음
+-- 직접 dml문 작업 후엔 꼭 커밋해주기
+
+--1. 다음과 같이 실습에 사용할 MY_EMPLOYEE 테이블을 생성하시오.
+CREATE TABLE my_employee
+  (id         NUMBER(4) NOT NULL,
+   last_name  VARCHAR2(25),
+   first_name VARCHAR2(25),
+   userid     VARCHAR2(8),
+   salary     NUMBER(9,2));
+
+--3. 다음 예제 데이터를 MY_EMPLOYEE 테이블에 추가하시오.(INSERT)
+--ID	LAST_NAME 	FIRST_NAME 	USERID 	SALARY
+--------- --------------- --------------- ------- ------
+--      1	Patel 		Ralph 		Rpatel 	   895
+--      2	Dancs 		Betty 		Bdancs 	   860
+--      3	Biri 		Ben 		Bbiri 	  1100
+
+insert into my_employee(ID,
+                        LAST_NAME, 
+                        FIRST_NAME, 
+                        USERID, 
+                        SALARY)
+values(1, 
+       'Patel', 
+       'Ralph', 
+       'Rpatel', 
+       895);
+
+insert into my_employee(ID,
+                        LAST_NAME, 
+                        FIRST_NAME, 
+                        USERID, 
+                        SALARY)
+values(2, 
+       'Dancs', 
+       'Betty', 
+       'Bdancs', 
+       860);
+
+insert into my_employee(ID,
+                        LAST_NAME, 
+                        FIRST_NAME, 
+                        USERID, 
+                        SALARY)
+values(3, 
+       'Biri', 
+       'Ben', 
+       'Bbiri', 
+       1100);
+
+--4. 테이블에 추가한 항목을 확인하시오.(SELECT)
+select *
+from my_employee;
+
+--6. 사원 3의 성을 Drexler로 변경하시오.(UPDATE)
+update my_employee
+set last_name = 'Drexler'
+where id = 3;
+
+--7. 급여가 900 미만인 모든 사원의 급여를 1000으로 변경하고 테이블의 변경 내용을 확인하시오.(UPDATE)
+update my_employee
+set salary = 1000
+where salary < 900;
+
+--8. MY_EMPLOYEE 테이블에서 사원 3을 삭제하고 테이블의 변경 내용을 확인하시오.(DELETE)
+delete my_employee
+where id = 3;
+
+--11. 테이블의 내용을 모두 삭제하고 테이블 내용이 비어 있는지 확인하시오.(DELETE)
+delete my_employee;
+
+-- 여기서 롤백하면 테이블은 있지만 데이터 안나타남
+-- 처음에 create 하고 그 이후론 dml문이기 때문에 create 한데까지 롤백됨.
+
+-- ddl: 디비 객체(table, view, sequence 등)를 다루는 명령어. create, alter, drop, truncate, rename
+
+-- 디비에서 알아서 관리해주는 테이블들
+select table_name
+from user_tables;
+
+select distinct object_type
+from user_objects;
+
+select *
+from user_catalog;
 
 
 

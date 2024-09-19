@@ -261,8 +261,6 @@ select to_char(hire_date, 'mm/yy') "Month_Hired",
        hire_date
 from employees;
 
--- 여기서부터 복습 240919
-
 alter session set
 nls_date_language = american;
 
@@ -293,8 +291,14 @@ from dual;
 select to_number('3400')
 from dual;
 
+-- 사용중인 날짜 표기법이 뭔지 모르면
+-- to_date()로 날짜 변환해주는거 중요. 날짜 그대로 넣는거보다.
 select to_date('2010년, 02월', 'yyyy"년", mm"월"')
 from dual;
+
+SELECT TO_DATE('January 15, 1989, 11:00 A.M.',
+               'Month dd, YYYY, HH:MI A.M.')
+FROM DUAL;
 
 -- 2006년 이전에 입사한 사원들
 select last_name,
@@ -307,9 +311,7 @@ where hire_date < to_date('2006', 'yyyy');
 alter session set
 nls_date_language = korean;
 
-select last_name || ' earns ' || to_char(salary, '$999,999.00') || ' monthly but wants ' || to_char(salary * 3, '$999,999.00') || '.'
-         as "Dream Salaries"
-from employees;
+
 
 select last_name || 
        ' earns ' || 
@@ -332,7 +334,7 @@ select last_name,
        as an_sal
 from employees;
 
--- commission_pct에 null이 있을 수 있기 an_sal2 null 나오는 사람이 있음
+-- commission_pct에 null이 있을 수 있기 an_sal2 null(0이 아니라서 해당 칼럼 자체 계산이 안됨) 나오는 사람이 있음
 select last_name,
        salary,
        nvl(commission_pct, 0),
@@ -342,8 +344,8 @@ from employees;
 
 -- nvl(): 첫번째, 두번째 인자 같은 타입이여야함
 select commission_pct,
---       nvl(commission_pct, 0)
---       nvl(commission_pct, '커미션 없음')
+       nvl(commission_pct, 0),
+--       nvl(commission_pct, '커미션 없음'),
        nvl(to_char(commission_pct), '커미션 없음')
 from employees;
 

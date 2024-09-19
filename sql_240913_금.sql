@@ -15,6 +15,7 @@ from employees;
 --nvl2(): 오라클 디비에서만 사용가능
 select last_name,
        salary,
+       commission_pct,
        nvl2(commission_pct, 'Yes', 'No') "commission"
 from employees;
 
@@ -111,23 +112,7 @@ select department_id,
 from employees
 group by department_id, 
          job_id
-order by job_id;
-
-select department_id,
-       job_id,
-       sum(salary)
-from employees
-group by department_id, 
-         job_id
-order by job_id;
-
-select job_id,
-       department_id,
-       sum(salary)
-from employees
-group by job_id,
-         department_id
-order by job_id;
+order by department_id;
 
 select department_id,
        job_id,
@@ -193,6 +178,7 @@ order by payroll;
 
 -- group function은 중첩 한번만 가능함
 -- 부서별 평균 급여중 젤 높은 값
+-- 그룹함수 중첩으로 있을 때 그룹 바이 꼭 있어야함
 select max(avg(salary))
 from employees
 group by department_id;
@@ -205,7 +191,7 @@ from employees
 group by department_id;
 
 -- cross join: 풀스캔. 모든 경우의 수를 루프 돌아서
--- employees * departments (107 * 27 = 2889)
+-- employees * departments 
 -- 표준 문법
 select last_name,
        department_name
@@ -217,15 +203,13 @@ select last_name,
        department_name
 from employees, departments;
 
--- 107
 select count(*)
 from employees;
 
--- 27
 select count(*)
-from departments;
+from locations;
 
--- natural join: 두 테이블에서 같은 이름 가진 칼럼 기준으로 조인. 교집합만 출력
+-- natural join: 두 테이블에서 같은 이름 가진 칼럼(location_id) 기준으로 조인. 교집합만 출력
 -- 한 테이블의 기본키와 다른 테이블의 외래키끼리 조인함(대부분. 관계형 데이터베이스기 때문)
 -- 표준 문법
 select department_id
@@ -250,15 +234,19 @@ select d.department_id,
 from departments d natural join locations l;
 
 -- 오라클 문법
-select department_id
+select department_id,
        department_name,
+       departments.location_id,
        locations.location_id,
        city
 from departments, locations
 where departments.location_id = locations.location_id;
 
+-- where 절을 사용하면 from에서 join 키워드 안넣어줘도됨
+-- using이나 on을 사용하면 join 넣어줘야함
 select d.department_id,
        d.department_name,
+       d.location_id,
        l.location_id,
        l.city
 from departments d, locations l
@@ -299,7 +287,7 @@ select e.last_name,
 from employees e, departments d
 where e.department_id = d.department_id;
 
--- 위와 같은 쿼리. 표준 문법
+-- 위와 같은 쿼리. 표준 문법(where 대신에 on 사용)
 select e.last_name,
        d.department_name
 from employees e join departments d
@@ -347,6 +335,8 @@ where e.manager_id = 149;
 -- inner join이 디폴드. 교집합.
 -- outer join 합집합(근데 왼쪽이랑 합할지, 오른쪽이랑 합할지, 풀로 합할지)
 
+-- 여기서부터 240919 
+
 -- self join. 같은 테이블끼리 별칭만 달리해서 조인함. 
 -- 표준 문법
 select w.last_name emp,
@@ -355,6 +345,8 @@ select w.last_name emp,
        m.employee_id
 from employees w join employees m
                   on (w.manager_id = m.employee_id);
+
+select * from employees;
 
 -- 오라클 문법
 select w.last_name emp,
