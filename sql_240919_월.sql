@@ -303,6 +303,28 @@ from employees;
 
 -- DML(데이터 조작어): Data Manipulation language. 추가, 삭제, 변경
 
+select * from departments;
+
+-- insert 하려니 이미 있는 부서라 cre_hrdata.sql 다시 실행하고 employees가 20행 나오면 그 때 insert해보기
+-- department_id가 PK라 중복 인서트 안됨
+insert into departments(department_id,
+                        department_name,
+                        manager_id,
+                        location_id)
+values (70, 'Public Relations', 100, 1700);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             
