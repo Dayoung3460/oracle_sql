@@ -176,8 +176,6 @@ select trunc(45.923, 2),
        trunc(45.923)
 from dual;
 
--- 여기서부터 복습 20240918
-
 -- mod({first}, {second}): first를 second로 나눴을 때 나머지
 -- modulo = 나머지 연산
 select last_name,
@@ -214,8 +212,9 @@ from employees;
 
 select employee_id,
        hire_date,
+       -- 둘 날짜 사이의 월수
        months_between(sysdate, hire_date) tenure,
-        months_between('24_11_12', sysdate) test,
+        months_between('24_09_22', sysdate) test,
        add_months(hire_date, 6) review,
        -- 입사 후 돌아오는 첫번째 금요일
        next_day(hire_date, '금'),
@@ -226,7 +225,7 @@ from employees;
 -- 날짜 반올림 기준 
 -- 연: 6월 30일 자정
 -- 달: 15일 자정(한 달에 며칠있는지 상관없)
--- 주: 수요일 낮 12시
+-- 주: 수요일 낮 12시(주는 일요일부터 시작)
 -- 일: 낮 12시
 select round(sysdate, 'year'),
        round(sysdate, 'month'),
@@ -244,6 +243,8 @@ select last_name,
        round(months_between(sysdate, hire_date)) "MONTHS_WORKED"
 from employees;
 
+
+
 select last_name,
        trunc((sysdate - hire_date) / 7) as "TENURE"
 from employees
@@ -256,8 +257,11 @@ where department_id = '90';
 
 -- to_char(): 날짜 타입 -> 문자 타입 변환
 select to_char(hire_date, 'mm/yy') "Month_Hired",
-       employee_id
+       employee_id,
+       hire_date
 from employees;
+
+-- 여기서부터 복습 240919
 
 alter session set
 nls_date_language = american;
