@@ -1,14 +1,17 @@
---0920
+-- 여기서부터 복습 0922
 
 select last_name,
-       job_id
+       job_id,
+       employee_id,
+       salary
 from employees
 where job_id = (select job_id
                 from employees
                 where employee_id = 141);
                 
 select last_name,
-       job_id
+       job_id,
+       employee_id
 from employees
 where job_id = (select job_id
                 from employees
@@ -34,10 +37,6 @@ select last_name,
 from employees
 where salary = (select min(salary)
                 from employees);
-
-select min(salary)
-from employees
-group by department_id;
 
 select min(salary)
 from employees
@@ -168,14 +167,14 @@ where department_id in (select department_id
                         where lower(last_name) like '%u%');
 
 --4. 부서 위치 ID(location_id)가 1700인 모든 사원의 이름, 부서 번호 및 업무 ID를 표시하시오.
--- 이건 왜 안되지
+-- 카테시안 곱: employees 테이블의 행이 departments 테이블의 모든 행과 결합
 select e.last_name,
        e.department_id,
-       d.department_id,
        e.job_id
 from employees e, departments d
 where location_id = 1700;
 
+-- location_id가 1700인 부서의 department_id를 먼저 선택한 후, 해당 부서에 속한 직원들을 employees 테이블에서 찾음
 select last_name,
        department_id,
        job_id
@@ -191,7 +190,8 @@ from employees
 where last_name = 'King';
 
 select last_name,
-       salary
+       salary,
+       manager_id
 from employees
 where manager_id in (select employee_id
                      from employees
@@ -232,6 +232,8 @@ and department_id in (select department_id
 select * from job_history;
 
 --job_history의 job_id와 employees의 job_id가 겹치는 사람은 하던 일에서 옮겼다가 다시 예전일로 돌아온 사람
+
+--여기서부터 복습 0923
 
 --176	SA_REP
 --200	AD_ASST
