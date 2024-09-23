@@ -1,5 +1,3 @@
--- 여기서부터 복습 0922
-
 select last_name,
        job_id,
        employee_id,
@@ -233,8 +231,6 @@ select * from job_history;
 
 --job_history의 job_id와 employees의 job_id가 겹치는 사람은 하던 일에서 옮겼다가 다시 예전일로 돌아온 사람
 
---여기서부터 복습 0923
-
 --176	SA_REP
 --200	AD_ASST
 select employee_id,
@@ -394,6 +390,8 @@ select * from copy_emp;
 update copy_emp
 set department_id = 100;
 
+-- 여기서부터 복습 0923
+
 update employees
 set job_id = (select job_id
               from employees
@@ -456,6 +454,8 @@ where employee_id = 176;
 select salary
 from copy_emp
 where employee_id = 176;
+
+-- 여기서부터 복습 0923
 
 -- 지금 상태에서 다른 사용자가 employee_id = 176의 salary를 8888로 업데이트해보면 무한 루프돎
 
