@@ -90,7 +90,7 @@ as
 -- alter option: 
 --add 열추가, 
 --modify 열변경: 컬럼 이름은 변경 불가, 숫자나 문자 열 길이를 기존 데이터보다 작게 설정하면 error
---drop 열드랍: 컬럼 하나씩 드랍 가능. alter는 ddl문이기 때문에 드랍할 때 조심. 바로 커밋되서 롤백 안됨
+--drop 열드랍: 컬럼 하나씩 드랍 가능. alter는 ddl(data definition language)문이기 때문에 드랍할 때 조심. 바로 커밋되서 롤백 안됨
 
 -- job_id 라는 컬럼 추가
 -- 데이터는 다 널로 들어가 있음
@@ -128,9 +128,6 @@ drop (sal);
 -- 컬럼은 있지만 blind 처리 됐다고 보면됨 unused 해놓고
 -- 진짜 삭제해야할 때 drop unused colnums 해주면 됨
 -- set unused 한걸 다시 롤백할순 없음
-
--- unused한 데이터를 읽을 수 없는지
--- unused 상태와 드랍된 상태를 어떻게 비교할 수 있는지
 
 alter table dept80
 set unused (last_name);
@@ -270,6 +267,8 @@ create table dept_test (
     deptid number(2) primary key,
     dname varchar2(14) unique,
     loc varchar2(13));
+    
+-- 0924
     
 insert into dept_test(deptid,
                       dname)
