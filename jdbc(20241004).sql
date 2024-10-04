@@ -8,3 +8,4 @@ grant connect, resource, dba to java;
 grant unlimited tablespace to java;
 
 -- db 새로 만들기. db이름: javadb, 사용자이름: java, 비번: 1234 / localhost / 1521 / xe 
+
