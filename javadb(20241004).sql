@@ -11,3 +11,8 @@ create sequence seq_bno nocache;
 -- 이클립스 루트폴더 바로 밑에 lib폴더 만들고 그 안에 복붙
 -- ojdbc6.jar 오른쪽 마우스 클릭 > build path > 첫번째꺼 클릭
 -- Referenced Libraries 파일 생기고 안에 자르파일에 있던 것들 주루룩 들어있음
+
+create table book(title varchar2(50) not null,
+                  writer varchar2(50) not null,
+                  price number not null,
+                  bnum varchar2(50) not null);
