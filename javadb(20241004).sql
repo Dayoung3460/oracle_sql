@@ -1,3 +1,5 @@
+-- javadb에서 실행하기
+
 create table boards(bno number primary key,
                     btitle varchar2(100) not null,
                     bcontent varchar2(1000) not null,
@@ -16,3 +18,7 @@ create table book(title varchar2(50) not null,
                   writer varchar2(50) not null,
                   price number not null,
                   bnum varchar2(50) not null);
+
+-- 오라클 디비 버전 확인
+SELECT * FROM v$version;
+SELECT banner FROM v$version WHERE banner LIKE 'Oracle%';
