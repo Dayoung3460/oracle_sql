@@ -124,6 +124,16 @@ create table member (
     signup_date date default sysdate
 );
 
+CREATE OR REPLACE TRIGGER trg_product_no
+    BEFORE INSERT ON product
+    FOR EACH ROW
+    WHEN (NEW.product_no IS NULL) -- Only generate if member_no is not provided
+BEGIN
+    :NEW.product_no := seq_product_no.NEXTVAL;
+END;
+/
+commit;
+
 ALTER TABLE MEMBER
 MODIFY id primary key;
 
@@ -225,11 +235,95 @@ ALTER TABLE ORDER_DETAILS
     
     
     
+select * from MEMBER;
     
     
-    
-    
-    
+select * from member;
+select * from product;
+select * from order_details;
+select * from grade;
+
+drop table grade;
+
+select member.member_name, member.phone
+from member, ORDER_DETAILS
+where MEMBER_NAME = (select member_name from order_details);
+
+
+delete member where member_no = 2;
+
+ALTER TABLE MEMBER
+    MODIFY id primary key;
+
+select member_no name, birth,phone,id,email,grade,signup_source,auth,signup_date,order_no
+from member
+where order_no is not null;
+
+ALTER TABLE member
+    MODIFY total_payment_amount DEFAULT 0;
+
+alter table MEMBER
+add total_payment_amount number;
+
+alter table ORDER_DETAILS
+    add order_price number;
+
+alter table ORDER_DETAILS
+    add product_name varchar2(100);
+
+alter table ORDER_DETAILS
+add member_id varchar2(100);
+
+ALTER TABLE ORDER_DETAILS
+    DROP COLUMN member_no;
+
+
+CREATE OR REPLACE TRIGGER trg_member_no
+    BEFORE INSERT ON member
+    FOR EACH ROW
+    WHEN (NEW.member_no IS NULL) -- Only generate if member_no is not provided
+BEGIN
+    :NEW.member_no := seq_member_no.NEXTVAL;
+END;
+/
+
+CREATE OR REPLACE TRIGGER trg_grade
+    BEFORE INSERT ON member
+    FOR EACH ROW
+    WHEN (NEW.member_no IS NULL) -- Only generate if member_no is not provided
+BEGIN
+    :NEW.member_no := seq_member_no.NEXTVAL;
+END;
+/
+
+CREATE OR REPLACE TRIGGER trg_product_no
+    BEFORE INSERT ON product
+    FOR EACH ROW
+    WHEN (NEW.product_no IS NULL) -- Only generate if member_no is not provided
+BEGIN
+    :NEW.product_no := seq_product_no.NEXTVAL;
+END;
+/
+
+ALTER TABLE ORDER_DETAILS
+    MODIFY DEL_PICK_TIME date NULL;
+
+ALTER TABLE member
+    RENAME COLUMN name TO member_name;
+
+CREATE OR REPLACE TRIGGER update_member_grade
+    BEFORE UPDATE OF total_payment_amount ON member
+    FOR EACH ROW
+BEGIN
+    IF :NEW.total_payment_amount > 10000 THEN
+        :NEW.grade := 'GOLD';
+    ELSIF :NEW.total_payment_amount > 5000 THEN
+        :NEW.grade := 'SILVER';
+    ELSE
+        :NEW.grade := 'WHITE';
+    END IF;
+END;
+/    
     
     
     
