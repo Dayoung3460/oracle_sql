@@ -79,7 +79,7 @@ create sequence seq_booking_no
     nocycle
     noorder
     nocache;
-    
+
 
     
 --🍕🍔🌭🥗🍜
@@ -93,7 +93,12 @@ create table product (
     combo number(1) default 0
 );
 
+select * from order_details;
 
+ALTER TABLE order_details MODIFY order_time DEFAULT TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS');
+commit;
+
+ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS';
 
 select * from product;
 create sequence seq_product_no
