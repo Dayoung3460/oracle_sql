@@ -8,6 +8,13 @@ create table tbl_board (
     update_date date default sysdate
 );
 
+create table test (
+    test_no number primary key
+);
+
+select count(*) 
+from test;
+
 desc tbl_board;
 
 create sequence board_seq;
@@ -25,7 +32,8 @@ insert into tbl_board(board_no, title, content, writer)
 values(board_seq.nextval, 'board test4', 'content test4', 'user5');
 insert into tbl_board(board_no, title, content, writer)
 values(board_seq.nextval, 'board test5', 'content test5', 'user6');
-
+insert into tbl_board(board_no, title, content, writer)
+values(board_seq.nextval, 'null', 'null', 'user116');
 
 commit;
 update tbl_board set title = 'jsp' 
@@ -44,10 +52,11 @@ insert into tbl_board(board_no, title, content, writer)
 select board_seq.nextval, title, content, writer
 from tbl_board;
 
-select * from tbl_board;
+select * from tbl_board
+where board_no = 26;
 
 -- 페이징 
-select b.*
+select b.*, (select count(*) from tbl_board totalCount)
 from (select rownum rn, a.*
     from (select *
         from tbl_board
@@ -56,5 +65,7 @@ where b.rn > (:page - 1) * 5 and b.rn <= (:page * 5);
 
 select count(*) 
 from tbl_board;
+
+select * from tbl_member;
 
 commit;
