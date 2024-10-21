@@ -8,6 +8,9 @@ create table tbl_board (
     update_date date default sysdate
 );
 
+alter table tbl_board
+add image varchar2(100);
+
 create table test (
     test_no number primary key
 );
@@ -67,5 +70,10 @@ select count(*)
 from tbl_board;
 
 select * from tbl_member;
+
+select * from tbl_board;
+
+insert into tbl_member(member_id, password, member_name, phone, responsibility)
+values('user7', 'test1234', 'test', '010-1111-1111', 'Admin');
 
 commit;
