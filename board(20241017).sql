@@ -77,3 +77,47 @@ insert into tbl_member(member_id, password, member_name, phone, responsibility)
 values('user7', 'test1234', 'test', '010-1111-1111', 'Admin');
 
 commit;
+
+create table tbl_reply (
+    reply_no number,
+    reply varchar2(1000) not null,
+    replyer varchar2(30) not null,
+    board_no number not null,
+    reply_date date default sysdate
+);
+
+create sequence reply_seq;
+
+alter table tbl_reply add constraint pk_reply primary key (reply_no);
+
+insert into tbl_reply(reply_no, reply, replyer, board_no)
+values(reply_seq.nextval, 'reply11111', 'user2', 596); 
+insert into tbl_reply(reply_no, reply, replyer, board_no)
+values(reply_seq.nextval, 'reply222222', 'user2', 596); 
+insert into tbl_reply(reply_no, reply, replyer, board_no)
+values(reply_seq.nextval, 'reply33333', 'user2', 596); 
+insert into tbl_reply(reply_no, reply, replyer, board_no)
+values(reply_seq.nextval, 'reply33333', 'user2', 596); 
+insert into tbl_reply(reply_no, reply, replyer, board_no)
+values(reply_seq.nextval, 'reply2', 'user2', 595); 
+insert into tbl_reply(reply_no, reply, replyer, board_no)
+values(reply_seq.nextval, 'reply3', 'user2', 592); 
+
+select * 
+from tbl_reply;
+
+select *
+from tbl_reply
+where board_no = 596;
+
+select reply_no,
+		reply,
+		replyer,
+		board_no,
+		reply_date
+		from tbl_reply
+		where board_no = 596
+		order by reply_no desc;
+        
+commit;
+
