@@ -42,6 +42,15 @@ commit;
 update tbl_board set title = 'jsp' 
 where board_no = 2;
 
+update tbl_reply
+set reply_date = sysdate, 
+    reply = 'comment'
+where reply_no = 11;
+        
+commit;
+
+select 
+
 select b.*, m.member_name
 from tbl_board b join tbl_member m
 on b.writer = m.member_id
@@ -88,6 +97,7 @@ create table tbl_reply (
 
 create sequence reply_seq;
 
+-- pk_reply 기본 키 제약 조건 이름. 인덱스 이름이됨
 alter table tbl_reply add constraint pk_reply primary key (reply_no);
 
 insert into tbl_reply(reply_no, reply, replyer, board_no)
@@ -120,4 +130,34 @@ select reply_no,
 		order by reply_no desc;
         
 commit;
+
+select * from tbl_member;
+
+update tbl_reply
+		set
+		reply_date = sysdate,
+		reply = 1111111
+		where reply_no = 11;
+        
+-- /*+ */ 안에 개발자가 임의로 해당 쿼리를 실행하는 방법 정의. 오류나도 쿼리가 오류가 나진않음
+-- index값인 pk_reply을 기준으로 가져오겠다
+-- order by 보다 훨씬 빠름
+-- index도 가능
+-- 댓글 페이지네이션
+select a.*
+from (select /*+ index_desc (r pk_reply) */ rownum rn, r.* 
+      from tbl_reply r
+      where board_no = :boardNo) a
+where a.rn > (:page - 1) * 5
+and   a.rn <= (:page * 5);
+
+-- count()와 같은 집계 함수는 보통 GROUP BY 와 함께 사용
+-- GROUP BY 없이 다른 열들을 선택하려고 할 때 오류가 발생
+-- Oracle에서는 count(r.*)와 같은 형식은 허용되지 않음
+-- t.*는 tbl_board 테이블의 모든 열을 의미하지만, GROUP BY 절에 모든 열을 명시하지 않으면 오류 발생
+select t.board_no, count(*) as reply_count
+from tbl_board t join tbl_reply r 
+on t.board_no = r.board_no
+group by t.board_no;
+
 
