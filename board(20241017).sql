@@ -11,6 +11,9 @@ create table tbl_board (
 alter table tbl_board
 add image varchar2(100);
 
+alter table tbl_event
+add event_no number;
+
 create table test (
     test_no number primary key
 );
@@ -22,13 +25,15 @@ desc tbl_board;
 
 create sequence board_seq;
 
+create sequence event_seq;
+
 select * from tbl_member;
 
 insert into tbl_board(board_no, title, content, writer)
 values(board_seq.nextval, 'board test', 'content test', 'user2');
 
 insert into tbl_board(board_no, title, content, writer)
-values(board_seq.nextval, 'board test2', 'content test2', 'user3');
+values(board_seq.nextval, 'board test2', 'content test2', 'user9');
 insert into tbl_board(board_no, title, content, writer)
 values(board_seq.nextval, 'board test3', 'content test3', 'user4');
 insert into tbl_board(board_no, title, content, writer)
@@ -83,7 +88,7 @@ select * from tbl_member;
 select * from tbl_board;
 
 insert into tbl_member(member_id, password, member_name, phone, responsibility)
-values('user7', 'test1234', 'test', '010-1111-1111', 'Admin');
+values('user9', 'test1234', 'test', '010-1111-1111', 'Admin');
 
 commit;
 
@@ -160,4 +165,52 @@ from tbl_board t join tbl_reply r
 on t.board_no = r.board_no
 group by t.board_no;
 
+select writer, count(1)
+from tbl_board
+group by writer;
 
+select * from tbl_member;
+
+select writer, member_name, count(1)
+from tbl_board b
+join tbl_member m
+on b.writer = m.member_id
+group by writer, member_name;
+
+UPDATE tbl_member
+SET member_name = ''
+WHERE member_id = 'user7';
+
+update tbl_event
+set event_no = event_seq.nextval
+where event_no is null;
+
+update tbl_event
+set start_date = '2024-10-01', end_date = '2024-10-03'
+where event_no = 6;
+
+
+select * from tbl_event;
+
+create table tbl_event (
+    title varchar2(1000) not null,
+    start_date varchar2(20) not null,
+    end_date varchar2(20)
+);
+
+
+
+insert into tbl_event values('meeing1', '2024-10-05', null);
+insert into tbl_event values('meeing2', '2024-10-06', '2024-10-07');
+insert into tbl_event values('meeing3', '2024-10-07', null);
+insert into tbl_event values('meeing4', '2024-10-06', '2024-10-17T21:00:00');
+
+delete from tbl_event
+where end_date = 'undefined';
+
+select * from tbl_event;
+
+delete tbl_event
+where event_no = 1;
+
+commit;
