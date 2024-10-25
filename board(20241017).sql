@@ -202,15 +202,15 @@ create table tbl_event (
 
 insert into tbl_event values('meeing1', '2024-10-05', null);
 insert into tbl_event values('meeing2', '2024-10-06', '2024-10-07');
-insert into tbl_event values('meeing3', '2024-10-07', null);
+insert into tbl_event values('title', 'meeing3', '2024-10-07', 89);
 insert into tbl_event values('meeing4', '2024-10-06', '2024-10-17T21:00:00');
 
 delete from tbl_event
-where end_date = 'undefined';
+where rownum between 1 and 14;
 
 select * from tbl_event;
 
 delete tbl_event
-where event_no = 1;
+where event_no is null;
 
 commit;
