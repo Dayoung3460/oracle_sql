@@ -2667,7 +2667,7 @@ SET board_category = 'reply'
 WHERE board_no = 3016;
 
 select * from board;
-
+select * from member;
 commit;
 
 desc board;
