@@ -1,11 +1,4 @@
--- 기환씨 작업
---------------------------------------------------------
---  파일이 생성됨 - 금요일-11월-01-2024   
---------------------------------------------------------
---------------------------------------------------------
---  DDL for Sequence BOARD_SEQ
---------------------------------------------------------
-
+  -- 5pc -> javadb
    CREATE SEQUENCE  "JAVA"."BOARD_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 801 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence REPLY_SEQ
@@ -2581,8 +2574,6 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
 
 
 
-
-
 -- 내가 수정한 것들
 
 select * 
@@ -2643,8 +2634,6 @@ ALTER TABLE board DROP COLUMN board_pw;
 -- Step 4: 새 컬럼의 이름을 기존 컬럼명으로 변경
 ALTER TABLE board RENAME COLUMN new_board_pw TO board_pw;
 
-commit;
-
 ALTER TABLE board
 MODIFY (book_no NULL);
 
@@ -2688,3 +2677,6 @@ select * from board;
 
 select * from board
 where board_category = 'review';
+
+
+commit;
