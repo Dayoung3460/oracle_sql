@@ -2663,11 +2663,12 @@ WHERE board_no = 3012;
 
 
 UPDATE board
-SET board_category = 'reply'
-WHERE board_no = 3016;
+SET writer = '-'
+WHERE writer = '로그인 필요';
 
 select * from board;
 select * from member;
+select * from site_book_option;
 commit;
 
 desc board;
@@ -2685,6 +2686,22 @@ select * from site_book;
 
 select * from member;
 select * from board;
+desc board;
+
+DELETE FROM board
+WHERE title = 'test' and board_category = 'review';
+
 
 select * from board
-where board_category = 'review';
+where board_category = 'qna';
+
+ select *
+        from board
+        where write_date = (
+            select max(write_date)
+            from board
+            where write_date < TO_DATE('2024-11-05 09:51:10', 'YYYY-MM-DD HH24:MI:SS')
+        )
+        and write_date < TO_DATE('2024-11-05 09:51:10', 'YYYY-MM-DD HH24:MI:SS')
+        and lower(board_category) like 'qna'
+        order by write_date desc;
