@@ -259,8 +259,8 @@ FOR EACH ROW
  WHEN (NEW.order_no IS NULL) BEGIN
   :NEW.order_no := seq_order_no.NEXTVAL;
 END;
-
 /
+
 ALTER TRIGGER "JAVA"."TRG_ORDER_NO" ENABLE;
 --------------------------------------------------------
 --  DDL for Trigger TRG_PRODUCT_NO
@@ -272,8 +272,8 @@ ALTER TRIGGER "JAVA"."TRG_ORDER_NO" ENABLE;
      WHEN (NEW.product_no IS NULL) BEGIN
     :NEW.product_no := seq_product_no.NEXTVAL;
 END;
-
 /
+
 ALTER TRIGGER "JAVA"."TRG_PRODUCT_NO" ENABLE;
 --------------------------------------------------------
 --  DDL for Trigger UPDATE_DEL_PICK_TIME
@@ -282,7 +282,9 @@ ALTER TRIGGER "JAVA"."TRG_PRODUCT_NO" ENABLE;
   CREATE OR REPLACE TRIGGER "JAVA"."UPDATE_DEL_PICK_TIME" 
     BEFORE INSERT ON ORDER_DETAILS
     FOR EACH ROW
-    :NEW.DEL_PICK_TIME := :NEW.ORDER_TIME + INTERVAL '1' HOUR;END;
+    BEGIN
+    :NEW.DEL_PICK_TIME := :NEW.ORDER_TIME + INTERVAL '1' HOUR;
+END;
 /
 ALTER TRIGGER "JAVA"."UPDATE_DEL_PICK_TIME" ENABLE;
 --------------------------------------------------------
@@ -292,9 +294,10 @@ ALTER TRIGGER "JAVA"."UPDATE_DEL_PICK_TIME" ENABLE;
   CREATE OR REPLACE TRIGGER "JAVA"."UPDATE_MEMBER_GRADE" 
     BEFORE UPDATE OF total_payment_amount ON member
     FOR EACH ROW
-    IF :NEW.total_payment_amount > 10000 THEN        :NEW.grade := 'GOLD';    ELSIF :NEW.total_payment_amount > 5000 THEN        :NEW.grade := 'SILVER';    ELSE        :NEW.grade := 'WHITE';    END IF;END;
+    IF :NEW.total_payment_amount > 10000 THEN        :NEW.grade := 'GOLD';    ELSE IF :NEW.total_payment_amount > 5000 THEN        :NEW.grade := 'SILVER';    ELSE        :NEW.grade := 'WHITE';    END IF;END;
 /
 ALTER TRIGGER "JAVA"."UPDATE_MEMBER_GRADE" ENABLE;
+commit;
 --------------------------------------------------------
 --  Constraints for Table BOOK
 --------------------------------------------------------
