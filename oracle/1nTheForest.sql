@@ -1,12 +1,26 @@
--- 기환씨 작업
 --------------------------------------------------------
---  파일이 생성됨 - 금요일-11월-01-2024   
+--  파일이 생성됨 - 금요일-11월-08-2024   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Sequence BOARD_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "JAVA"."BOARD_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 801 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "JAVA"."BOARD_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1301 CACHE 20 NOORDER  NOCYCLE ;
+--------------------------------------------------------
+--  DDL for Sequence BOOK_OPTION_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "JAVA"."BOOK_OPTION_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+--------------------------------------------------------
+--  DDL for Sequence BOOK_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "JAVA"."BOOK_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 241 CACHE 20 NOORDER  NOCYCLE ;
+--------------------------------------------------------
+--  DDL for Sequence HWAN_TEST
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "JAVA"."HWAN_TEST"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 41 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence REPLY_SEQ
 --------------------------------------------------------
@@ -39,7 +53,7 @@
 	"VIEW_CNT" NUMBER DEFAULT 0, 
 	"WRITE_DATE" DATE DEFAULT sysdate, 
 	"REPLY_NO" NUMBER, 
-	"BOARD_PW" NUMBER
+	"BOARD_PW" VARCHAR2(10 BYTE)
    ) SEGMENT CREATION IMMEDIATE 
   PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
@@ -97,11 +111,12 @@
    (	"MEMBER_ID" VARCHAR2(40 BYTE), 
 	"PASSWORD" VARCHAR2(40 BYTE), 
 	"MEMBER_NAME" VARCHAR2(40 BYTE), 
-	"ADDRESS" VARCHAR2(200 BYTE), 
+	"ADDRESS" VARCHAR2(1000 BYTE), 
 	"EMAIL" VARCHAR2(40 BYTE), 
 	"TEL" VARCHAR2(40 BYTE), 
 	"JOINED_DATE" DATE DEFAULT sysdate, 
-	"PERMISSION" VARCHAR2(40 BYTE) DEFAULT 'user'
+	"PERMISSION" VARCHAR2(40 BYTE) DEFAULT 'user', 
+	"QUIT" NUMBER DEFAULT 0
    ) SEGMENT CREATION IMMEDIATE 
   PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
@@ -355,22 +370,899 @@
   TABLESPACE "SYSTEM" ;
 REM INSERTING into JAVA.BOARD
 SET DEFINE OFF;
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3001,'notice',null,0,'필수공지사항 1/5','첫번째 공지사항입니다. 1002번 caraban, 1004번 auto, 109번 deck는 현재 사용불가합니다.',1,null,'admin101',0,to_date('24/10/30','RR/MM/DD'),null,3001);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3002,'notice',null,0,'필수공지사항 2/5','두번째 공지사항입니다. 1002번 caraban, 1004번 auto, 109번 deck는 현재 사용불가합니다.',1,null,'kim_sazang',888,to_date('24/10/30','RR/MM/DD'),null,3002);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3003,'notice',null,0,'필수공지사항 3/5','세번째 공지사항입니다. 필수 공지사항은 notice_flag 값이 1입니다.',1,null,'kim_sazang',888,to_date('24/10/30','RR/MM/DD'),null,3003);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3004,'notice',null,0,'필수공지사항 4/5','네번째 공지사항입니다. 필수 공지사항은 permission이 admin인 admin101 사용자만 작성할 수 있습니다.',1,null,'kim_sazang',666,to_date('24/10/30','RR/MM/DD'),null,3004);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3005,'notice',null,0,'필수공지사항 5/5','다섯번째 공지사항입니다. 필수 공지는 5가지입니다.',1,null,'kim_sazang',789,to_date('24/10/30','RR/MM/DD'),null,3005);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3006,'notice',null,0,'일반공지사항 1/2','첫번째 일반공지사항입니다. 예약번호 0번에 일반공지사항을 넣겠습니다.',0,null,'kim_sazang',123,to_date('24/10/30','RR/MM/DD'),null,3006);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3007,'notice',null,0,'일반공지사항 2/2','두번째 일반공지사항입니다. 일반 공지사항은 notice_flag 값이 0입니다.',0,null,'kim_sazang',456,to_date('24/10/30','RR/MM/DD'),null,3007);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3011,'qna','2001',0,'문의사항 1/3','예약번호 2001번의 문의사항입니다. 삼겹살도 파나요?',0,null,'kim_hama',777,to_date('24/10/30','RR/MM/DD'),null,3011);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3012,'reply','2001',0,'문의사항 1/3_답변','예약번호 2001번의 답변입니다. 오면서 사오셔야 됩니다.',0,null,'kim_sazang',777,to_date('24/10/30','RR/MM/DD'),3023,3012);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3013,'qna','2002',1,'문의사항 2/3','예약번호 2002번의 문의사항입니다. 바베큐 공짜로 해주면 리뷰써줌',0,null,'kim_girin',777,to_date('24/10/30','RR/MM/DD'),null,3013);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3014,'reply','2001',1,'문의사항 2/3_답변','예약번호 2002번의 답변입니다. 영업방해로 고소함.',0,null,'kim_sazang',777,to_date('24/10/30','RR/MM/DD'),3013,3014);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3015,'qna','2003',0,'문의사항 3/3','예약번호 2003번의 문의사항입니다. 입구에 레드카펫좀 깔아주세요.',0,null,'kim_tokki',777,to_date('24/10/30','RR/MM/DD'),null,3013);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3016,'reply','2001',0,'문의사항 3/3_답변','예약번호 2003번의 답변입니다. 추가비용 150000원 입니다.',0,null,'kim_sazang',777,to_date('24/10/30','RR/MM/DD'),3015,3016);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3021,'review','2001',0,'리뷰 1/3','예약번호 2001번의 후기입니다. 잘놀다 갑니다. 별점 4점',0,null,'kim_hama',777,to_date('24/10/30','RR/MM/DD'),null,3021);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3022,'review','2002',0,'리뷰 2/3','예약번호 2002번의 후기입니다. 간단한 요구도 안들어줍니다. 오지마세요. 별점 1점.',0,null,'kim_girin',777,to_date('24/10/30','RR/MM/DD'),null,3022);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3023,'review','2003',0,'리뷰 3/3','예약번호 2003번의 후기입니다. 사장이 돈에 미쳤어요. 별점 3점',0,null,'kim_tokki',779,to_date('24/10/30','RR/MM/DD'),null,3023);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1025,'notice',null,0,'해변 진출입로 공사안내','추암해변 진출입로 포장공사로 인하여 6.24.~6.25 양일간 캠핑장 출입시 불편이 예상되오니 참조하시기 바랍니다.!',1,null,'admin',9,to_date('24/11/08','RR/MM/DD'),0,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1029,'notice',null,0,'2024년 해돋이 행사 공지','▣ 추암해변 신년 해맞이 행사현황
+
+
+○ 일 시 : 2019.12.31(화) 18:00 ~ 2020.1.1(수) 09:00
+
+    - 해뜨는 시각 : 07:38분 예상
+
+○ 장 소 : 추암해변 광장일원
+
+○ 주요 행사내용
+
+    - 추암 케이크 트리 설치 : 1개소
+
+    - 파티오 난로 해변설치 운영
+
+    - 입체글자 조형물 포토존 설치
+
+    - 촛대바위 다리 구간 아트조명 설치
+
+    - 2020 새해 소망 기원판 운영 등',0,null,'admin',29,to_date('24/11/08','RR/MM/DD'),0,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1032,'notice',null,0,'캠핑장 온라인 예약 및 취소 방법 안내',' 첨부파일중 이미지미리보기',0,null,'admin',3,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1033,'notice',null,0,'코로나19관련 12/15 ~ 상황해제시 임시폐쇄 안내.','동해시 코로나19관련 다수 확진자 발생으로 인해 캠핑장 방역을 위해 12/15 ~ 상황해제시 임시 폐쇄하오니 양해바랍니다.
+
+방역지침에 따라 기간이 연장될 수 있음을 안내드립니다.',0,null,'admin',3,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1034,'notice',null,0,'캠핑장 예약시간 공지사항','예약시간을 정오 12시로 바꾸는 과정에서 테스트 진행 결과 지속적으로 오류가 발생하고 있습니다.
+
+예약시간 변경 시 더 많은 혼란과 불편을 드릴 것으로 판단하여 앞으로 예약시간은 기존대로 매월 1일 24시에 열릴 예정입니다.
+
+이용에 불편을 드려 정말 죄송합니다.',0,null,'admin',62,to_date('24/11/08','RR/MM/DD'),0,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1035,'notice',null,0,'캠핑장 홍보촬영 협조 안내','
+안녕하세요!
+
+전북 특별한 관광지 영상콘텐츠 홍보영상 제작을 위해 웅포캠핑장 내에서 홍보 영상 촬영 예정에 있습니다.
+
+촬영일시 : 11. 2. (토) 10 : 00 ~ 18 : 00
+촬영장소 : 웅포캠핑장, 웅포곰개나루길
+촬영내용 : 익산 홍보영상 스케치 및 드론(항공) 촬영',0,null,'admin',5,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1036,'notice',null,0,'무통장 환급 지연 안내','안녕하십니까
+
+망상 오토 캠핑 리조트 입니다.
+
+정부 프로그램 변경으로 인한 오류 발생으로 
+
+2.5~2.18 무통장 취소분에 대하여
+
+무통장 환급건이 지연되고 있습니다.
+
+해당 기관 문의 결과 2.27(화) 환급 예정이며
+
+2.19부터 발생되는 취소분은 정상적(취소후 15일 이내)으로 진행될 예정입니다.
+
+환급 건이 늦어지게 된 점 다시 한번 사과드립니다.
+
+죄송합니다.',0,null,'admin',4,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1037,'notice',null,0,'2024년 물놀이장 운영공지','어린이 물놀이장은 여름해수욕장 개장 시기에 맞춰 2024.07.10~08.18까지 운영 합니다.
+
+운영시간은 11:00~18:00이며, 중간 1시간 용수 교체시간 있습니다.
+
+
+
+이용수칙 관련
+
+1. 입장시 워터슈즈만 착용가능합니다(크록스,슬리퍼X)
+
+2. 튜브,물총,비누방울 사용금지
+
+3. 물놀이장 주변 취식금지(주류 제외한 음료는 가능)
+
+4. 소중한 우리 자녀의 안전을 위해 성인 이용 자재 및 뛰어다니기 금지!!
+
+상기 사항 꼭 지켜주시고 안전한 물놀이를 위해 안전요원 지시에 따라주세요 
+
+많이 이용해 주시기 바랍니다
+
+
+
+※ 우천시 운영 중단 합니다. ',0,null,'admin',1,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1024,'notice',null,0,'2024년 인더숲캠핑장 이용만족도 설문조사 실시 안내','2024년 인더숲 캠핑장 이용만족도 설문조사 바로가기 >>>',0,null,'admin',8,to_date('24/10/24','RR/MM/DD'),0,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1042,'notice',null,0,'캠핑장 각종 벌레 해충 주의 요망 안내','우리 캠핑장은 산 속에 조성되어 각종 벌레, 산바퀴벌레 등 해충이 나타 날 수 있습니다. 
+
+포충기와 정기적 방역 중이나 산속에 근본적 해결은 어려운 상황 입니다.
+
+이점에 유의해 주시고 에프킬라, 모기향, 사전 준비해 캠핑을 즐겨주시기 바랍니다. ',0,null,'admin',2,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1043,'qna',null,0,'입실 시간 언제인가요??','입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1044,'qna',null,0,'드라이기 있나요??','헤어드라이기 있는지 궁금해요',0,null,'user02',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1045,'qna',null,0,'야외수영장은 몇 시에 오픈인가요','수영장 열리는 시간에 맞춰서 가려고요...',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1046,'qna',null,0,'휴무 있나요???','1월 1일에도 영업하나요??',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1047,'qna',null,1,'문의','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다.',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1048,'qna',null,0,'1월 1일에 여나요','연다면 입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1049,'qna',null,0,'화장실 위치','어딘가요????',0,null,'user02',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1050,'qna',null,0,'텐트 브랜드 문의','대여용 텐트가 어디 브랜드인가요',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1051,'qna',null,0,'내년 2월 예약 미리 가능한가요','내년 예약 미리 하고 싶습니다...',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1052,'qna',null,1,'물어볼 게 있습니다','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다........',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1053,'qna',null,0,'크리스마스에는 영업하나요','연다면 입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1054,'qna',null,0,'매점 있을까요','어디 있나요?? 뭐 파는지 알 수 있나요',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1055,'qna',null,0,'가격 문의','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다........',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1056,'qna',null,0,'2025년 예약가능여부','내년 예약 미리 하고 싶습니다...',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1059,'notice',null,0,'2024년 해돋이 행사 공지','▣ 추암해변 신년 해맞이 행사현황
+
+
+○ 일 시 : 2019.12.31(화) 18:00 ~ 2020.1.1(수) 09:00
+
+    - 해뜨는 시각 : 07:38분 예상
+
+○ 장 소 : 추암해변 광장일원
+
+○ 주요 행사내용
+
+    - 추암 케이크 트리 설치 : 1개소
+
+    - 파티오 난로 해변설치 운영
+
+    - 입체글자 조형물 포토존 설치
+
+    - 촛대바위 다리 구간 아트조명 설치
+
+    - 2020 새해 소망 기원판 운영 등',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1060,'notice',null,0,'캠핑장 온라인 예약 및 취소 방법 안내',' 첨부파일중 이미지미리보기',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1061,'notice',null,0,'코로나19관련 12/15 ~ 상황해제시 임시폐쇄 안내.','동해시 코로나19관련 다수 확진자 발생으로 인해 캠핑장 방역을 위해 12/15 ~ 상황해제시 임시 폐쇄하오니 양해바랍니다.
+
+방역지침에 따라 기간이 연장될 수 있음을 안내드립니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1062,'notice',null,0,'캠핑장 예약시간 공지사항','예약시간을 정오 12시로 바꾸는 과정에서 테스트 진행 결과 지속적으로 오류가 발생하고 있습니다.
+
+예약시간 변경 시 더 많은 혼란과 불편을 드릴 것으로 판단하여 앞으로 예약시간은 기존대로 매월 1일 24시에 열릴 예정입니다.
+
+이용에 불편을 드려 정말 죄송합니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1063,'notice',null,0,'캠핑장 홍보촬영 협조 안내','
+안녕하세요!
+
+전북 특별한 관광지 영상콘텐츠 홍보영상 제작을 위해 웅포캠핑장 내에서 홍보 영상 촬영 예정에 있습니다.
+
+촬영일시 : 11. 2. (토) 10 : 00 ~ 18 : 00
+촬영장소 : 웅포캠핑장, 웅포곰개나루길
+촬영내용 : 익산 홍보영상 스케치 및 드론(항공) 촬영',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1064,'notice',null,0,'무통장 환급 지연 안내','안녕하십니까
+
+망상 오토 캠핑 리조트 입니다.
+
+정부 프로그램 변경으로 인한 오류 발생으로 
+
+2.5~2.18 무통장 취소분에 대하여
+
+무통장 환급건이 지연되고 있습니다.
+
+해당 기관 문의 결과 2.27(화) 환급 예정이며
+
+2.19부터 발생되는 취소분은 정상적(취소후 15일 이내)으로 진행될 예정입니다.
+
+환급 건이 늦어지게 된 점 다시 한번 사과드립니다.
+
+죄송합니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1065,'notice',null,0,'2024년 물놀이장 운영공지','어린이 물놀이장은 여름해수욕장 개장 시기에 맞춰 2024.07.10~08.18까지 운영 합니다.
+
+운영시간은 11:00~18:00이며, 중간 1시간 용수 교체시간 있습니다.
+
+
+
+이용수칙 관련
+
+1. 입장시 워터슈즈만 착용가능합니다(크록스,슬리퍼X)
+
+2. 튜브,물총,비누방울 사용금지
+
+3. 물놀이장 주변 취식금지(주류 제외한 음료는 가능)
+
+4. 소중한 우리 자녀의 안전을 위해 성인 이용 자재 및 뛰어다니기 금지!!
+
+상기 사항 꼭 지켜주시고 안전한 물놀이를 위해 안전요원 지시에 따라주세요 
+
+많이 이용해 주시기 바랍니다
+
+
+
+※ 우천시 운영 중단 합니다. ',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1070,'notice',null,0,'2024년 인더숲캠핑장 이용만족도 설문조사 실시 안내','2024년 인더숲 캠핑장 이용만족도 설문조사 바로가기 >>>',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1071,'notice',null,0,'캠핑장 각종 벌레 해충 주의 요망 안내','우리 캠핑장은 산 속에 조성되어 각종 벌레, 산바퀴벌레 등 해충이 나타 날 수 있습니다. 
+
+포충기와 정기적 방역 중이나 산속에 근본적 해결은 어려운 상황 입니다.
+
+이점에 유의해 주시고 에프킬라, 모기향, 사전 준비해 캠핑을 즐겨주시기 바랍니다. ',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1072,'qna',null,0,'입실 시간 언제인가요??','입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1073,'qna',null,0,'드라이기 있나요??','헤어드라이기 있는지 궁금해요',0,null,'user02',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1074,'qna',null,0,'야외수영장은 몇 시에 오픈인가요','수영장 열리는 시간에 맞춰서 가려고요...',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1075,'qna',null,0,'휴무 있나요???','1월 1일에도 영업하나요??',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1076,'qna',null,1,'문의','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다.',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1077,'qna',null,0,'1월 1일에 여나요','연다면 입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1078,'qna',null,0,'화장실 위치','어딘가요????',0,null,'user02',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1079,'qna',null,0,'텐트 브랜드 문의','대여용 텐트가 어디 브랜드인가요',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1080,'qna',null,0,'내년 2월 예약 미리 가능한가요','내년 예약 미리 하고 싶습니다...',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1081,'qna',null,1,'물어볼 게 있습니다','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다........',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1082,'qna',null,0,'크리스마스에는 영업하나요','연다면 입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1083,'qna',null,0,'매점 있을까요','어디 있나요?? 뭐 파는지 알 수 있나요',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1084,'qna',null,0,'가격 문의','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다........',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1085,'qna',null,0,'2025년 예약가능여부','내년 예약 미리 하고 싶습니다...',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1086,'notice',null,0,'해변 진출입로 공사안내','추암해변 진출입로 포장공사로 인하여 6.24.~6.25 양일간 캠핑장 출입시 불편이 예상되오니 참조하시기 바랍니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1088,'notice',null,0,'2024년 해돋이 행사 공지','▣ 추암해변 신년 해맞이 행사현황
+
+
+○ 일 시 : 2019.12.31(화) 18:00 ~ 2020.1.1(수) 09:00
+
+    - 해뜨는 시각 : 07:38분 예상
+
+○ 장 소 : 추암해변 광장일원
+
+○ 주요 행사내용
+
+    - 추암 케이크 트리 설치 : 1개소
+
+    - 파티오 난로 해변설치 운영
+
+    - 입체글자 조형물 포토존 설치
+
+    - 촛대바위 다리 구간 아트조명 설치
+
+    - 2020 새해 소망 기원판 운영 등',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1089,'notice',null,0,'캠핑장 온라인 예약 및 취소 방법 안내',' 첨부파일중 이미지미리보기',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1090,'notice',null,0,'코로나19관련 12/15 ~ 상황해제시 임시폐쇄 안내.','동해시 코로나19관련 다수 확진자 발생으로 인해 캠핑장 방역을 위해 12/15 ~ 상황해제시 임시 폐쇄하오니 양해바랍니다.
+
+방역지침에 따라 기간이 연장될 수 있음을 안내드립니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1091,'notice',null,0,'캠핑장 예약시간 공지사항','예약시간을 정오 12시로 바꾸는 과정에서 테스트 진행 결과 지속적으로 오류가 발생하고 있습니다.
+
+예약시간 변경 시 더 많은 혼란과 불편을 드릴 것으로 판단하여 앞으로 예약시간은 기존대로 매월 1일 24시에 열릴 예정입니다.
+
+이용에 불편을 드려 정말 죄송합니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1092,'notice',null,0,'캠핑장 홍보촬영 협조 안내','
+안녕하세요!
+
+전북 특별한 관광지 영상콘텐츠 홍보영상 제작을 위해 웅포캠핑장 내에서 홍보 영상 촬영 예정에 있습니다.
+
+촬영일시 : 11. 2. (토) 10 : 00 ~ 18 : 00
+촬영장소 : 웅포캠핑장, 웅포곰개나루길
+촬영내용 : 익산 홍보영상 스케치 및 드론(항공) 촬영',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1093,'notice',null,0,'무통장 환급 지연 안내','안녕하십니까
+
+망상 오토 캠핑 리조트 입니다.
+
+정부 프로그램 변경으로 인한 오류 발생으로 
+
+2.5~2.18 무통장 취소분에 대하여
+
+무통장 환급건이 지연되고 있습니다.
+
+해당 기관 문의 결과 2.27(화) 환급 예정이며
+
+2.19부터 발생되는 취소분은 정상적(취소후 15일 이내)으로 진행될 예정입니다.
+
+환급 건이 늦어지게 된 점 다시 한번 사과드립니다.
+
+죄송합니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1094,'notice',null,0,'2024년 물놀이장 운영공지','어린이 물놀이장은 여름해수욕장 개장 시기에 맞춰 2024.07.10~08.18까지 운영 합니다.
+
+운영시간은 11:00~18:00이며, 중간 1시간 용수 교체시간 있습니다.
+
+
+
+이용수칙 관련
+
+1. 입장시 워터슈즈만 착용가능합니다(크록스,슬리퍼X)
+
+2. 튜브,물총,비누방울 사용금지
+
+3. 물놀이장 주변 취식금지(주류 제외한 음료는 가능)
+
+4. 소중한 우리 자녀의 안전을 위해 성인 이용 자재 및 뛰어다니기 금지!!
+
+상기 사항 꼭 지켜주시고 안전한 물놀이를 위해 안전요원 지시에 따라주세요 
+
+많이 이용해 주시기 바랍니다
+
+
+
+※ 우천시 운영 중단 합니다. ',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1099,'notice',null,0,'2024년 인더숲캠핑장 이용만족도 설문조사 실시 안내','2024년 인더숲 캠핑장 이용만족도 설문조사 바로가기 >>>',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1100,'notice',null,0,'캠핑장 각종 벌레 해충 주의 요망 안내','우리 캠핑장은 산 속에 조성되어 각종 벌레, 산바퀴벌레 등 해충이 나타 날 수 있습니다. 
+
+포충기와 정기적 방역 중이나 산속에 근본적 해결은 어려운 상황 입니다.
+
+이점에 유의해 주시고 에프킬라, 모기향, 사전 준비해 캠핑을 즐겨주시기 바랍니다. ',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1101,'qna',null,0,'입실 시간 언제인가요??','입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1102,'qna',null,0,'드라이기 있나요??','헤어드라이기 있는지 궁금해요',0,null,'user02',1,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1103,'qna',null,0,'야외수영장은 몇 시에 오픈인가요','수영장 열리는 시간에 맞춰서 가려고요...',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1104,'qna',null,0,'휴무 있나요???','1월 1일에도 영업하나요??',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1105,'qna',null,1,'문의','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다.',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1106,'qna',null,0,'1월 1일에 여나요','연다면 입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1107,'qna',null,0,'화장실 위치','어딘가요????',0,null,'user02',1,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1108,'qna',null,0,'텐트 브랜드 문의','대여용 텐트가 어디 브랜드인가요',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1109,'qna',null,0,'내년 2월 예약 미리 가능한가요','내년 예약 미리 하고 싶습니다...',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1110,'qna',null,1,'물어볼 게 있습니다','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다........',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1111,'qna',null,0,'크리스마스에는 영업하나요','연다면 입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1112,'qna',null,0,'매점 있을까요','어디 있나요?? 뭐 파는지 알 수 있나요',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1113,'qna',null,0,'가격 문의','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다........',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1114,'qna',null,0,'2025년 예약가능여부','내년 예약 미리 하고 싶습니다...',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1115,'notice',null,0,'해변 진출입로 공사안내','추암해변 진출입로 포장공사로 인하여 6.24.~6.25 양일간 캠핑장 출입시 불편이 예상되오니 참조하시기 바랍니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1117,'notice',null,0,'2024년 해돋이 행사 공지','▣ 추암해변 신년 해맞이 행사현황
+
+
+○ 일 시 : 2019.12.31(화) 18:00 ~ 2020.1.1(수) 09:00
+
+    - 해뜨는 시각 : 07:38분 예상
+
+○ 장 소 : 추암해변 광장일원
+
+○ 주요 행사내용
+
+    - 추암 케이크 트리 설치 : 1개소
+
+    - 파티오 난로 해변설치 운영
+
+    - 입체글자 조형물 포토존 설치
+
+    - 촛대바위 다리 구간 아트조명 설치
+
+    - 2020 새해 소망 기원판 운영 등',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1118,'notice',null,0,'캠핑장 온라인 예약 및 취소 방법 안내',' 첨부파일중 이미지미리보기',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1119,'notice',null,0,'코로나19관련 12/15 ~ 상황해제시 임시폐쇄 안내.','동해시 코로나19관련 다수 확진자 발생으로 인해 캠핑장 방역을 위해 12/15 ~ 상황해제시 임시 폐쇄하오니 양해바랍니다.
+
+방역지침에 따라 기간이 연장될 수 있음을 안내드립니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1120,'notice',null,0,'캠핑장 예약시간 공지사항','예약시간을 정오 12시로 바꾸는 과정에서 테스트 진행 결과 지속적으로 오류가 발생하고 있습니다.
+
+예약시간 변경 시 더 많은 혼란과 불편을 드릴 것으로 판단하여 앞으로 예약시간은 기존대로 매월 1일 24시에 열릴 예정입니다.
+
+이용에 불편을 드려 정말 죄송합니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1121,'notice',null,0,'캠핑장 홍보촬영 협조 안내','
+안녕하세요!
+
+전북 특별한 관광지 영상콘텐츠 홍보영상 제작을 위해 웅포캠핑장 내에서 홍보 영상 촬영 예정에 있습니다.
+
+촬영일시 : 11. 2. (토) 10 : 00 ~ 18 : 00
+촬영장소 : 웅포캠핑장, 웅포곰개나루길
+촬영내용 : 익산 홍보영상 스케치 및 드론(항공) 촬영',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1122,'notice',null,0,'무통장 환급 지연 안내','안녕하십니까
+
+망상 오토 캠핑 리조트 입니다.
+
+정부 프로그램 변경으로 인한 오류 발생으로 
+
+2.5~2.18 무통장 취소분에 대하여
+
+무통장 환급건이 지연되고 있습니다.
+
+해당 기관 문의 결과 2.27(화) 환급 예정이며
+
+2.19부터 발생되는 취소분은 정상적(취소후 15일 이내)으로 진행될 예정입니다.
+
+환급 건이 늦어지게 된 점 다시 한번 사과드립니다.
+
+죄송합니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1123,'notice',null,0,'2024년 물놀이장 운영공지','어린이 물놀이장은 여름해수욕장 개장 시기에 맞춰 2024.07.10~08.18까지 운영 합니다.
+
+운영시간은 11:00~18:00이며, 중간 1시간 용수 교체시간 있습니다.
+
+
+
+이용수칙 관련
+
+1. 입장시 워터슈즈만 착용가능합니다(크록스,슬리퍼X)
+
+2. 튜브,물총,비누방울 사용금지
+
+3. 물놀이장 주변 취식금지(주류 제외한 음료는 가능)
+
+4. 소중한 우리 자녀의 안전을 위해 성인 이용 자재 및 뛰어다니기 금지!!
+
+상기 사항 꼭 지켜주시고 안전한 물놀이를 위해 안전요원 지시에 따라주세요 
+
+많이 이용해 주시기 바랍니다
+
+
+
+※ 우천시 운영 중단 합니다. ',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1128,'notice',null,0,'2024년 인더숲캠핑장 이용만족도 설문조사 실시 안내','2024년 인더숲 캠핑장 이용만족도 설문조사 바로가기 >>>',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1129,'notice',null,0,'캠핑장 각종 벌레 해충 주의 요망 안내','우리 캠핑장은 산 속에 조성되어 각종 벌레, 산바퀴벌레 등 해충이 나타 날 수 있습니다. 
+
+포충기와 정기적 방역 중이나 산속에 근본적 해결은 어려운 상황 입니다.
+
+이점에 유의해 주시고 에프킬라, 모기향, 사전 준비해 캠핑을 즐겨주시기 바랍니다. ',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1130,'qna',null,0,'입실 시간 언제인가요??','입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1131,'qna',null,0,'드라이기 있나요??','헤어드라이기 있는지 궁금해요',0,null,'user02',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1132,'qna',null,0,'야외수영장은 몇 시에 오픈인가요','수영장 열리는 시간에 맞춰서 가려고요...',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1133,'qna',null,0,'휴무 있나요???','1월 1일에도 영업하나요??',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1134,'qna',null,1,'문의','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다.',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1135,'qna',null,0,'1월 1일에 여나요','연다면 입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1136,'qna',null,0,'화장실 위치','어딘가요????',0,null,'user02',1,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1137,'qna',null,0,'텐트 브랜드 문의','대여용 텐트가 어디 브랜드인가요',0,null,'user03',1,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1138,'qna',null,0,'내년 2월 예약 미리 가능한가요','내년 예약 미리 하고 싶습니다...',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1139,'qna',null,1,'물어볼 게 있습니다','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다........',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1140,'qna',null,0,'크리스마스에는 영업하나요','연다면 입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1141,'qna',null,0,'매점 있을까요','어디 있나요?? 뭐 파는지 알 수 있나요',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1142,'qna',null,0,'가격 문의','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다........',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1143,'qna',null,0,'2025년 예약가능여부','내년 예약 미리 하고 싶습니다...',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1144,'notice',null,0,'해변 진출입로 공사안내','추암해변 진출입로 포장공사로 인하여 6.24.~6.25 양일간 캠핑장 출입시 불편이 예상되오니 참조하시기 바랍니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1146,'notice',null,0,'2024년 해돋이 행사 공지','▣ 추암해변 신년 해맞이 행사현황
+
+
+○ 일 시 : 2019.12.31(화) 18:00 ~ 2020.1.1(수) 09:00
+
+    - 해뜨는 시각 : 07:38분 예상
+
+○ 장 소 : 추암해변 광장일원
+
+○ 주요 행사내용
+
+    - 추암 케이크 트리 설치 : 1개소
+
+    - 파티오 난로 해변설치 운영
+
+    - 입체글자 조형물 포토존 설치
+
+    - 촛대바위 다리 구간 아트조명 설치
+
+    - 2020 새해 소망 기원판 운영 등',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1147,'notice',null,0,'캠핑장 온라인 예약 및 취소 방법 안내',' 첨부파일중 이미지미리보기',0,null,'admin',1,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1148,'notice',null,0,'코로나19관련 12/15 ~ 상황해제시 임시폐쇄 안내.','동해시 코로나19관련 다수 확진자 발생으로 인해 캠핑장 방역을 위해 12/15 ~ 상황해제시 임시 폐쇄하오니 양해바랍니다.
+
+방역지침에 따라 기간이 연장될 수 있음을 안내드립니다.',0,null,'admin',1,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1149,'notice',null,0,'캠핑장 예약시간 공지사항','예약시간을 정오 12시로 바꾸는 과정에서 테스트 진행 결과 지속적으로 오류가 발생하고 있습니다.
+
+예약시간 변경 시 더 많은 혼란과 불편을 드릴 것으로 판단하여 앞으로 예약시간은 기존대로 매월 1일 24시에 열릴 예정입니다.
+
+이용에 불편을 드려 정말 죄송합니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1150,'notice',null,0,'캠핑장 홍보촬영 협조 안내','
+안녕하세요!
+
+전북 특별한 관광지 영상콘텐츠 홍보영상 제작을 위해 웅포캠핑장 내에서 홍보 영상 촬영 예정에 있습니다.
+
+촬영일시 : 11. 2. (토) 10 : 00 ~ 18 : 00
+촬영장소 : 웅포캠핑장, 웅포곰개나루길
+촬영내용 : 익산 홍보영상 스케치 및 드론(항공) 촬영',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1151,'notice',null,0,'무통장 환급 지연 안내','안녕하십니까
+
+망상 오토 캠핑 리조트 입니다.
+
+정부 프로그램 변경으로 인한 오류 발생으로 
+
+2.5~2.18 무통장 취소분에 대하여
+
+무통장 환급건이 지연되고 있습니다.
+
+해당 기관 문의 결과 2.27(화) 환급 예정이며
+
+2.19부터 발생되는 취소분은 정상적(취소후 15일 이내)으로 진행될 예정입니다.
+
+환급 건이 늦어지게 된 점 다시 한번 사과드립니다.
+
+죄송합니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1152,'notice',null,0,'2024년 물놀이장 운영공지','어린이 물놀이장은 여름해수욕장 개장 시기에 맞춰 2024.07.10~08.18까지 운영 합니다.
+
+운영시간은 11:00~18:00이며, 중간 1시간 용수 교체시간 있습니다.
+
+
+
+이용수칙 관련
+
+1. 입장시 워터슈즈만 착용가능합니다(크록스,슬리퍼X)
+
+2. 튜브,물총,비누방울 사용금지
+
+3. 물놀이장 주변 취식금지(주류 제외한 음료는 가능)
+
+4. 소중한 우리 자녀의 안전을 위해 성인 이용 자재 및 뛰어다니기 금지!!
+
+상기 사항 꼭 지켜주시고 안전한 물놀이를 위해 안전요원 지시에 따라주세요 
+
+많이 이용해 주시기 바랍니다
+
+
+
+※ 우천시 운영 중단 합니다. ',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1153,'notice',null,0,'시설보수로 인한 예약제한 운영 안내 ','『훼미리롯지동 지붕개량 보수공사』 관계로 인해 아래와 같이 시설이용이 제한되오니, 예약시 반드시 참고하시어 이용에 불편함 없으시기 바랍니다.
+
+아울러, 시설이용에 불편드려 죄송하며, 빠른시일내 보수공사를 마무리하여 좀더 나은 모습으로 찾아뵙도록 하겠습니다. 
+
+ 
+
+○ 예약중지기간 : 2017. 12. 4(월) ~ 2017. 12. 31(일), 총27일간
+
+○ 예약중지시설 : 훼미리롯지동 전체시설 
+
+
+
+기타 궁금한 사항은 033)539-3600~02 문의 주시기 바랍니다.',1,null,'admin',6,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1154,'notice',null,0,'[예약안내] 12월 캠핑장 지역주민 우선예약 안내','◆ 2024. 12. 1.(일) 14:00에 오픈하는 2024년 12월분 지역주민 우선예약과 관련하여 우선 예약 가능한 시설을 공지하오니,
+이용에 참고하시기 바랍니다.
+
+◆ 1n the 숲 캠핑장이 위치한 지역에 거주하시는 분들은 대기 없이 우선예약 가능합니다.
+
+☛ 지역주민 우선예약기간(11월분): 10. 1.(화) 14:00 ~ 10. 2.(수) 13:00
+
+○ 카라반(2대): 1, 2호
+
+○ 오토캠핑장(2개): 1, 2번 사이트
+
+○ 데크캠핑장(2개): 1, 2번 사이트
+
+
+※ 주말예약의 경우 경쟁률이 높은 상황입니다. 원하시는 날짜에 예약을 못 하시더라도 양해해주시기 바랍니다.
+
+※ <참고사항>
+○ 카라반 내 침구류는 구비되어 있으나, 숲속에 위치한 캠핑장 특성상 추울 수 있으니,
+여분의 이불이나 옷을 준비해 오시기 바랍니다.
+○ 문의: 1n the 숲 캠핑장 관리사무소 (053-133-1333)',1,null,'admin',6,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1156,'notice',null,0,'안전하고 즐거운 캠핑! 인더숲캠핑장과 함께해요!','인더숲캠핑장과 함께 캠핑 에티켓과 안전수칙에 대한 동영상입니다~!
+사전에 공부를 하고 준비해서 갈수록 캠핑은 더 안전하고 즐거워질 거에요
+모두들 캠핑장 에티켓과 안전수칙! 꼭 지켜주실꺼죠?
+그럼 우리 모두 달서별빛캠프 캠핑장에서 행복한 시간 보내길 바라요~',1,null,'admin',2,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1157,'notice',null,0,'2024년 인더숲캠핑장 이용만족도 설문조사 실시 안내','2024년 인더숲 캠핑장 이용만족도 설문조사 바로가기 >>>',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1158,'notice',null,0,'캠핑장 각종 벌레 해충 주의 요망 안내','우리 캠핑장은 산 속에 조성되어 각종 벌레, 산바퀴벌레 등 해충이 나타 날 수 있습니다. 
+
+포충기와 정기적 방역 중이나 산속에 근본적 해결은 어려운 상황 입니다.
+
+이점에 유의해 주시고 에프킬라, 모기향, 사전 준비해 캠핑을 즐겨주시기 바랍니다. ',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1160,'qna',null,0,'드라이기 있나요??','헤어드라이기 있는지 궁금해요!!',0,null,'user02',18,to_date('24/11/08','RR/MM/DD'),1263,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1161,'qna',null,0,'야외수영장은 몇 시에 오픈인가요','수영장 열리는 시간에 맞춰서 가려고요...',0,null,'user03',8,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1162,'qna',null,0,'휴무 있나요???','1월 1일에도 영업하나요??',0,null,'user04',4,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1163,'qna',null,1,'문의','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다.',0,null,'user05',9,to_date('24/11/08','RR/MM/DD'),1262,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1164,'qna',null,0,'1월 1일에 여나요','연다면 입실 시간 문의합니다.',0,null,'user01',2,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1165,'qna',null,0,'화장실 위치','어딘가요????',0,null,'user02',2,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1166,'qna',null,0,'텐트 브랜드 문의','대여용 텐트가 어디 브랜드인가요',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1167,'qna',null,0,'내년 2월 예약 미리 가능한가요','내년 예약 미리 하고 싶습니다...',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1168,'qna',null,1,'물어볼 게 있습니다','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다........',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1169,'qna',null,0,'크리스마스에는 영업하나요','연다면 입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1170,'qna',null,0,'매점 있을까요','어디 있나요?? 뭐 파는지 알 수 있나요',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1171,'qna',null,0,'가격 문의','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다........',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1172,'qna',null,0,'2025년 예약가능여부','내년 예약 미리 하고 싶습니다...',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1173,'notice',null,0,'해변 진출입로 공사안내','추암해변 진출입로 포장공사로 인하여 6.24.~6.25 양일간 캠핑장 출입시 불편이 예상되오니 참조하시기 바랍니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1175,'notice',null,0,'2024년 해돋이 행사 공지','▣ 추암해변 신년 해맞이 행사현황
+
+
+○ 일 시 : 2019.12.31(화) 18:00 ~ 2020.1.1(수) 09:00
+
+    - 해뜨는 시각 : 07:38분 예상
+
+○ 장 소 : 추암해변 광장일원
+
+○ 주요 행사내용
+
+    - 추암 케이크 트리 설치 : 1개소
+
+    - 파티오 난로 해변설치 운영
+
+    - 입체글자 조형물 포토존 설치
+
+    - 촛대바위 다리 구간 아트조명 설치
+
+    - 2020 새해 소망 기원판 운영 등',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1176,'notice',null,0,'캠핑장 온라인 예약 및 취소 방법 안내',' 첨부파일중 이미지미리보기',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1177,'notice',null,0,'코로나19관련 12/15 ~ 상황해제시 임시폐쇄 안내.','동해시 코로나19관련 다수 확진자 발생으로 인해 캠핑장 방역을 위해 12/15 ~ 상황해제시 임시 폐쇄하오니 양해바랍니다.
+
+방역지침에 따라 기간이 연장될 수 있음을 안내드립니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1178,'notice',null,0,'캠핑장 예약시간 공지사항','예약시간을 정오 12시로 바꾸는 과정에서 테스트 진행 결과 지속적으로 오류가 발생하고 있습니다.
+
+예약시간 변경 시 더 많은 혼란과 불편을 드릴 것으로 판단하여 앞으로 예약시간은 기존대로 매월 1일 24시에 열릴 예정입니다.
+
+이용에 불편을 드려 정말 죄송합니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1179,'notice',null,0,'캠핑장 홍보촬영 협조 안내','
+안녕하세요!
+
+전북 특별한 관광지 영상콘텐츠 홍보영상 제작을 위해 웅포캠핑장 내에서 홍보 영상 촬영 예정에 있습니다.
+
+촬영일시 : 11. 2. (토) 10 : 00 ~ 18 : 00
+촬영장소 : 웅포캠핑장, 웅포곰개나루길
+촬영내용 : 익산 홍보영상 스케치 및 드론(항공) 촬영',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1180,'notice',null,0,'무통장 환급 지연 안내','안녕하십니까
+
+망상 오토 캠핑 리조트 입니다.
+
+정부 프로그램 변경으로 인한 오류 발생으로 
+
+2.5~2.18 무통장 취소분에 대하여
+
+무통장 환급건이 지연되고 있습니다.
+
+해당 기관 문의 결과 2.27(화) 환급 예정이며
+
+2.19부터 발생되는 취소분은 정상적(취소후 15일 이내)으로 진행될 예정입니다.
+
+환급 건이 늦어지게 된 점 다시 한번 사과드립니다.
+
+죄송합니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1181,'notice',null,0,'2024년 물놀이장 운영공지','어린이 물놀이장은 여름해수욕장 개장 시기에 맞춰 2024.07.10~08.18까지 운영 합니다.
+
+운영시간은 11:00~18:00이며, 중간 1시간 용수 교체시간 있습니다.
+
+
+
+이용수칙 관련
+
+1. 입장시 워터슈즈만 착용가능합니다(크록스,슬리퍼X)
+
+2. 튜브,물총,비누방울 사용금지
+
+3. 물놀이장 주변 취식금지(주류 제외한 음료는 가능)
+
+4. 소중한 우리 자녀의 안전을 위해 성인 이용 자재 및 뛰어다니기 금지!!
+
+상기 사항 꼭 지켜주시고 안전한 물놀이를 위해 안전요원 지시에 따라주세요 
+
+많이 이용해 주시기 바랍니다
+
+
+
+※ 우천시 운영 중단 합니다. ',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1184,'notice',null,0,'◆2024년 11월분 캠핑장 사이트 예약안내(우선예약 등)◆','◆2024년 11월분 캠핑장 사이트 예약안내(우선예약 등)◆
+★ 달서구민(주민등록 주소지를 달서구에 둔 자) 우선예약이 가능합니다!(12. 1.(화) 14시부터) ★
+',0,null,'admin',8,to_date('24/11/08','RR/MM/DD'),0,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1186,'notice',null,0,'2024년 인더숲캠핑장 이용만족도 설문조사 실시 안내','2024년 인더숲 캠핑장 이용만족도 설문조사 바로가기 >>>',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1187,'notice',null,0,'캠핑장 각종 벌레 해충 주의 요망 안내','우리 캠핑장은 산 속에 조성되어 각종 벌레, 산바퀴벌레 등 해충이 나타 날 수 있습니다. 
+
+포충기와 정기적 방역 중이나 산속에 근본적 해결은 어려운 상황 입니다.
+
+이점에 유의해 주시고 에프킬라, 모기향, 사전 준비해 캠핑을 즐겨주시기 바랍니다. ',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1188,'qna',null,0,'입실 시간 언제인가요??','입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1189,'qna',null,0,'드라이기 있나요??','헤어드라이기 있는지 궁금해요',0,null,'user02',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1190,'qna',null,0,'야외수영장은 몇 시에 오픈인가요','수영장 열리는 시간에 맞춰서 가려고요...',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1191,'qna',null,0,'휴무 있나요???','1월 1일에도 영업하나요??',0,null,'user04',1,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1192,'qna',null,1,'문의','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다.',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1193,'qna',null,0,'1월 1일에 여나요','연다면 입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1194,'qna',null,0,'화장실 위치','어딘가요????',0,null,'user02',5,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1195,'qna',null,0,'텐트 브랜드 문의','대여용 텐트가 어디 브랜드인가요',0,null,'user03',1,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1196,'qna',null,0,'내년 2월 예약 미리 가능한가요','내년 예약 미리 하고 싶습니다...',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1197,'qna',null,1,'물어볼 게 있습니다','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다........',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1198,'qna',null,0,'크리스마스에는 영업하나요','연다면 입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1199,'qna',null,0,'매점 있을까요','어디 있나요?? 뭐 파는지 알 수 있나요',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1200,'qna',null,0,'가격 문의','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다........',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1201,'qna',null,0,'2025년 예약가능여부','내년 예약 미리 하고 싶습니다...',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1202,'notice',null,0,'해변 진출입로 공사안내','추암해변 진출입로 포장공사로 인하여 6.24.~6.25 양일간 캠핑장 출입시 불편이 예상되오니 참조하시기 바랍니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1204,'notice',null,0,'2024년 해돋이 행사 공지','▣ 추암해변 신년 해맞이 행사현황
+
+
+○ 일 시 : 2019.12.31(화) 18:00 ~ 2020.1.1(수) 09:00
+
+    - 해뜨는 시각 : 07:38분 예상
+
+○ 장 소 : 추암해변 광장일원
+
+○ 주요 행사내용
+
+    - 추암 케이크 트리 설치 : 1개소
+
+    - 파티오 난로 해변설치 운영
+
+    - 입체글자 조형물 포토존 설치
+
+    - 촛대바위 다리 구간 아트조명 설치
+
+    - 2020 새해 소망 기원판 운영 등',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1205,'notice',null,0,'캠핑장 온라인 예약 및 취소 방법 안내',' 첨부파일중 이미지미리보기',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1206,'notice',null,0,'코로나19관련 12/15 ~ 상황해제시 임시폐쇄 안내.','동해시 코로나19관련 다수 확진자 발생으로 인해 캠핑장 방역을 위해 12/15 ~ 상황해제시 임시 폐쇄하오니 양해바랍니다.
+
+방역지침에 따라 기간이 연장될 수 있음을 안내드립니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1207,'notice',null,0,'캠핑장 예약시간 공지사항','예약시간을 정오 12시로 바꾸는 과정에서 테스트 진행 결과 지속적으로 오류가 발생하고 있습니다.
+
+예약시간 변경 시 더 많은 혼란과 불편을 드릴 것으로 판단하여 앞으로 예약시간은 기존대로 매월 1일 24시에 열릴 예정입니다.
+
+이용에 불편을 드려 정말 죄송합니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1208,'notice',null,0,'캠핑장 홍보촬영 협조 안내','
+안녕하세요!
+
+전북 특별한 관광지 영상콘텐츠 홍보영상 제작을 위해 웅포캠핑장 내에서 홍보 영상 촬영 예정에 있습니다.
+
+촬영일시 : 11. 2. (토) 10 : 00 ~ 18 : 00
+촬영장소 : 웅포캠핑장, 웅포곰개나루길
+촬영내용 : 익산 홍보영상 스케치 및 드론(항공) 촬영',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1209,'notice',null,0,'무통장 환급 지연 안내','안녕하십니까
+
+망상 오토 캠핑 리조트 입니다.
+
+정부 프로그램 변경으로 인한 오류 발생으로 
+
+2.5~2.18 무통장 취소분에 대하여
+
+무통장 환급건이 지연되고 있습니다.
+
+해당 기관 문의 결과 2.27(화) 환급 예정이며
+
+2.19부터 발생되는 취소분은 정상적(취소후 15일 이내)으로 진행될 예정입니다.
+
+환급 건이 늦어지게 된 점 다시 한번 사과드립니다.
+
+죄송합니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1210,'notice',null,0,'2024년 물놀이장 운영공지','어린이 물놀이장은 여름해수욕장 개장 시기에 맞춰 2024.07.10~08.18까지 운영 합니다.
+
+운영시간은 11:00~18:00이며, 중간 1시간 용수 교체시간 있습니다.
+
+
+
+이용수칙 관련
+
+1. 입장시 워터슈즈만 착용가능합니다(크록스,슬리퍼X)
+
+2. 튜브,물총,비누방울 사용금지
+
+3. 물놀이장 주변 취식금지(주류 제외한 음료는 가능)
+
+4. 소중한 우리 자녀의 안전을 위해 성인 이용 자재 및 뛰어다니기 금지!!
+
+상기 사항 꼭 지켜주시고 안전한 물놀이를 위해 안전요원 지시에 따라주세요 
+
+많이 이용해 주시기 바랍니다
+
+
+
+※ 우천시 운영 중단 합니다. ',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1215,'notice',null,0,'2024년 인더숲캠핑장 이용만족도 설문조사 실시 안내','2024년 인더숲 캠핑장 이용만족도 설문조사 바로가기 >>>',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1216,'notice',null,0,'캠핑장 각종 벌레 해충 주의 요망 안내','우리 캠핑장은 산 속에 조성되어 각종 벌레, 산바퀴벌레 등 해충이 나타 날 수 있습니다. 
+
+포충기와 정기적 방역 중이나 산속에 근본적 해결은 어려운 상황 입니다.
+
+이점에 유의해 주시고 에프킬라, 모기향, 사전 준비해 캠핑을 즐겨주시기 바랍니다. ',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1217,'qna',null,0,'입실 시간 언제인가요??','입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1218,'qna',null,0,'드라이기 있나요??','헤어드라이기 있는지 궁금해요',0,null,'user02',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1219,'qna',null,0,'야외수영장은 몇 시에 오픈인가요','수영장 열리는 시간에 맞춰서 가려고요...',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1220,'qna',null,0,'휴무 있나요???','1월 1일에도 영업하나요??',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1221,'qna',null,1,'문의','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다.',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1222,'qna',null,0,'1월 1일에 여나요','연다면 입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1223,'qna',null,0,'화장실 위치','어딘가요????',0,null,'user02',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1224,'qna',null,0,'텐트 브랜드 문의','대여용 텐트가 어디 브랜드인가요',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1225,'qna',null,0,'내년 2월 예약 미리 가능한가요','내년 예약 미리 하고 싶습니다...',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1226,'qna',null,1,'물어볼 게 있습니다','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다........',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1227,'qna',null,0,'크리스마스에는 영업하나요','연다면 입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1228,'qna',null,0,'매점 있을까요','어디 있나요?? 뭐 파는지 알 수 있나요',0,null,'user03',1,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1229,'qna',null,0,'가격 문의','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다........',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1230,'qna',null,0,'2025년 예약가능여부','내년 예약 미리 하고 싶습니다...',0,null,'user04',1,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1231,'notice',null,0,'해변 진출입로 공사안내','추암해변 진출입로 포장공사로 인하여 6.24.~6.25 양일간 캠핑장 출입시 불편이 예상되오니 참조하시기 바랍니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1233,'notice',null,0,'2024년 해돋이 행사 공지','▣ 추암해변 신년 해맞이 행사현황
+
+
+○ 일 시 : 2019.12.31(화) 18:00 ~ 2020.1.1(수) 09:00
+
+    - 해뜨는 시각 : 07:38분 예상
+
+○ 장 소 : 추암해변 광장일원
+
+○ 주요 행사내용
+
+    - 추암 케이크 트리 설치 : 1개소
+
+    - 파티오 난로 해변설치 운영
+
+    - 입체글자 조형물 포토존 설치
+
+    - 촛대바위 다리 구간 아트조명 설치
+
+    - 2020 새해 소망 기원판 운영 등',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1234,'notice',null,0,'캠핑장 온라인 예약 및 취소 방법 안내',' 첨부파일중 이미지미리보기',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1235,'notice',null,0,'코로나19관련 12/15 ~ 상황해제시 임시폐쇄 안내.','동해시 코로나19관련 다수 확진자 발생으로 인해 캠핑장 방역을 위해 12/15 ~ 상황해제시 임시 폐쇄하오니 양해바랍니다.
+
+방역지침에 따라 기간이 연장될 수 있음을 안내드립니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1236,'notice',null,0,'캠핑장 예약시간 공지사항','예약시간을 정오 12시로 바꾸는 과정에서 테스트 진행 결과 지속적으로 오류가 발생하고 있습니다.
+
+예약시간 변경 시 더 많은 혼란과 불편을 드릴 것으로 판단하여 앞으로 예약시간은 기존대로 매월 1일 24시에 열릴 예정입니다.
+
+이용에 불편을 드려 정말 죄송합니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1237,'notice',null,0,'캠핑장 홍보촬영 협조 안내','
+안녕하세요!
+
+전북 특별한 관광지 영상콘텐츠 홍보영상 제작을 위해 웅포캠핑장 내에서 홍보 영상 촬영 예정에 있습니다.
+
+촬영일시 : 11. 2. (토) 10 : 00 ~ 18 : 00
+촬영장소 : 웅포캠핑장, 웅포곰개나루길
+촬영내용 : 익산 홍보영상 스케치 및 드론(항공) 촬영',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1238,'notice',null,0,'무통장 환급 지연 안내','안녕하십니까
+
+망상 오토 캠핑 리조트 입니다.
+
+정부 프로그램 변경으로 인한 오류 발생으로 
+
+2.5~2.18 무통장 취소분에 대하여
+
+무통장 환급건이 지연되고 있습니다.
+
+해당 기관 문의 결과 2.27(화) 환급 예정이며
+
+2.19부터 발생되는 취소분은 정상적(취소후 15일 이내)으로 진행될 예정입니다.
+
+환급 건이 늦어지게 된 점 다시 한번 사과드립니다.
+
+죄송합니다.',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1239,'notice',null,0,'2024년 물놀이장 운영공지','어린이 물놀이장은 여름해수욕장 개장 시기에 맞춰 2024.07.10~08.18까지 운영 합니다.
+
+운영시간은 11:00~18:00이며, 중간 1시간 용수 교체시간 있습니다.
+
+
+
+이용수칙 관련
+
+1. 입장시 워터슈즈만 착용가능합니다(크록스,슬리퍼X)
+
+2. 튜브,물총,비누방울 사용금지
+
+3. 물놀이장 주변 취식금지(주류 제외한 음료는 가능)
+
+4. 소중한 우리 자녀의 안전을 위해 성인 이용 자재 및 뛰어다니기 금지!!
+
+상기 사항 꼭 지켜주시고 안전한 물놀이를 위해 안전요원 지시에 따라주세요 
+
+많이 이용해 주시기 바랍니다
+
+
+
+※ 우천시 운영 중단 합니다. ',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1244,'notice',null,0,'2024년 인더숲캠핑장 이용만족도 설문조사 실시 안내','2024년 인더숲 캠핑장 이용만족도 설문조사 바로가기 >>>',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1245,'notice',null,0,'캠핑장 각종 벌레 해충 주의 요망 안내','우리 캠핑장은 산 속에 조성되어 각종 벌레, 산바퀴벌레 등 해충이 나타 날 수 있습니다. 
+
+포충기와 정기적 방역 중이나 산속에 근본적 해결은 어려운 상황 입니다.
+
+이점에 유의해 주시고 에프킬라, 모기향, 사전 준비해 캠핑을 즐겨주시기 바랍니다. ',0,null,'admin',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1246,'qna',null,0,'입실 시간 언제인가요??','입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1247,'qna',null,0,'드라이기 있나요??','헤어드라이기 있는지 궁금해요',0,null,'user02',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1248,'qna',null,0,'야외수영장은 몇 시에 오픈인가요','수영장 열리는 시간에 맞춰서 가려고요...',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1249,'qna',null,0,'휴무 있나요???','1월 1일에도 영업하나요??',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1250,'qna',null,1,'문의','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다.',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1251,'qna',null,0,'1월 1일에 여나요','연다면 입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1252,'qna',null,0,'화장실 위치','어딘가요????',0,null,'user02',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1253,'qna',null,0,'텐트 브랜드 문의','대여용 텐트가 어디 브랜드인가요',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1254,'qna',null,0,'내년 2월 예약 미리 가능한가요','내년 예약 미리 하고 싶습니다...',0,null,'user04',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1255,'qna',null,1,'물어볼 게 있습니다','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다........',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1256,'qna',null,0,'크리스마스에는 영업하나요','연다면 입실 시간 문의합니다.',0,null,'user01',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1257,'qna',null,0,'매점 있을까요','어디 있나요?? 뭐 파는지 알 수 있나요',0,null,'user03',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1258,'qna',null,0,'가격 문의','혹시 가격 깎아주실 수 있나요?....
+
+        안 되면 죄송합니다........',0,null,'user05',0,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1259,'qna',null,0,'2025년 예약가능여부','내년 예약 미리 하고 싶습니다...',0,null,'user04',1,to_date('24/11/08','RR/MM/DD'),null,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1260,'review',null,0,'자연 속 힐링, 최고의 캠핑 경험이었습니다!','이번 주말 가족들과 함께 캠핑장을 다녀왔습니다. 도심을 벗어나 맑은 공기와 푸른 숲 속에서 여유로운 시간을 보낼 수 있어서 정말 힐링이 되었어요. 시설도 청결하고 잘 관리되어 있어 편리하게 이용할 수 있었습니다. 특히 밤하늘에 쏟아지는 별들을 보며 모닥불을 피우니, 일상에서 쌓였던 스트레스가 모두 날아가는 느낌이었어요!
+
+캠핑장 직원분들도 친절하게 안내해 주셔서 감사했습니다. 다음에 기회가 된다면 친구들과 함께 또 오고 싶습니다. 강력 추천합니다!',0,null,'user02',21,to_date('24/11/08','RR/MM/DD'),0,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1261,'notice',null,0,'10월 20일 호우주의보/태풍주의보 관련 캠핑장 이용 안내','10월 20일 현재 동해시 호우주의보, 강풍o 태풍주의보 : 남해동부먼바다, 동해남부북쪽먼바다, 동해남부남쪽먼바다
+o 강풍주의보 : 울릉도.독도, 울산, 부산, 경상남도(거제), 경상북도(경북북동산지, 울진평지, 경주, 포항, 영덕), 강원도(강원북부산지, 강원중부산지, 강원남부산지, 삼척평지, 동해평지, 강릉평지, 양양평지, 고성평지, 속초평지, 태백)
+o 풍랑주의보 : 제주도남쪽먼바다, 남해동부앞바다(거제시동부앞바다, 부산앞바다), 동해중부전해상, 동해남부앞바다
+
+캠핑장 이용에 주의 바랍니다.!',0,null,'admin',4,to_date('24/11/08','RR/MM/DD'),0,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1270,'reply',null,0,'└ [RE] : 문의','절대 안 됩니다.!',0,null,'admin',10,to_date('24/11/08','RR/MM/DD'),1163,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1272,'reply',null,0,'└ [RE] : 매점 있을까요','간단한 과자와 마시멜로, 음료수, 생수 판매중입니다~!',0,null,'admin',2,to_date('24/11/08','RR/MM/DD'),1228,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1271,'reply',null,0,'└ [RE] : 야외수영장은 몇 시에 오픈인가요','동절기라 영업하지 않으려 합니다....!',0,null,'admin',18,to_date('24/11/08','RR/MM/DD'),1161,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1273,'reply',null,0,'└ [RE] : 화장실 위치','안쪽으로 가시면 됩니다',0,null,'admin',3,to_date('24/11/08','RR/MM/DD'),1194,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1274,'qna',null,1,'반려동물 동반 가능 여부 문의드립니다.','안녕하세요. 캠핑장 이용 시 반려동물과 함께 방문할 계획인데, 반려동물 동반이 가능한지 문의드립니다. 가능하다면 몇 가지 추가 질문이 있습니다.
+
+반려동물과 동반 가능한 사이트가 따로 지정되어 있나요?
+반려동물을 위한 편의 시설이 있는지 궁금합니다.
+반려동물 동반 시 주의사항이나 추가 비용이 발생하는지 알려주시면 감사하겠습니다.
+답변 주시면 예약에 참고하겠습니다. 좋은 하루 보내세요! 감사합니다.',0,null,'user02',7,to_date('24/11/08','RR/MM/DD'),0,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1282,'reply',null,0,'└ [RE] : 드라이기 있나요??','아쉽지만 없네요ㅠㅠ',0,null,'admin',4,to_date('24/11/08','RR/MM/DD'),1160,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1276,'reply',null,1,'└ [RE] : 반려동물 동반 가능 여부 문의드립니다.','동반 가능합니다',0,null,'admin',7,to_date('24/11/08','RR/MM/DD'),1274,'1234');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1283,'review','114',0,'좋아요','정말 행복합니다.',0,null,'user02',3,to_date('24/11/08','RR/MM/DD'),0,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1285,'reply',null,0,'└ [RE] : 화장실 위치','안으로 들어가세요!!!!!!',0,null,'admin',3,to_date('24/11/08','RR/MM/DD'),1165,'0');
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (1286,'qna',null,1,'문의','문의입니다!!!',0,'coffee.jpg','admin',1,to_date('24/11/08','RR/MM/DD'),0,'0000');
 REM INSERTING into JAVA.BOARDS
 SET DEFINE OFF;
 Insert into JAVA.BOARDS (BNO,BTITLE,CONTENT,BWRITER,BDATE) values (1,'추운날','날이춥다','글쓴이1',to_date('24/10/04','RR/MM/DD'));
@@ -406,13 +1298,13 @@ Insert into JAVA.EMPLOYEE (EMPLOYEE_ID,EMPLOYEE_NAME,PHONE,HIRE_DATE,SALARY) val
 Insert into JAVA.EMPLOYEE (EMPLOYEE_ID,EMPLOYEE_NAME,PHONE,HIRE_DATE,SALARY) values ('2','2','2',to_date('24/10/01','RR/MM/DD'),'100');
 REM INSERTING into JAVA.MEMBER
 SET DEFINE OFF;
-Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION) values ('admin101','101','kim_sazang','daegu','master@gmail.com','010-1234-1234',to_date('24/10/30','RR/MM/DD'),'admin');
-Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION) values ('mid901','901','kim_hama','daegu','hippo@gmail.com','010-1122-3030',to_date('24/10/30','RR/MM/DD'),'user');
-Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION) values ('mid902','902','kim_girin','daegu','giraffe@gmail.com','010-2255-5544',to_date('24/10/30','RR/MM/DD'),'user');
-Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION) values ('mid903','903','kim_tokki','busan','rabbit@gmail.com','010-3375-4242',to_date('24/10/30','RR/MM/DD'),'user');
-Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION) values ('mid904','904','kang_azi','daejeon','dog@gmail.com','010-4487-5784',to_date('24/10/30','RR/MM/DD'),'user');
-Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION) values ('mid905','905','park_sasum','ulsan','deer@gmail.com','010-5578-3512',to_date('24/10/30','RR/MM/DD'),'user');
-Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION) values ('mid906','906','kwon_goyang','seoul','cat@gmail.com','010-6688-5447',to_date('24/10/30','RR/MM/DD'),'user');
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('admin','0000','관리자','41935|대구 중구 남일동 135-1|5층 예담직업전문학교','admin@yedam.ac','010-1234-5678',to_date('24/11/08','RR/MM/DD'),'admin',0);
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('user01','0000','홍길동','41937|대구 중구 동성로 7|태왕아파트 204동 1005호','hongs@gmail.com','010-4578-1244',to_date('24/11/08','RR/MM/DD'),'user',0);
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('user02','0000','이민박','06034|서울 강남구 가로수길 23|롯데캐슬 401동 1204호','minpark@gmail.com','010-4572-4622',to_date('24/11/08','RR/MM/DD'),'user',0);
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('user03','0000','김미니','63534|제주특별자치도 서귀포시 가가로 25|미니아파트101동781호','mini@naver.com','010-4741-1655',to_date('24/11/08','RR/MM/DD'),'user',0);
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('user04','0000','이주리','62404|광주 광산구 가마길 21|푸르지오 401동 1503호','jurie123@hanmail.net','010-6758-1369',to_date('24/11/08','RR/MM/DD'),'user',0);
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('user05','0000','강유인','25511|강원특별자치도 강릉시 가작로 16-1|힐스테이트 407동 2004호','yunin456@naver.com','010-7456-2451',to_date('24/11/08','RR/MM/DD'),'user',0);
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('user','0000','홍길동','41806|대구 서구 큰장로25길 6-10|태스트','leadon@daum.net','010-5412-4574',to_date('24/11/08','RR/MM/DD'),'user',1);
 REM INSERTING into JAVA.PRODUCT_TBL
 SET DEFINE OFF;
 Insert into JAVA.PRODUCT_TBL (PRD_CODE,PRD_NAME,PRD_DESC,ORIGIN_PRICE,SALE_PRICE,STAR_POINT,PROD_IMAGE,CREATION_DATE) values ('P001','과테말라 안티구아','아주 맛있는 과테말라 안티구아 입니다',3000,2500,5,'과테말라 안티구아.jpg',to_date('24/10/30','RR/MM/DD'));
@@ -423,48 +1315,299 @@ Insert into JAVA.PRODUCT_TBL (PRD_CODE,PRD_NAME,PRD_DESC,ORIGIN_PRICE,SALE_PRICE
 Insert into JAVA.PRODUCT_TBL (PRD_CODE,PRD_NAME,PRD_DESC,ORIGIN_PRICE,SALE_PRICE,STAR_POINT,PROD_IMAGE,CREATION_DATE) values ('P006','코스타리카 따라주','아주 맛있는 코스타리카 따라주 입니다',4500,3200,3,'코스타리카 따라주.jpg',to_date('24/10/30','RR/MM/DD'));
 REM INSERTING into JAVA.SITE
 SET DEFINE OFF;
-Insert into JAVA.SITE (SITE_NO,SITE_NAME,CATEGORY,SITE_MAX,SITE_PRICE,USE_FLAG) values (1001,'카라반1','caravan',4,100000,'y');
+Insert into JAVA.SITE (SITE_NO,SITE_NAME,CATEGORY,SITE_MAX,SITE_PRICE,USE_FLAG) values (1001,'카라반1','caravan',4,100000,'n');
 Insert into JAVA.SITE (SITE_NO,SITE_NAME,CATEGORY,SITE_MAX,SITE_PRICE,USE_FLAG) values (1002,'카라반2','caravan',4,100000,'n');
 Insert into JAVA.SITE (SITE_NO,SITE_NAME,CATEGORY,SITE_MAX,SITE_PRICE,USE_FLAG) values (1003,'오토1','auto',2,50000,'y');
-Insert into JAVA.SITE (SITE_NO,SITE_NAME,CATEGORY,SITE_MAX,SITE_PRICE,USE_FLAG) values (1004,'오토2','auto',2,50000,'n');
+Insert into JAVA.SITE (SITE_NO,SITE_NAME,CATEGORY,SITE_MAX,SITE_PRICE,USE_FLAG) values (1004,'오토2','auto',2,50000,'y');
 Insert into JAVA.SITE (SITE_NO,SITE_NAME,CATEGORY,SITE_MAX,SITE_PRICE,USE_FLAG) values (1005,'데크1','deck',2,25000,'y');
-Insert into JAVA.SITE (SITE_NO,SITE_NAME,CATEGORY,SITE_MAX,SITE_PRICE,USE_FLAG) values (1006,'데크2','deck',2,25000,'n');
+Insert into JAVA.SITE (SITE_NO,SITE_NAME,CATEGORY,SITE_MAX,SITE_PRICE,USE_FLAG) values (1006,'데크2','deck',2,25000,'y');
 REM INSERTING into JAVA.SITE_BOOK
 SET DEFINE OFF;
-Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (2001,'mid901',1001,3,'2024/10/10 13:00:00','2024/10/11 10:00:00','대구31 가1010',150000,1,0,to_date('24/10/30','RR/MM/DD'));
-Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (2002,'mid902',1002,1,'2024/10/10 13:00:00','2024/10/11 10:00:00','대구57 나9875',150000,1,0,to_date('24/10/30','RR/MM/DD'));
-Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (2003,'mid903',1001,2,'2024/10/11 13:00:00','2024/10/12 10:00:00','부산31 가5050',58000,1,0,to_date('24/10/30','RR/MM/DD'));
-Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (2004,'mid904',1005,1,'2024/10/11 13:00:00','2024/10/13 10:00:00','대구31 가1010',70000,0,0,to_date('24/10/30','RR/MM/DD'));
-Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (2005,'mid905',1005,2,'2024/10/14 13:00:00','2024/10/15 10:00:00','대구31 가1010',30000,0,0,to_date('24/10/30','RR/MM/DD'));
-Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (2006,'mid906',1006,2,'2024/10/16 13:00:00','2024/10/17 10:00:00','대구31 가1010',35000,0,1,to_date('24/10/30','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (115,'user01',1006,2,'2024/10/14','2024/10/16','18나 6604',187000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (116,'user01',1006,2,'2024/11/21','2024/11/25','18나 6604',187000,0,1,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (117,'user02',1004,2,'2024/11/12','2024/11/14',null,65000,0,1,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (118,'user02',1004,2,'2024/11/24','2024/11/25','12가 3456',91000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (119,'user05',1005,2,'2024/11/08','2024/11/10',null,155000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (120,'user02',1002,4,'2024/11/28','2024/12/01',null,286000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (121,'user04',1003,2,'2024/11/18','2024/11/21',null,185000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (122,'user04',1001,4,'2024/11/27','2024/11/29','34나 5678',170000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (123,'user03',1003,2,'2024/11/28','2024/11/30',null,152000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (124,'user05',1005,2,'2025/01/23','2025/01/24',null,44000,0,1,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (125,'user05',1001,4,'2025/01/10','2025/01/11',null,109000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (126,'user05',1004,2,'2025/04/10','2025/04/11',null,180000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (127,'user05',1005,2,'2025/04/12','2025/04/13',null,127000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (128,'user05',1001,4,'2025/05/10','2025/05/11',null,286000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (129,'user05',1005,2,'2025/07/21','2025/07/22',null,85000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (130,'user05',1005,2,'2025/01/01','2025/01/02',null,136000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (131,'user05',1003,2,'2025/04/17','2025/04/18',null,82000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (132,'user05',1001,4,'2025/02/17','2025/02/18',null,170000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (133,'user05',1006,2,'2025/02/21','2025/02/22',null,62000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (114,'user02',1001,3,'2024/10/10 13:00:00','2024/10/11 10:00:00','대구31 가1712',150000,0,0,to_date('24/10/30','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (134,'user05',1001,4,'2024/11/08','2024/11/09',null,137000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (135,'user05',1005,2,'2024/11/14','2024/11/15',null,34000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (136,'user01',1004,2,'2024/11/15','2024/11/16',null,120000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (137,'user05',1003,2,'2025/02/10','2025/02/11',null,50000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (138,'user05',1001,4,'2025/04/12','2025/04/13',null,100000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (139,'user05',1005,2,'2025/04/30','2025/05/01',null,25000,0,1,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (140,'user05',1001,4,'2025/04/14','2025/04/15',null,110000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (141,'user05',1005,2,'2025/04/21','2025/04/22',null,104000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (142,'user05',1003,2,'2025/04/15','2025/04/16',null,55000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (143,'user05',1005,2,'2025/04/04','2025/04/05',null,66000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (144,'user05',1004,2,'2025/04/18','2025/04/20',null,91000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (145,'user05',1003,2,'2025/04/12','2025/04/13',null,60000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (146,'user05',1002,4,'2025/04/17','2025/04/19',null,160000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (147,'user05',1005,2,'2025/04/13','2025/04/14',null,57000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (148,'user05',1006,2,'2025/04/17','2025/04/18',null,95000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (149,'user05',1006,2,'2025/04/12','2025/04/13',null,30000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (150,'user05',1006,2,'2025/04/13','2025/04/14',null,25000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (151,'user05',1006,2,'2025/04/27','2025/04/28',null,25000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (152,'user05',1003,2,'2025/04/21','2025/04/22',null,129000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (153,'user05',1001,4,'2025/04/16','2025/04/17',null,115000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (154,'user05',1004,2,'2025/04/03','2025/04/04',null,60000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (155,'user05',1005,2,'2025/04/05','2025/04/06',null,95000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (156,'user05',1006,2,'2025/04/06','2025/04/07',null,85000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (157,'user05',1006,2,'2025/04/16','2025/04/17',null,57000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (158,'user05',1003,2,'2025/04/01','2025/04/02',null,60000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (159,'user05',1005,2,'2025/04/01','2025/04/02',null,30000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (160,'user05',1001,4,'2025/04/09','2025/04/10',null,105000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (161,'user05',1006,2,'2025/04/02','2025/04/03',null,35000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (162,'user05',1004,2,'2025/04/02','2025/04/03',null,60000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (163,'user05',1002,4,'2025/04/16','2025/04/17',null,100000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (164,'user05',1002,4,'2025/04/01','2025/04/02',null,100000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (165,'user05',1003,2,'2025/04/08','2025/04/09',null,60000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (166,'user05',1004,2,'2025/04/07','2025/04/08',null,50000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (167,'user05',1004,2,'2025/04/06','2025/04/07',null,50000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (168,'user05',1005,2,'2025/04/16','2025/04/17',null,35000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (169,'user05',1002,4,'2025/04/07','2025/04/08',null,119000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (170,'user05',1003,2,'2025/04/11','2025/04/12',null,55000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (171,'user05',1004,2,'2025/04/15','2025/04/17',null,55000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (172,'user05',1003,2,'2025/04/22','2025/04/23',null,55000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (173,'user05',1006,2,'2025/04/01','2025/04/02',null,57000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (174,'user05',1002,4,'2025/04/02','2025/04/03',null,109000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (175,'user05',1004,2,'2025/04/04','2025/04/05',null,110000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (176,'user05',1006,2,'2025/04/05','2025/04/06',null,35000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (177,'user05',1001,4,'2025/04/24','2025/04/25',null,137000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (178,'user05',1002,4,'2025/04/23','2025/04/27',null,179000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (179,'user05',1003,2,'2025/04/16','2025/04/17',null,55000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (180,'user05',1003,2,'2025/04/13','2025/04/14',null,60000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (181,'user05',1006,2,'2025/04/22','2025/04/23',null,40000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (182,'user05',1004,2,'2025/04/14','2025/04/15',null,129000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (183,'user05',1005,2,'2025/04/15','2025/04/16',null,72000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (184,'user05',1006,2,'2025/04/03','2025/04/04',null,104000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (185,'user05',1005,2,'2025/04/10','2025/04/11',null,95000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (186,'user05',1001,4,'2025/04/07','2025/04/08',null,179000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (187,'user05',1005,2,'2025/04/07','2025/04/08',null,57000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (188,'user05',1003,2,'2025/04/06','2025/04/07',null,180000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (189,'user05',1004,2,'2025/04/13','2025/04/14',null,180000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (190,'user05',1002,4,'2025/04/03','2025/04/04',null,109000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (191,'user05',1001,4,'2025/04/17','2025/04/18',null,100000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (192,'user05',1003,2,'2025/04/05','2025/04/06',null,50000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (193,'user05',1006,2,'2025/04/04','2025/04/05',null,25000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (194,'user05',1001,4,'2025/04/06','2025/04/07',null,141000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (195,'user05',1005,2,'2025/04/24','2025/04/25',null,25000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (196,'user05',1006,2,'2025/04/21','2025/04/22',null,25000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (197,'user05',1006,2,'2025/04/23','2025/04/24',null,25000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (198,'user05',1005,2,'2025/04/17','2025/04/18',null,25000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (199,'user05',1005,2,'2025/04/19','2025/04/20',null,85000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (200,'user05',1003,2,'2025/04/19','2025/04/20',null,82000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (201,'user05',1001,4,'2025/04/15','2025/04/16',null,179000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (202,'user05',1006,2,'2025/04/15','2025/04/16',null,34000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (203,'user05',1002,4,'2025/04/15','2025/04/16',null,160000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (204,'user05',1005,2,'2025/04/20','2025/04/21',null,30000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (205,'user05',1001,4,'2025/04/11','2025/04/12',null,100000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (206,'user05',1006,2,'2025/04/19','2025/04/20',null,25000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (207,'user05',1003,2,'2025/04/25','2025/04/26',null,50000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (208,'user05',1004,2,'2025/04/08','2025/04/09',null,50000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (209,'user05',1001,4,'2025/04/13','2025/04/14',null,105000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (210,'user05',1003,2,'2025/04/27','2025/04/28',null,129000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (211,'user05',1006,2,'2025/04/24','2025/04/25',null,35000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (212,'user05',1003,2,'2025/04/20','2025/04/21',null,120000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (213,'user05',1003,2,'2025/04/14','2025/04/15',null,50000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (214,'user05',1006,2,'2025/04/07','2025/04/08',null,25000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (215,'user05',1001,4,'2025/04/25','2025/04/26',null,132000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (216,'user05',1002,4,'2025/04/21','2025/04/22',null,109000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (217,'user05',1004,2,'2025/04/27','2025/04/28',null,59000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (218,'user05',1006,2,'2025/04/29','2025/04/30',null,85000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (219,'user05',1003,2,'2025/04/24','2025/04/25',null,55000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (220,'user05',1006,2,'2025/04/26','2025/04/27',null,25000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (221,'user05',1001,4,'2025/04/21','2025/04/22',null,132000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (222,'user05',1005,2,'2025/04/23','2025/04/24',null,25000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (223,'user05',1004,2,'2025/04/05','2025/04/06',null,120000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (224,'user05',1003,2,'2025/04/28','2025/04/29',null,55000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (225,'user05',1006,2,'2025/04/20','2025/04/21',null,25000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (226,'user05',1003,2,'2025/04/26','2025/04/27',null,50000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (227,'user04',1004,2,'2025/04/23','2025/04/24',null,55000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (228,'user04',1004,2,'2025/04/28','2025/04/29',null,60000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (229,'user04',1003,2,'2025/04/23','2025/04/24',null,55000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (230,'user04',1002,4,'2025/04/12','2025/04/13',null,100000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (231,'user04',1005,2,'2025/04/14','2025/04/15',null,30000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (232,'user04',1003,2,'2025/04/29','2025/04/30',null,82000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (233,'user04',1001,4,'2025/04/05','2025/04/06',null,100000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (234,'user04',1002,4,'2025/04/05','2025/04/06',null,160000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (235,'user04',1002,4,'2025/04/14','2025/04/15',null,109000,0,0,to_date('24/11/08','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (236,'user01',1001,4,'2024/11/26','2024/11/27',null,151000,0,0,to_date('24/11/08','RR/MM/DD'));
 REM INSERTING into JAVA.SITE_BOOK_OPTION
 SET DEFINE OFF;
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,2001,'mid901',50000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,2002,'mid902',50000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,2003,'mid903',8000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,2004,'mid904',20000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,2005,'mid905',5000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,2006,'mid906',10000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,2001,'mid901',50000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,2002,'mid902',50000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,2003,'mid903',8000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,2004,'mid904',20000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,2005,'mid905',5000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,2006,'mid906',10000);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,114,'gihwan',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,115,'user01',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,115,'user01',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,115,'user01',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,116,'user01',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,116,'user01',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,116,'user01',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,117,'user02',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,117,'user02',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,118,'user02',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,118,'user02',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,119,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,119,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,120,'user02',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,120,'user02',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,120,'user02',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,120,'user02',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,120,'user02',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,120,'user02',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,121,'user04',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,121,'user04',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,121,'user04',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,122,'user04',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,123,'user03',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,123,'user03',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,123,'user03',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,124,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,124,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,125,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,126,'user05',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,126,'user05',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,127,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,127,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,128,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,128,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,128,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,128,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,128,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,128,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,129,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,130,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,130,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,130,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,131,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,132,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,133,'user05',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,133,'user05',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,134,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,134,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,135,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,136,'user01',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,140,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,141,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,141,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,142,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,113,'gihwan',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,114,'gihwan',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,143,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,143,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,144,'user05',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,144,'user05',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,145,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,146,'user05',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,147,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,148,'user05',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,149,'user05',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,152,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,152,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,153,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,153,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,154,'user05',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,155,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,156,'user05',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,157,'user05',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,158,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,159,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,160,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,161,'user05',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,162,'user05',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,165,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,168,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,169,'user05',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,169,'user05',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,170,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,171,'user05',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,172,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,173,'user05',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,174,'user05',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,175,'user05',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,176,'user05',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,177,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,177,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,178,'user05',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,178,'user05',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,179,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,180,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,181,'user05',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,181,'user05',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,182,'user05',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,182,'user05',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,183,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,183,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,183,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,184,'user05',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,184,'user05',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,185,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,186,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,186,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,187,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,188,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,188,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,189,'user05',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,189,'user05',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,190,'user05',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,194,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,194,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,199,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,200,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,201,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,201,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,202,'user05',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,203,'user05',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,204,'user05',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,209,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,210,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,210,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,211,'user05',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,212,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,215,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,216,'user05',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,217,'user05',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,218,'user05',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,219,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,221,'user05',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,223,'user05',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,224,'user05',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,227,'user04',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,228,'user04',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,229,'user04',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,231,'user04',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,232,'user04',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,234,'user04',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,235,'user04',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,236,'user01',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,236,'user01',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,236,'user01',1001);
 REM INSERTING into JAVA.SITE_OPTION
 SET DEFINE OFF;
-Insert into JAVA.SITE_OPTION (OPTION_NO,OPTION_NAME,OPTION_PRICE) values (101,'바베큐',50000);
-Insert into JAVA.SITE_OPTION (OPTION_NO,OPTION_NAME,OPTION_PRICE) values (102,'캠프파이어',50000);
+Insert into JAVA.SITE_OPTION (OPTION_NO,OPTION_NAME,OPTION_PRICE) values (101,'바베큐',20000);
+Insert into JAVA.SITE_OPTION (OPTION_NO,OPTION_NAME,OPTION_PRICE) values (102,'캠프파이어',70000);
 Insert into JAVA.SITE_OPTION (OPTION_NO,OPTION_NAME,OPTION_PRICE) values (103,'튜브',8000);
-Insert into JAVA.SITE_OPTION (OPTION_NO,OPTION_NAME,OPTION_PRICE) values (104,'텐트',20000);
-Insert into JAVA.SITE_OPTION (OPTION_NO,OPTION_NAME,OPTION_PRICE) values (105,'보드게임',5000);
+Insert into JAVA.SITE_OPTION (OPTION_NO,OPTION_NAME,OPTION_PRICE) values (104,'텐트',50000);
+Insert into JAVA.SITE_OPTION (OPTION_NO,OPTION_NAME,OPTION_PRICE) values (105,'보드게임',8000);
 Insert into JAVA.SITE_OPTION (OPTION_NO,OPTION_NAME,OPTION_PRICE) values (106,'유아침구',10000);
 REM INSERTING into JAVA.TBL_BOARD
 SET DEFINE OFF;
 Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (100,'점심','점심내용','test2',0,to_date('24/10/18','RR/MM/DD'),to_date('24/10/18','RR/MM/DD'),null);
 Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (101,'test[수정]','test[수정]','user03',0,to_date('24/10/18','RR/MM/DD'),to_date('24/10/18','RR/MM/DD'),null);
 Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (134,'dd익히기','내용입니다','test999',0,to_date('24/10/18','RR/MM/DD'),to_date('24/10/18','RR/MM/DD'),null);
-Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (6,'점심','점심내용','test2',8,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (6,'점심','점심내용','test2',9,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
 Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (7,'test[수정]','test[수정]','user03',4,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
 Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (8,'dd','dd','test9999',3,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
 Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (10,'게시글테스트[수정]>>>','글내용입니다[수정]','user03',7,to_date('24/10/17','RR/MM/DD'),to_date('24/10/18','RR/MM/DD'),null);
@@ -2361,7 +3504,7 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
 --------------------------------------------------------
 
   ALTER TABLE "JAVA"."EMPLOYEE" ADD PRIMARY KEY ("EMPLOYEE_ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
@@ -2371,7 +3514,7 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
 --------------------------------------------------------
 
   ALTER TABLE "JAVA"."TBL_CONSULT" ADD PRIMARY KEY ("CONS_ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
@@ -2383,7 +3526,7 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
 --------------------------------------------------------
 
   ALTER TABLE "JAVA"."BOARDS" ADD PRIMARY KEY ("BNO")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
@@ -2395,7 +3538,7 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
 --------------------------------------------------------
 
   ALTER TABLE "JAVA"."TBL_MEMBER" ADD PRIMARY KEY ("MEMBER_ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
@@ -2406,7 +3549,7 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
 --------------------------------------------------------
 
   ALTER TABLE "JAVA"."PRODUCT_TBL" ADD PRIMARY KEY ("PRD_CODE")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
@@ -2417,7 +3560,7 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
 --------------------------------------------------------
 
   ALTER TABLE "JAVA"."MEMBER" ADD PRIMARY KEY ("MEMBER_ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
@@ -2431,7 +3574,7 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
 --------------------------------------------------------
 
   ALTER TABLE "JAVA"."SITE_OPTION" ADD PRIMARY KEY ("OPTION_NO")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
@@ -2440,7 +3583,7 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
 --------------------------------------------------------
 
   ALTER TABLE "JAVA"."SITE_BOOK" ADD PRIMARY KEY ("BOOK_NO")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
@@ -2455,7 +3598,7 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
 --------------------------------------------------------
 
   ALTER TABLE "JAVA"."BOARD" ADD PRIMARY KEY ("BOARD_NO")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
@@ -2467,7 +3610,7 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
 --------------------------------------------------------
 
   ALTER TABLE "JAVA"."SITE" ADD PRIMARY KEY ("SITE_NO")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
@@ -2486,7 +3629,7 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
 --------------------------------------------------------
 
   ALTER TABLE "JAVA"."TBL_STORAGE" ADD PRIMARY KEY ("STO_TYPE")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
@@ -2499,7 +3642,7 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
 --------------------------------------------------------
 
   ALTER TABLE "JAVA"."TBL_BOARD" ADD PRIMARY KEY ("BOARD_NO")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
@@ -2511,7 +3654,7 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
 --------------------------------------------------------
 
   ALTER TABLE "JAVA"."TBL_BUY_LIST" ADD PRIMARY KEY ("LIST_NAME")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
@@ -2534,7 +3677,7 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
 --------------------------------------------------------
 
   ALTER TABLE "JAVA"."TBL_CARE_LIST" ADD PRIMARY KEY ("CARE_NO")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
@@ -2545,7 +3688,7 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
 --------------------------------------------------------
 
   ALTER TABLE "JAVA"."TBL_PERSON" ADD PRIMARY KEY ("P_ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
@@ -2577,131 +3720,3 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
 
   ALTER TABLE "JAVA"."TBL_CONSULT" ADD CONSTRAINT "FK" FOREIGN KEY ("P_ID")
 	  REFERENCES "JAVA"."TBL_PERSON" ("P_ID") ON DELETE SET NULL ENABLE;
-
-
-
-
-
-
--- 내가 수정한 것들
-
-select * 
-from site;
-
-select * 
-from site_book;
-
-select * 
-from site_book_option;
-
-select *
-from site_option;
-
-select * 
-from member;
-
-select * 
-from board;
-
-select board_no,
-        board_category,
-        book_no,
-        reply_no,
-        secret_flag,
-        title,
-        content,
-        board_pw,
-        notice_flag,
-        board_file,
-        writer,
-        view_cnt,
-        write_date
-        from board
-        order by
-        board_no desc;
-        
-desc board;
-
- select b.*
-    from (select rownum rn, a.*
-    from (select *
-    from board
-    order by notice_flag desc, board_no desc
-    ) a
-    ) b;
-
-
--- Step 1: 새로운 임시 컬럼 추가
-ALTER TABLE board ADD (new_board_pw NUMBER);
-
--- Step 2: 기존 데이터를 새 컬럼으로 복사
-UPDATE board SET new_board_pw = board_pw;
-
--- Step 3: 기존 컬럼 삭제
-ALTER TABLE board DROP COLUMN board_pw;
-
--- Step 4: 새 컬럼의 이름을 기존 컬럼명으로 변경
-ALTER TABLE board RENAME COLUMN new_board_pw TO board_pw;
-
-commit;
-
-ALTER TABLE board
-MODIFY (book_no NULL);
-
-UPDATE board
-SET book_no = NULL
-WHERE book_no = 0;
-
-UPDATE board
-SET board_category = 'reply'
-WHERE board_no = 3012;
-
-
-UPDATE board
-SET board_category = 'reply'
-WHERE board_no = 3012;
-
-
-UPDATE board
-SET writer = '-'
-WHERE writer = '로그인 필요';
-
-select * from board;
-select * from member;
-select * from site_book_option;
-commit;
-
-desc board;
-
-select s.book_no 
-from site_book s join member m
-on s.member_id = m.member_id
-where s.member_id = 'mid902';
-
-select book_no
-from site_book
-where member_id = 'mid901';
-
-select * from site_book;
-
-select * from member;
-select * from board;
-desc board;
-
-DELETE FROM board
-WHERE title = 'test' and board_category = 'review';
-
-
-select * from board
-where board_category = 'qna';
-
- select *
-        from board
-        where write_date = (
-            select max(write_date)
-            from board
-            where write_date < TO_DATE('2024-11-05 09:51:10', 'YYYY-MM-DD HH24:MI:SS')
-        )
-        and write_date < TO_DATE('2024-11-05 09:51:10', 'YYYY-MM-DD HH24:MI:SS')
-        and lower(board_category) like 'qna'
-        order by write_date desc;
