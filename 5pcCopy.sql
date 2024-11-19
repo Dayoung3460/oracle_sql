@@ -1,5 +1,26 @@
-  -- 5pc -> javadb
-   CREATE SEQUENCE  "JAVA"."BOARD_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 801 CACHE 20 NOORDER  NOCYCLE ;
+--------------------------------------------------------
+--  파일이 생성됨 - 화요일-11월-05-2024   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Sequence BOARD_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "JAVA"."BOARD_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 901 CACHE 20 NOORDER  NOCYCLE ;
+--------------------------------------------------------
+--  DDL for Sequence BOOK_OPTION_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "JAVA"."BOOK_OPTION_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+--------------------------------------------------------
+--  DDL for Sequence BOOK_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "JAVA"."BOOK_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 101 CACHE 20 NOORDER  NOCYCLE ;
+--------------------------------------------------------
+--  DDL for Sequence HWAN_TEST
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "JAVA"."HWAN_TEST"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 41 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence REPLY_SEQ
 --------------------------------------------------------
@@ -90,11 +111,12 @@
    (	"MEMBER_ID" VARCHAR2(40 BYTE), 
 	"PASSWORD" VARCHAR2(40 BYTE), 
 	"MEMBER_NAME" VARCHAR2(40 BYTE), 
-	"ADDRESS" VARCHAR2(200 BYTE), 
+	"ADDRESS" VARCHAR2(1000 BYTE), 
 	"EMAIL" VARCHAR2(40 BYTE), 
 	"TEL" VARCHAR2(40 BYTE), 
 	"JOINED_DATE" DATE DEFAULT sysdate, 
-	"PERMISSION" VARCHAR2(40 BYTE) DEFAULT 'user'
+	"PERMISSION" VARCHAR2(40 BYTE) DEFAULT 'user', 
+	"QUIT" NUMBER DEFAULT 0
    ) SEGMENT CREATION IMMEDIATE 
   PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
@@ -348,22 +370,86 @@
   TABLESPACE "SYSTEM" ;
 REM INSERTING into JAVA.BOARD
 SET DEFINE OFF;
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3001,'notice',null,0,'필수공지사항 1/5','첫번째 공지사항입니다. 1002번 caraban, 1004번 auto, 109번 deck는 현재 사용불가합니다.',1,null,'admin101',0,to_date('24/10/30','RR/MM/DD'),null,3001);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3002,'notice',null,0,'필수공지사항 2/5','두번째 공지사항입니다. 1002번 caraban, 1004번 auto, 109번 deck는 현재 사용불가합니다.',1,null,'kim_sazang',888,to_date('24/10/30','RR/MM/DD'),null,3002);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3003,'notice',null,0,'필수공지사항 3/5','세번째 공지사항입니다. 필수 공지사항은 notice_flag 값이 1입니다.',1,null,'kim_sazang',888,to_date('24/10/30','RR/MM/DD'),null,3003);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3004,'notice',null,0,'필수공지사항 4/5','네번째 공지사항입니다. 필수 공지사항은 permission이 admin인 admin101 사용자만 작성할 수 있습니다.',1,null,'kim_sazang',666,to_date('24/10/30','RR/MM/DD'),null,3004);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3005,'notice',null,0,'필수공지사항 5/5','다섯번째 공지사항입니다. 필수 공지는 5가지입니다.',1,null,'kim_sazang',789,to_date('24/10/30','RR/MM/DD'),null,3005);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3006,'notice',null,0,'일반공지사항 1/2','첫번째 일반공지사항입니다. 예약번호 0번에 일반공지사항을 넣겠습니다.',0,null,'kim_sazang',123,to_date('24/10/30','RR/MM/DD'),null,3006);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3007,'notice',null,0,'일반공지사항 2/2','두번째 일반공지사항입니다. 일반 공지사항은 notice_flag 값이 0입니다.',0,null,'kim_sazang',456,to_date('24/10/30','RR/MM/DD'),null,3007);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3011,'qna','2001',0,'문의사항 1/3','예약번호 2001번의 문의사항입니다. 삼겹살도 파나요?',0,null,'kim_hama',777,to_date('24/10/30','RR/MM/DD'),null,3011);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3001,'notice',null,0,'필수공지사항 1/5','첫번째 공지사항입니다. 1002번 caraban, 1004번 auto, 109번 deck는 현재 사용불가합니다.',1,null,'admin101',13,to_date('24/10/30','RR/MM/DD'),null,3001);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3002,'notice',null,0,'필수공지사항 2/5','두번째 공지사항입니다. 1002번 caraban, 1004번 auto, 109번 deck는 현재 사용불가합니다.',1,null,'kim_sazang',893,to_date('24/10/30','RR/MM/DD'),null,3002);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3003,'notice',null,0,'필수공지사항 3/5','세번째 공지사항입니다. 필수 공지사항은 notice_flag 값이 1입니다.',1,null,'kim_sazang',895,to_date('24/10/30','RR/MM/DD'),null,3003);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3004,'notice',null,0,'필수공지사항 4/5','네번째 공지사항입니다. 필수 공지사항은 permission이 admin인 admin101 사용자만 작성할 수 있습니다.',1,null,'kim_sazang',678,to_date('24/10/30','RR/MM/DD'),null,3004);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3005,'notice',null,0,'필수공지사항 5/5','다섯번째 공지사항입니다. 필수 공지는 5가지입니다.',1,null,'kim_sazang',834,to_date('24/10/30','RR/MM/DD'),null,3005);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3006,'notice',null,0,'일반공지사항 1/2','첫번째 일반공지사항입니다. 예약번호 0번에 일반공지사항을 넣겠습니다.',0,null,'kim_sazang',126,to_date('24/10/30','RR/MM/DD'),null,3006);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3007,'notice',null,0,'일반공지사항 2/2','두번째 일반공지사항입니다. 일반 공지사항은 notice_flag 값이 0입니다.',0,null,'kim_sazang',461,to_date('24/10/30','RR/MM/DD'),null,3007);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3011,'qna','2001',0,'문의사항 1/3','예약번호 2001번의 문의사항입니다. 삼겹살도 파나요?',0,null,'kim_hama',783,to_date('24/10/30','RR/MM/DD'),null,3011);
 Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3012,'reply','2001',0,'문의사항 1/3_답변','예약번호 2001번의 답변입니다. 오면서 사오셔야 됩니다.',0,null,'kim_sazang',777,to_date('24/10/30','RR/MM/DD'),3023,3012);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3013,'qna','2002',1,'문의사항 2/3','예약번호 2002번의 문의사항입니다. 바베큐 공짜로 해주면 리뷰써줌',0,null,'kim_girin',777,to_date('24/10/30','RR/MM/DD'),null,3013);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3014,'reply','2001',1,'문의사항 2/3_답변','예약번호 2002번의 답변입니다. 영업방해로 고소함.',0,null,'kim_sazang',777,to_date('24/10/30','RR/MM/DD'),3013,3014);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3015,'qna','2003',0,'문의사항 3/3','예약번호 2003번의 문의사항입니다. 입구에 레드카펫좀 깔아주세요.',0,null,'kim_tokki',777,to_date('24/10/30','RR/MM/DD'),null,3013);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3016,'reply','2001',0,'문의사항 3/3_답변','예약번호 2003번의 답변입니다. 추가비용 150000원 입니다.',0,null,'kim_sazang',777,to_date('24/10/30','RR/MM/DD'),3015,3016);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3021,'review','2001',0,'리뷰 1/3','예약번호 2001번의 후기입니다. 잘놀다 갑니다. 별점 4점',0,null,'kim_hama',777,to_date('24/10/30','RR/MM/DD'),null,3021);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3022,'review','2002',0,'리뷰 2/3','예약번호 2002번의 후기입니다. 간단한 요구도 안들어줍니다. 오지마세요. 별점 1점.',0,null,'kim_girin',777,to_date('24/10/30','RR/MM/DD'),null,3022);
-Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3023,'review','2003',0,'리뷰 3/3','예약번호 2003번의 후기입니다. 사장이 돈에 미쳤어요. 별점 3점',0,null,'kim_tokki',779,to_date('24/10/30','RR/MM/DD'),null,3023);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3013,'qna','2002',1,'문의사항 2/3','예약번호 2002번의 문의사항입니다. 바베큐 공짜로 해주면 리뷰써줌',0,null,'kim_girin',779,to_date('24/10/30','RR/MM/DD'),null,3013);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3014,'reply','2001',1,'문의사항 2/3_답변','예약번호 2002번의 답변입니다. 영업방해로 고소함.',0,null,'kim_sazang',778,to_date('24/10/30','RR/MM/DD'),3013,3014);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3015,'qna','2003',0,'문의사항 3/3','예약번호 2003번의 문의사항입니다. 입구에 레드카펫좀 깔아주세요.',0,null,'kim_tokki',789,to_date('24/10/30','RR/MM/DD'),null,3013);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3016,'reply','2001',0,'문의사항 3/3_답변','예약번호 2003번의 답변입니다. 추가비용 150000원 입니다.',0,null,'kim_sazang',781,to_date('24/10/30','RR/MM/DD'),3015,3016);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3021,'review','2001',0,'리뷰 1/3','예약번호 2001번의 후기입니다. 잘놀다 갑니다. 별점 4점',0,null,'kim_hama',786,to_date('24/10/30','RR/MM/DD'),null,3021);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3022,'review','2002',0,'리뷰 2/3','예약번호 2002번의 후기입니다. 간단한 요구도 안들어줍니다. 오지마세요. 별점 1점.',0,null,'kim_girin',798,to_date('24/10/30','RR/MM/DD'),null,3022);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (3023,'review','2003',0,'리뷰 3/3','예약번호 2003번의 후기입니다. 사장이 돈에 미쳤어요. 별점 3점',0,null,'kim_tokki',797,to_date('24/10/30','RR/MM/DD'),null,3023);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (802,'notice',null,0,'test','test!!!',1,null,'admin101',6,to_date('24/11/01','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (803,'notice',null,0,'test1','test11111',0,null,'admin101',2,to_date('24/11/01','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (804,'notice',null,0,'test112222','test11111111',0,null,'admin101',2,to_date('24/11/01','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (805,'notice',null,0,'22','222222222',1,null,'admin101',8,to_date('24/11/01','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (806,'notice',null,0,'333','3333',0,null,'admin101',7,to_date('24/11/01','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (814,'qna',null,0,'체크아웃문의','몇시 까지 체크아웃인가요?',0,null,'user02',14,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (811,'qna',null,0,'qna','qna222',0,null,'-',37,to_date('24/11/05','RR/MM/DD'),null,1234);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (812,'qna',null,0,'test','test123',0,null,'-',73,to_date('24/11/05','RR/MM/DD'),null,1234);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (815,'qna',null,0,'44','44444',0,null,'-',1,to_date('24/11/05','RR/MM/DD'),null,1234);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (813,'qna',null,0,'11','111111',0,null,'-',142,to_date('24/11/05','RR/MM/DD'),null,1234);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (816,'qna',null,0,'fgth','fgh',0,null,'-',81,to_date('24/11/05','RR/MM/DD'),null,1234);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (817,'qna',null,1,'secret','secret!!!',0,null,'-',8,to_date('24/11/05','RR/MM/DD'),null,1234);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (818,'qna',null,1,'로그인 안한 사람이 쓴 무느이','로그인 안한 사람이 쓴 무느이!!',0,null,null,27,to_date('24/11/05','RR/MM/DD'),null,1234);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (822,'qna',null,1,'체크인시간문의','체크인 이랑 체크아웃 시간은 언제 인가요?',0,null,'nayun124',1,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (823,'qna',null,1,'비번있음','비번있음!!!',0,null,'dayoung',5,to_date('24/11/05','RR/MM/DD'),null,1234);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (824,'qna',null,1,'??','?????',0,null,'dayoung',4,to_date('24/11/05','RR/MM/DD'),null,1234);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (825,'qna',null,0,'ㅅㄷㄴㅅ','ㅅㄷㄴㅅ!!!!!',0,null,'dayoung',0,to_date('24/11/05','RR/MM/DD'),null,1234);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (826,'qna',null,0,'!!','!!!!!!!!!!',0,null,'dayoung',0,to_date('24/11/05','RR/MM/DD'),null,1234);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (827,'qna',null,1,'1','1111111111111',0,null,'dayoung',1,to_date('24/11/05','RR/MM/DD'),null,1234);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (828,'qna',null,1,'22','2222222',0,null,'dayoung',2,to_date('24/11/05','RR/MM/DD'),null,1234);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (829,'qna',null,0,'asd','sdf',0,null,null,23,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (840,'reply',null,0,'└ [RE] : asd','rerererere',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (841,'reply',null,0,'└ [RE] : asd','rerererere',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (842,'reply',null,0,'└ [RE] : asd','rerererere',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (843,'reply',null,0,'└ [RE] : asd','rerererere',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (844,'reply',null,0,'└ [RE] : asd','asfasfsfsafsf',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (845,'reply',null,0,'└ [RE] : asd','asfasfsfsafsf',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (846,'reply',null,0,'└ [RE] : asd','asfasfsfsafsf',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (847,'reply',null,0,'└ [RE] : asd','asfasfsfsafsf',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (848,'reply',null,0,'└ [RE] : asd','asdfasfsafsaf',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (849,'reply',null,0,'└ [RE] : asd','asdfasfsafsaf',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (850,'reply',null,0,'└ [RE] : asd','bbbbb',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (851,'reply',null,0,'└ [RE] : asd','bbbbb',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (852,'qna',null,0,'ㅠㅠㅠㅠ','ㅠㅠㅠㅠㅠㅠㅠㅠ',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (853,'qna',null,0,'ㅠㅠㅠㅠ','ㅠㅠㅠㅠㅠㅠㅠㅠ',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (854,'qna',null,0,'///','/////',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (855,'qna',null,0,'///','/////',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (856,'qna',null,0,'11','111',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (857,'qna',null,0,'11','111',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (858,'qna',null,0,'2','2222222222',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (859,'qna',null,0,'2','2222222222',0,null,'admindayoung',11,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (860,'reply',null,0,'└ [RE] : 2','33333',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (861,'reply',null,0,'└ [RE] : 2','33333',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (862,'reply',null,0,'└ [RE] : 2','4444444',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (863,'reply',null,0,'└ [RE] : 2','4444444',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (864,'reply',null,0,'└ [RE] : 2','44',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (865,'reply',null,0,'└ [RE] : 2','44',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (866,'reply',null,0,'└ [RE] : 2','iiiiiii',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (867,'reply',null,0,'└ [RE] : 2','iiiiiii',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (868,'reply',null,0,'└ [RE] : 2','ereeeee',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (869,'reply',null,0,'└ [RE] : 2','ereeeee',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (870,'reply',null,0,'└ [RE] : 2','hjghjhgjhgj',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (871,'reply',null,0,'└ [RE] : 2','hjghjhgjhgj',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (872,'qna',null,0,'ㅎㅎㅎ','ㅎㅎㅎㅎㅎㅎ',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (873,'qna',null,0,'ㅎㅎㅎ','ㅎㅎㅎㅎㅎㅎ',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (874,'qna',null,0,'ㅇㅀ','ㅇㅀ',0,null,null,0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (875,'qna',null,0,'ㅇㅀ','ㅇㅀ',0,null,null,0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (876,'qna',null,0,'ㅓㅓ','ㅓㅓㅓㅓ',0,null,null,0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (877,'qna',null,0,'ㅓㅓ','ㅓㅓㅓㅓ',0,null,null,0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (878,'qna',null,0,'ㅑㅑ','ㅑㅑㅑ',0,null,null,0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (879,'qna',null,0,'ㅑㅑ','ㅑㅑㅑ',0,null,null,0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (880,'qna',null,0,'ㅀㅇㄶ','ㅇㅎㅇㅎ',0,null,null,0,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (881,'qna',null,0,'ㅀㅇㄶ','ㅇㅎㅇㅎ',0,null,null,1,to_date('24/11/05','RR/MM/DD'),null,0);
+Insert into JAVA.BOARD (BOARD_NO,BOARD_CATEGORY,BOOK_NO,SECRET_FLAG,TITLE,CONTENT,NOTICE_FLAG,BOARD_FILE,WRITER,VIEW_CNT,WRITE_DATE,REPLY_NO,BOARD_PW) values (882,'qna',null,0,'hh','hhhhhhhhhhhhhh',0,null,'admindayoung',0,to_date('24/11/05','RR/MM/DD'),null,0);
 REM INSERTING into JAVA.BOARDS
 SET DEFINE OFF;
 Insert into JAVA.BOARDS (BNO,BTITLE,CONTENT,BWRITER,BDATE) values (1,'추운날','날이춥다','글쓴이1',to_date('24/10/04','RR/MM/DD'));
@@ -394,18 +480,20 @@ Insert into JAVA.BOOK (TITLE,WRITER,PRICE,BNUM) values ('3','3',103,'3');
 Insert into JAVA.BOOK (TITLE,WRITER,PRICE,BNUM) values ('4','4',141,'41');
 REM INSERTING into JAVA.EMPLOYEE
 SET DEFINE OFF;
-Insert into JAVA.EMPLOYEE (EMPLOYEE_ID,EMPLOYEE_NAME,PHONE,HIRE_DATE,SALARY) values ('3','3','3',to_date('15/08/07','RR/MM/DD'),'200');
-Insert into JAVA.EMPLOYEE (EMPLOYEE_ID,EMPLOYEE_NAME,PHONE,HIRE_DATE,SALARY) values ('1','2','3',to_date('00/01/01','RR/MM/DD'),'500');
-Insert into JAVA.EMPLOYEE (EMPLOYEE_ID,EMPLOYEE_NAME,PHONE,HIRE_DATE,SALARY) values ('2','2','2',to_date('24/10/01','RR/MM/DD'),'100');
 REM INSERTING into JAVA.MEMBER
 SET DEFINE OFF;
-Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION) values ('admin101','101','kim_sazang','daegu','master@gmail.com','010-1234-1234',to_date('24/10/30','RR/MM/DD'),'admin');
-Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION) values ('mid901','901','kim_hama','daegu','hippo@gmail.com','010-1122-3030',to_date('24/10/30','RR/MM/DD'),'user');
-Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION) values ('mid902','902','kim_girin','daegu','giraffe@gmail.com','010-2255-5544',to_date('24/10/30','RR/MM/DD'),'user');
-Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION) values ('mid903','903','kim_tokki','busan','rabbit@gmail.com','010-3375-4242',to_date('24/10/30','RR/MM/DD'),'user');
-Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION) values ('mid904','904','kang_azi','daejeon','dog@gmail.com','010-4487-5784',to_date('24/10/30','RR/MM/DD'),'user');
-Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION) values ('mid905','905','park_sasum','ulsan','deer@gmail.com','010-5578-3512',to_date('24/10/30','RR/MM/DD'),'user');
-Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION) values ('mid906','906','kwon_goyang','seoul','cat@gmail.com','010-6688-5447',to_date('24/10/30','RR/MM/DD'),'user');
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('dayoung','0000','김다영','43109|대구 군위군 군위읍 개봉길 23-72|상세주소!','kimdayoung771@gmail.com','01028697886',to_date('24/11/05','RR/MM/DD'),'user',0);
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('nayun124','0000','권나윤','06036|서울 강남구 가로수길 14-3|주리아파트 201동1302호','nayunkwon124@gmail.com','010-1234-5678',to_date('24/11/05','RR/MM/DD'),'user',0);
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('admindayoung','1234','kim_dayoung','seoul','dayoung@gmail.com','010-1111-4545',to_date('24/11/05','RR/MM/DD'),'admin',0);
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('adminnayun','1234','kwon_nayun','seoul','nayun@gmail.com','010-1111-2424',to_date('24/11/05','RR/MM/DD'),'admin',0);
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('admingihwan','1234','kim_gihwan','seoul','gihwan@gmail.com','010-1111-3555',to_date('24/11/05','RR/MM/DD'),'admin',0);
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('adminsohyun','1234','park_sohyun','seoul','sohyun@gmail.com','010-1111-2525',to_date('24/11/05','RR/MM/DD'),'admin',0);
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('adminjuhyun','1234','park_juhyun','seoul','juhyun@gmail.com','010-1111-5050',to_date('24/11/05','RR/MM/DD'),'admin',0);
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('gihwan','1234','김기환','42260|대구 수성구 고모로 31|근처100km','gihwan@gmail.com','010-1122-3344',to_date('24/11/05','RR/MM/DD'),'user',0);
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('user01','0000','김유저','63534|제주특별자치도 서귀포시 가가로 14|테스트용 ','user@naver.com','010-4578-4121',to_date('24/11/05','RR/MM/DD'),'user',0);
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('user02','0000','이유저','12758|경기 광주시 경안로 5|유저네집','leeuser@gmail.com','010-7845-2356',to_date('24/11/05','RR/MM/DD'),'user',0);
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('soso','1234','감자바','13479|경기 성남시 분당구 서판교로 32|판교빌딩 1202호','soso@naver.com','010-2222-2222',to_date('24/11/05','RR/MM/DD'),'user',0);
+Insert into JAVA.MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,ADDRESS,EMAIL,TEL,JOINED_DATE,PERMISSION,QUIT) values ('pjh','1234','박주현','28562|충북 청주시 서원구 1순환로 627|천국','gn06146@naver.com','010-5689-7704',to_date('24/11/05','RR/MM/DD'),'user',0);
 REM INSERTING into JAVA.PRODUCT_TBL
 SET DEFINE OFF;
 Insert into JAVA.PRODUCT_TBL (PRD_CODE,PRD_NAME,PRD_DESC,ORIGIN_PRICE,SALE_PRICE,STAR_POINT,PROD_IMAGE,CREATION_DATE) values ('P001','과테말라 안티구아','아주 맛있는 과테말라 안티구아 입니다',3000,2500,5,'과테말라 안티구아.jpg',to_date('24/10/30','RR/MM/DD'));
@@ -424,26 +512,55 @@ Insert into JAVA.SITE (SITE_NO,SITE_NAME,CATEGORY,SITE_MAX,SITE_PRICE,USE_FLAG) 
 Insert into JAVA.SITE (SITE_NO,SITE_NAME,CATEGORY,SITE_MAX,SITE_PRICE,USE_FLAG) values (1006,'데크2','deck',2,25000,'n');
 REM INSERTING into JAVA.SITE_BOOK
 SET DEFINE OFF;
-Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (2001,'mid901',1001,3,'2024/10/10 13:00:00','2024/10/11 10:00:00','대구31 가1010',150000,1,0,to_date('24/10/30','RR/MM/DD'));
-Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (2002,'mid902',1002,1,'2024/10/10 13:00:00','2024/10/11 10:00:00','대구57 나9875',150000,1,0,to_date('24/10/30','RR/MM/DD'));
-Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (2003,'mid903',1001,2,'2024/10/11 13:00:00','2024/10/12 10:00:00','부산31 가5050',58000,1,0,to_date('24/10/30','RR/MM/DD'));
-Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (2004,'mid904',1005,1,'2024/10/11 13:00:00','2024/10/13 10:00:00','대구31 가1010',70000,0,0,to_date('24/10/30','RR/MM/DD'));
-Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (2005,'mid905',1005,2,'2024/10/14 13:00:00','2024/10/15 10:00:00','대구31 가1010',30000,0,0,to_date('24/10/30','RR/MM/DD'));
-Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (2006,'mid906',1006,2,'2024/10/16 13:00:00','2024/10/17 10:00:00','대구31 가1010',35000,0,1,to_date('24/10/30','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (70,'dayoung',1005,2,'2024/11/28','2024/11/29',null,25000,0,0,to_date('24/11/05','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (71,'nayun124',1001,3,'2024/11/06','2024/11/08','서울 가 1234',100000,0,0,to_date('24/11/05','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (72,'gihwan',1003,2,'2024/11/05','2024/11/06','12가 1234',50000,0,0,to_date('24/11/05','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (73,'gihwan',1006,2,'2024/11/08','2024/11/12','12가 1234',25000,0,0,to_date('24/11/05','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (74,'gihwan',1005,2,'2024/11/10','2024/11/12',null,25000,0,0,to_date('24/11/05','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (75,'gihwan',1001,4,'2024/11/26','2024/11/27',null,100000,0,0,to_date('24/11/05','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (76,'gihwan',1004,2,'2024/11/15','2024/11/16',null,50000,0,0,to_date('24/11/05','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (77,'gihwan',1005,2,'2024/12/19','2024/12/22',null,25000,0,0,to_date('24/11/05','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (78,'gihwan',1005,2,'2024/11/21','2024/11/22',null,25000,0,0,to_date('24/11/05','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (79,'gihwan',1002,4,'2024/12/30','2024/12/31',null,100000,0,0,to_date('24/11/05','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (80,'gihwan',1003,2,'2024/11/24','2024/11/26',null,50000,0,0,to_date('24/11/05','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (81,'gihwan',1004,2,'2025/01/09','2025/01/10',null,50000,0,0,to_date('24/11/05','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (82,'gihwan',1005,2,'2025/02/14','2025/02/15',null,25000,0,0,to_date('24/11/05','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (68,'mid905',1005,2,'2024/11/14','2024/11/16','18나 6604',103000,0,0,to_date('24/11/05','RR/MM/DD'));
+Insert into JAVA.SITE_BOOK (BOOK_NO,MEMBER_ID,SITE_NO,MEM_CNT,START_DATE,END_DATE,CAR_NUM,TOTAL_PRICE,REVIEW_FLAG,CANCEL_FLAG,CREATE_DATE) values (69,'soso',1001,3,'2024/11/08','2024/11/12','11나 1223',100000,0,0,to_date('24/11/05','RR/MM/DD'));
 REM INSERTING into JAVA.SITE_BOOK_OPTION
 SET DEFINE OFF;
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,2001,'mid901',50000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,2002,'mid902',50000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,2003,'mid903',8000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,2004,'mid904',20000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,2005,'mid905',5000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,2006,'mid906',10000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,2001,'mid901',50000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,2002,'mid902',50000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,2003,'mid903',8000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,2004,'mid904',20000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,2005,'mid905',5000);
-Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,2006,'mid906',10000);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,68,'mid905',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,69,'soso',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,69,'soso',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,69,'soso',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,70,'dayoung',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,70,'dayoung',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,71,'nayun124',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,71,'nayun124',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,71,'nayun124',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,72,'gihwan',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,72,'gihwan',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,73,'gihwan',1006);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,74,'gihwan',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (106,74,'gihwan',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,75,'gihwan',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,75,'gihwan',1001);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,76,'gihwan',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,76,'gihwan',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,77,'gihwan',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,78,'gihwan',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,79,'gihwan',1002);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,80,'gihwan',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,80,'gihwan',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,80,'gihwan',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (105,80,'gihwan',1003);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,81,'gihwan',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (102,81,'gihwan',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,81,'gihwan',1004);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,82,'gihwan',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (104,82,'gihwan',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (101,68,'mid905',1005);
+Insert into JAVA.SITE_BOOK_OPTION (OPTION_NO,BOOK_NO,MEMBER_ID,SITE_NO) values (103,68,'mid905',1005);
 REM INSERTING into JAVA.SITE_OPTION
 SET DEFINE OFF;
 Insert into JAVA.SITE_OPTION (OPTION_NO,OPTION_NAME,OPTION_PRICE) values (101,'바베큐',50000);
@@ -454,7 +571,33 @@ Insert into JAVA.SITE_OPTION (OPTION_NO,OPTION_NAME,OPTION_PRICE) values (105,'�
 Insert into JAVA.SITE_OPTION (OPTION_NO,OPTION_NAME,OPTION_PRICE) values (106,'유아침구',10000);
 REM INSERTING into JAVA.TBL_BOARD
 SET DEFINE OFF;
-REM INSERTING into JAVA.TBL_BUY
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (100,'점심','점심내용','test2',0,to_date('24/10/18','RR/MM/DD'),to_date('24/10/18','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (101,'test[수정]','test[수정]','user03',0,to_date('24/10/18','RR/MM/DD'),to_date('24/10/18','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (134,'dd익히기','내용입니다','test999',0,to_date('24/10/18','RR/MM/DD'),to_date('24/10/18','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (6,'점심','점심내용','test2',9,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (7,'test[수정]','test[수정]','user03',4,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (8,'dd','dd','test9999',3,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (10,'게시글테스트[수정]>>>','글내용입니다[수정]','user03',7,to_date('24/10/17','RR/MM/DD'),to_date('24/10/18','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (11,'dd익히기','내용입니다','test999',3,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (12,'HTML','javascript','user03',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (13,'점심','점심내용','test2',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (14,'test[수정]','test[수정]','user03',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (15,'dd','dd','test9999',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (16,'게시글테스트[수정]>','글내용입니다[수정]','user03',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (17,'dd익히기','내용입니다','test999',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (18,'HTML','javascript','user03',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (19,'점심','점심내용','test2',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (20,'test[수정]','test[수정]','user03',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (21,'dd','dd','test9999',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (22,'게시글테스트[수정]>','글내용입니다[수정]','user03',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (23,'dd익히기','내용입니다','test999',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (24,'HTML','javascript','user03',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (25,'점심','점심내용','test2',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (26,'test[수정]','test[수정]','user03',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (27,'dd','dd','test9999',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (28,'게시글테스트[수정]>','글내용입니다[수정]','user03',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+Insert into JAVA.TBL_BOARD (BOARD_NO,TITLE,CONTENT,WRITER,VIEW_CNT,WRITE_DATE,UPDATE_DATE,IMG) values (29,'dd익히기','내용입니다','test999',0,to_date('24/10/17','RR/MM/DD'),to_date('24/10/17','RR/MM/DD'),null);
+IREM INSERTING into JAVA.TBL_BUY
 SET DEFINE OFF;
 REM INSERTING into JAVA.TBL_BUY_LIST
 SET DEFINE OFF;
@@ -464,159 +607,27 @@ SET DEFINE OFF;
 Insert into JAVA.TBL_CARE_LIST (CARE_NO,CARE_DATE,P_ID,STO_TYPE,SELL_QUAN,CONS_ID,CONTENT) values ('s01',to_date('22/02/02','RR/MM/DD'),'eee555','p01',50,'cat111','none');
 REM INSERTING into JAVA.TBL_CONSULT
 SET DEFINE OFF;
-Insert into JAVA.TBL_CONSULT (CONS_DATE,CONS_ID,P_ID,ANI_NAME,ANI_TYPE,CONS_CONTENT,CONS_PRESCRIPTION) values (to_date('02/02/02','RR/MM/DD'),'cat222','bbb222','chewing','cat_black','left-arm','fucidin');
-Insert into JAVA.TBL_CONSULT (CONS_DATE,CONS_ID,P_ID,ANI_NAME,ANI_TYPE,CONS_CONTENT,CONS_PRESCRIPTION) values (to_date('01/01/01','RR/MM/DD'),'cat111','aaa111','bbobbi','cat_white','eye_problem','water');
-Insert into JAVA.TBL_CONSULT (CONS_DATE,CONS_ID,P_ID,ANI_NAME,ANI_TYPE,CONS_CONTENT,CONS_PRESCRIPTION) values (to_date('03/03/03','RR/MM/DD'),'dog333','ccc333','ddungee','dog_orange','eat_problem','medicin');
-REM INSERTING into JAVA.TBL_EVENT
+IREM INSERTING into JAVA.TBL_EVENT
 SET DEFINE OFF;
-Insert into JAVA.TBL_EVENT (TITLE,START_DATE,END) values ('회의1','2024-10-15',null);
-Insert into JAVA.TBL_EVENT (TITLE,START_DATE,END) values ('회식','2024-10-13T19:00:00','2024-10-13T21:00:00');
-Insert into JAVA.TBL_EVENT (TITLE,START_DATE,END) values ('출장','2024-10-06','2024-10-11');
-Insert into JAVA.TBL_EVENT (TITLE,START_DATE,END) values ('asd','2024-10-03','2024-10-04');
 REM INSERTING into JAVA.TBL_MEMBER
 SET DEFINE OFF;
+Insert into JAVA.TBL_MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,PHONE,RESPONSIBILITY,CREATION_DATE) values ('admin','9999','관리자',null,'Admin',to_date('24/10/22','RR/MM/DD'));
+Insert into JAVA.TBL_MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,PHONE,RESPONSIBILITY,CREATION_DATE) values ('test2','2222','test2','2222','User',to_date('24/10/16','RR/MM/DD'));
+Insert into JAVA.TBL_MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,PHONE,RESPONSIBILITY,CREATION_DATE) values ('test999','999','연습99','010-9999-9999','User',to_date('24/10/15','RR/MM/DD'));
+Insert into JAVA.TBL_MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,PHONE,RESPONSIBILITY,CREATION_DATE) values ('test9999','999','연습99','010-9999-9999','User',to_date('24/10/15','RR/MM/DD'));
+Insert into JAVA.TBL_MEMBER (MEMBER_ID,PASSWORD,MEMBER_NAME,PHONE,RESPONSIBILITY,CREATION_DATE) values ('user03','1111','홍길순3','010-3333-3333','User',to_date('24/10/22','RR/MM/DD'));
 REM INSERTING into JAVA.TBL_PERSON
 SET DEFINE OFF;
+Insert into JAVA.TBL_PERSON (P_ID,P_NAME,P_AGE,P_PHONE,P_HOME,P_ANIMALS,P_DATE,PW) values ('ddd444','ddd','4','010-4444-4444','사막','4',to_date('04/04/04','RR/MM/DD'),'444');
+Insert into JAVA.TBL_PERSON (P_ID,P_NAME,P_AGE,P_PHONE,P_HOME,P_ANIMALS,P_DATE,PW) values ('bbb222','bbb','2','010-2222-2222','이천','2',to_date('02/02/02','RR/MM/DD'),'222');
+Insert into JAVA.TBL_PERSON (P_ID,P_NAME,P_AGE,P_PHONE,P_HOME,P_ANIMALS,P_DATE,PW) values ('aaa111','aaa','1','010-1111-1111','일산','1',to_date('01/01/01','RR/MM/DD'),'111');
+Insert into JAVA.TBL_PERSON (P_ID,P_NAME,P_AGE,P_PHONE,P_HOME,P_ANIMALS,P_DATE,PW) values ('eee555','김기환','33','010-5555-5555','대구','5',to_date('22/02/02','RR/MM/DD'),'555');
+Insert into JAVA.TBL_PERSON (P_ID,P_NAME,P_AGE,P_PHONE,P_HOME,P_ANIMALS,P_DATE,PW) values ('ccc333','ccc','3','010-3333-3333','삼척','3',to_date('03/03/03','RR/MM/DD'),'333');
 REM INSERTING into JAVA.TBL_REPLY
-SET DEFINE OFF;lues (871,'21112','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (872,'asdasd','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (873,'asdfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (874,'asdfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (875,'asasd','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (876,'asdfa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (877,'asdfa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (878,'asdfa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (879,'asdfa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (880,'asdfa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (881,'asdfa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (882,'hi','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (883,'bye','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (884,'afasfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (885,'afasfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (886,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (887,'fgfgdh','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (888,'sdfasfd','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (889,'afasfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (890,'afasfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (891,'afasfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (892,'afasfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (893,'afasfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (894,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (895,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (896,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (897,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (898,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (899,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (900,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (901,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (902,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (903,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (904,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (905,'aaa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (906,'aaa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (907,'aaa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (908,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (909,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (910,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (911,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (912,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (913,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (914,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (915,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (916,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (917,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (918,'fsfassdfsadfsdfsdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (919,'fsfassdfsadfsdfsdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (920,'fsfassdfsadfsdfsdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (921,'fsfassdfsadfsdfsdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (922,'tgsdfgdsfg','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (923,'tgsdfgdsfg','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (924,'asdfsadfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (925,'asdfsadfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (926,'asdfsadfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (927,'asdfsadfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (928,'asdfsadfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (929,'asdfsadfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (930,'asdfsadfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (931,'asdfsadfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (932,'asdfsadfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (933,'asdfsadfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (934,'asdfsadfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (935,'hjj','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (936,'21112','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (937,'21112','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (938,'21112','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (939,'21112','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (940,'21112','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (941,'asdasd','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (942,'asdfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (943,'asdfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (944,'asasd','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (945,'asdfa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (946,'asdfa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (947,'asdfa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (948,'asdfa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (949,'asdfa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (950,'21112','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (951,'asdfa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (952,'hi','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (953,'bye','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (954,'afasfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (955,'afasfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (956,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (957,'fgfgdh','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (958,'sdfasfd','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (959,'afasfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (960,'afasfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (961,'afasfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (962,'afasfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (963,'afasfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (964,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (965,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (966,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (967,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (968,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (969,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (970,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (971,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (972,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (973,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (974,'safasdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (975,'aaa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (976,'aaa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (977,'aaa','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (978,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (979,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (980,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (981,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (982,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (983,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (984,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (985,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (986,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (987,'fsfas','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (988,'fsfassdfsadfsdfsdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (989,'fsfassdfsadfsdfsdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (990,'fsfassdfsadfsdfsdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (991,'fsfassdfsadfsdfsdf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (992,'tgsdfgdsfg','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (993,'tgsdfgdsfg','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (994,'asdfsadfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (995,'asdfsadfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (996,'asdfsadfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (997,'asdfsadfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (998,'asdfsadfsadf','user03',391,to_date('24/10/24','RR/MM/DD'));
-Insert into JAVA.TBL_REPLY (REPLY_NO,REPLY,REPLYER,BOARD_NO,REPLY_DATE) values (1162,'asdfsadf','user03',391,to_date('24/10/28','RR/MM/DD'));
-REM INSERTING into JAVA.TBL_STORAGE
 SET DEFINE OFF;
-Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) values ('p01',50,0,0,0);
-Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) values ('t01',0,0,0,0);
-Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) values ('p02',0,0,0,0);
-Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) values ('t02',0,0,0,0);
---------------------------------------------------------
---  DDL for Index PK_REPLY
---------------------------------------------------------
-
+IREM INSERTING into JAVA.TBL_STORAGE
+SET DEFINE OFF;
+I
   CREATE UNIQUE INDEX "JAVA"."PK_REPLY" ON "JAVA"."TBL_REPLY" ("REPLY_NO") 
   PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
@@ -852,114 +863,28 @@ Insert into JAVA.TBL_STORAGE (STO_TYPE,STO_QUAN,STO_SELL,STO_NOW,STO_LOSS) value
   ALTER TABLE "JAVA"."TBL_CONSULT" ADD CONSTRAINT "FK" FOREIGN KEY ("P_ID")
 	  REFERENCES "JAVA"."TBL_PERSON" ("P_ID") ON DELETE SET NULL ENABLE;
 
-
-
-
--- 내가 수정한 것들
-
-select * 
-from site;
-
-select * 
-from site_book;
-
-select * 
-from site_book_option;
-
-select *
-from site_option;
-
-select * 
-from member;
-
-select * 
-from board;
-
-select board_no,
-        board_category,
-        book_no,
-        reply_no,
-        secret_flag,
-        title,
-        content,
-        board_pw,
-        notice_flag,
-        board_file,
-        writer,
-        view_cnt,
-        write_date
-        from board
-        order by
-        board_no desc;
-        
-desc board;
-
- select b.*
-    from (select rownum rn, a.*
-    from (select *
-    from board
-    order by notice_flag desc, board_no desc
-    ) a
-    ) b;
-
-
--- Step 1: 새로운 임시 컬럼 추가
-ALTER TABLE board ADD (new_board_pw NUMBER);
-
--- Step 2: 기존 데이터를 새 컬럼으로 복사
-UPDATE board SET new_board_pw = board_pw;
-
--- Step 3: 기존 컬럼 삭제
-ALTER TABLE board DROP COLUMN board_pw;
-
--- Step 4: 새 컬럼의 이름을 기존 컬럼명으로 변경
-ALTER TABLE board RENAME COLUMN new_board_pw TO board_pw;
-
-ALTER TABLE board
-MODIFY (book_no NULL);
-
-UPDATE board
-SET book_no = NULL
-WHERE book_no = 0;
-
-UPDATE board
-SET board_category = 'reply'
-WHERE board_no = 3012;
-
-
-UPDATE board
-SET board_category = 'reply'
-WHERE board_no = 3012;
-
-
-UPDATE board
-SET board_category = 'reply'
-WHERE board_no = 3016;
-
-select * from board;
-select * from member;
-commit;
-
-desc board;
-
-select s.book_no 
-from site_book s join member m
-on s.member_id = m.member_id
-where s.member_id = 'mid902';
-
-select book_no
-from site_book
-where member_id = 'mid901';
-
 select * from site_book;
+select * from board where board_category in ('reply' , 'qna');
 
-select * from member;
-select * from board;
+SELECT column_name
+FROM all_cons_columns
+WHERE constraint_name = 'SYS_C008642' AND owner = 'JAVA';
 
-select * from board
-where board_category = 'review';
+drop table tbl_buy_list;
 
---drop table member;
---drop table board;
+insert into
+        board(board_no, board_category, book_no, secret_flag, title, content, board_pw, notice_flag, writer)
+        values(board_seq.nextval,  'qna', 2001, 0, 'title', 'content', 0, 0, 'dayoung');
 
+SELECT MAX(board_no) FROM board;
+
+ALTER SEQUENCE board_seq RESTART START WITH 3023;
 commit;
+
+
+
+delete board
+where board_category = 'reply';
+commit;
+
+select * from board where board_category in ('reply', 'qna');
