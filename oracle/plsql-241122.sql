@@ -69,7 +69,7 @@ FROM employees e
 -- 나오게 해주는 프로시저.
 -- off 하면 내부에서를 실행되지만 화면으로 출력은 안됨
 -- 고정되는 값이 아니라서 sql 시작할 때 필수 명령어~~
-set serveroutput on
+--set serveroutput on
 
 -- /: 블럭의 끝. 컴파일과 실행을 동시에 함. 항상 새 줄에다가 쓰기
 begin
@@ -130,7 +130,7 @@ end;
 
 /*
 plsql에서 
-그룹함수(lower() 등), decode 함수 사용불가
+그룹함수(lower() 등), decode 함수 사용불가. sql과 함께 사용해야함
 데이터 유형 변환, 날짜 함수는 가능
 */
 
@@ -352,7 +352,505 @@ begin
 end;
 /
 
--- 커서: sql을 실행한 메모리 영역
+-- plsql 커서: sql을 실행한 메모리 영역
  -- 암시적 커서: 이름 없. insert, update, delete -> 세개를 실행하면 오라클이 커서 메모리를 만들고 자동으로 수행하고 없어짐
---                SQL%ROWCOUNT: 가장 최근 SQL 문이 적용된 행의 개수를 알 수 있음
+ --                     쿼리문 하나씩 가능. 이전 쿼리 메모리를 덮어씀
+--                     직접 접근 불가
+--                     속성- SQL%ROWCOUNT: 가장 최근 SQL 문이 적용된 행의 개수를 알 수 있음(dml 실행결과 확인) create insert update delete
  -- 명시적 커서: 이름 있. 재호출이 가능함. 
+ 
+begin
+    delete from employees
+    where employee_id = 0;
+    
+    -- 여러개의 sql을 실행해도 마지막 하나만 나옴
+    dbms_output.put_line(sql%rowcount || '건이 삭제되었습니다.');
+end;
+/
+
+/**** 제어문: 예외 상황일 때 사용
+if {조건식} then
+    {실행코드}
+elsif
+    {실행코드}
+else 
+    {실행코드}
+end if;
+*/
+
+begin
+-- child record error 나면 employee_id를 fk(부모 자식 관계)로 사용하고 있는 칼럼들을 확인해야해
+-- employees에서 manager_id, departments에서 manager_id 체크해서 여기서 사용안하는 employee_id만 삭제 가능
+    delete from employees
+    where employee_id = &사원번호;
+    
+    if sql%rowcount >= 1 then
+        dbms_output.put_line('정상적으로 삭제되었습니다.');
+    else
+        dbms_output.put_line('삭제 실패');
+        dbms_output.put_line('사원 번호를 확인해주세요');
+    end if;    
+end;
+/
+
+-- 아무데서도 참조안하고 있는 사원찾기
+select employee_id
+from employees
+where employee_id not in (select manager_id
+                            from employees
+                            where manager_id is not null
+                            union
+                            select manager_id
+                            from departments
+                            where manager_id is not null);
+select * from employees;
+
+declare
+    v_score number(2, 0) := &정수;
+    v_grade char(1);
+--  마지막에 else 구문 안하고 싶으면 이렇게 초기값을 주면됨    
+--  v_grade char(1) := 'F';
+begin
+    if v_score >= 90 then
+        v_grade := 'A';
+    elsif v_score >= 80 then
+        v_grade := 'B';
+    elsif v_score >= 70 then
+        v_grade := 'C';
+    elsif v_score >= 60 then
+        v_grade := 'D';
+    else
+        v_grade := 'F';
+    end if;
+    
+    dbms_output.put_line(v_grade);
+end;
+/
+
+select * from employees;
+
+-- 사원번호 입력받았을 때 해당 사원의 업무(job_id)가 영업(SA_REP)인 경우 확인하기
+declare
+    v_empid employees.employee_id%type := &사원번호;
+    v_jobid employees.job_id%type;
+    v_sa_emp_cnt number(2, 0);
+begin
+--    select count(*)
+--    into v_sa_emp_cnt
+--    from employees
+--    where upper(job_id) like '%SA%'
+--    and employee_id = v_empid;
+--    
+--    if v_sa_emp_cnt > 0 then
+--        dbms_output.put_line(v_empid || '번 사원의 업무는 영업이 맞습니다');
+--    else
+--        dbms_output.put_line(v_empid || '번 사원의 업무는 영업이 아닙니다');
+    
+    select job_id
+    into v_jobid
+    from employees
+    where employee_id = v_empid;
+
+    if upper(v_jobid) like '%SA%' then
+        dbms_output.put_line(v_empid || '번 사원의 업무는 영업이 맞습니다');
+    else
+        dbms_output.put_line(v_empid || '번 사원의 업무는 ' || v_jobid || ' 입니다');
+
+    end if;
+end;
+/
+
+/*
+3.
+사원번호를 입력(치환변수사용&)할 경우
+입사일이 2025년 이후(2025년 포함)이면 'New employee' 출력
+      2025년 이전이면 'Career employee' 출력
+단, DBMS_OUTPUT.PUT_LINE ~ 은 한번만 사용
+*/
+
+declare
+    v_hiredate employees.hire_date%type;
+    v_emp varchar2(20) := 'New employee';
+begin
+    select hire_date
+    into v_hiredate
+    from employees
+    where employee_id = &사원번호;
+    
+--    if v_hiredate < to_date('2025-01-01') then    
+    if to_char(v_hiredate, 'yyyy') < '2025' then
+--    if 2025 >= extract (year from v_hiredate) then
+        v_emp := 'Career employee';
+    end if;
+    
+    dbms_output.put_line(v_emp);
+end;
+/
+
+/*
+4.
+사원번호를 입력(치환변수사용&)할 경우
+사원들 중 2025년 이후(2025년 포함)에 입사한 사원의 사원번호, 
+사원이름, 입사일을 test01 테이블에 입력하고, 2025년 이전에 
+입사한 사원의 사원번호,사원이름,입사일을 test02 테이블에 입력하시오.
+*/
+
+create table test01(empid, ename, hiredate)
+as
+  select employee_id, last_name, hire_date
+  from employees
+  where  employee_id = 0;
+
+create table test02(empid, ename, hiredate)
+as
+  select employee_id, last_name, hire_date
+  from   employees
+  where  employee_id = 0;
+
+select * from employees;
+
+declare
+    v_hiredate employees.hire_date%type;
+    v_empid employees.employee_id%type;
+    v_empname employees.last_name%type;
+begin
+    select employee_id, last_name, hire_date 
+    into v_empid, v_empname, v_hiredate
+    from employees
+    where employee_id = &사원번호;
+
+    if v_hiredate >= to_date('2025-01-01') then
+        insert into test01 (empid, ename, hiredate)
+        values(v_empid, v_empname, v_hiredate);
+    else
+        insert into test02 (empid, ename, hiredate)
+        values(v_empid, v_empname, v_hiredate);
+    end if;
+end;
+/
+
+/*
+5.
+급여가  5000이하이면 20% 인상된 급여
+급여가 10000이하이면 15% 인상된 급여
+급여가 15000이하이면 10% 인상된 급여
+급여가 15001이상이면 급여 인상없음
+
+사원번호를 입력(치환변수)하면 사원이름, 급여, 인상된 급여가 출력되도록 PL/SQL 블록을 생성하시오.
+*/
+
+declare
+    v_ename employees.last_name%type;
+    v_sal employees.salary%type;
+    v_raise number(2, 0) := 0;
+    v_new_sal employees.salary%type;
+begin
+    select last_name, salary
+    into v_ename, v_sal
+    from employees
+    where employee_id = &사원번호;
+    
+    if v_sal <= 5000 then
+        v_raise := 20;
+    elsif v_sal <= 10000 then
+        v_raise := 15;
+    elsif v_sal <= 15000 then
+        v_raise := 10;
+    end if;
+    
+    v_new_sal := v_sal + (v_sal * v_raise/100);
+    dbms_output.put_line(v_ename ||' '|| v_sal ||' '|| v_new_sal);
+    
+end;
+/
+
+-- loop
+/*
+begin
+    loop
+        {실행문}
+    exit [when 종료 조건]
+    end loop;
+end;
+/
+*/
+
+begin
+    loop
+        dbms_output.put_line('hello');
+        exit; -- exit 안걸면: buffer overflow, limit of 1000000 bytes
+    end loop;
+end;
+/
+
+declare
+    v_count number(1, 0) := 0;
+begin
+    loop
+        dbms_output.put_line('hello');
+        v_count := v_count + 1;
+        exit when v_count >= 5;
+    end loop;
+end;
+/
+
+-- 1 ~ 10 정수의 총합
+declare
+    v_num number(2, 0) := 1;
+    v_sum number(2, 0) := 0;
+begin
+    loop
+        v_sum := v_sum + v_num;
+        v_num := v_num + 1;
+    exit when v_num > 10;
+    end loop;
+    
+    dbms_output.put_line(v_sum);
+end;
+/
+
+/*
+
+6. 다음과 같이 출력되도록 하시오.
+*         
+**        
+***       
+****     
+*****    
+
+*/
+declare
+    v_tree varchar2(6) := '';
+begin
+    loop
+        v_tree := v_tree || '*';
+        dbms_output.put_line(v_tree);
+        exit when length(v_tree) >= 5;
+    end loop;
+end;
+/
+
+
+/*
+7. 치환변수(&)를 사용하면 숫자를 입력하면 
+해당 구구단이 출력되도록 하시오.
+예) 2 입력시 아래와 같이 출력
+2 * 1 = 2
+2 * 2 = 4
+...
+
+*/
+
+declare
+    v_dan number(1, 0) := &dan;
+    v_cnt number(2, 0) := 1;
+begin
+    loop
+        dbms_output.put_line(v_dan || '*' || v_cnt || '=' || v_dan * v_cnt);
+        v_cnt := v_cnt + 1;
+    exit when v_cnt > 9; 
+    end loop;
+end;
+/
+
+/*
+8. 구구단 2~9단까지 출력되도록 하시오.
+*/
+declare
+    v_factor number(2, 0) := 2;
+    v_last_factor number(2, 0) := 9;
+    v_multiply number(2, 0) := 1;
+begin
+    loop
+        loop
+            dbms_output.put_line(v_factor || '*' || v_multiply || '=' || v_factor * v_multiply);
+            v_multiply := v_multiply + 1;
+        exit when v_multiply > 9; 
+        end loop;
+        
+        v_factor := v_factor + 1;
+        v_multiply := 1;
+        exit when v_last_factor < v_factor;
+     end loop;
+end;
+/
+
+/*
+while {반복조건} loop
+    {실행 코드}
+end loop;
+*/
+
+declare
+    v_count number(1, 0) := 0;
+begin
+    while v_count < 3 loop
+        dbms_output.put_line('hello');
+        v_count := v_count + 1;
+    end loop;
+end;
+/
+
+-- 1 ~ 10까지 숫자 합
+declare
+    v_num number(2, 0) := 0;
+    v_sum number(2, 0) := 0;
+begin
+    while v_num <= 10
+    loop
+        v_sum := v_sum + v_num; 
+        v_num := v_num + 1;
+    end loop;
+    dbms_output.put_line(v_sum);
+end;
+/
+
+declare
+    v_tree varchar2(10) := '*';
+begin
+-- 오라클 함수에서 공백은 다 널
+-- length('') -> null
+-- length(' ') -> 1
+-- v_tree 초기값을 ''공백으로 하면 
+-- while nvl(length(v_tree), 0) <= 5 loop
+    while length(v_tree) <= 5 loop
+        dbms_output.put_line(v_tree);
+        v_tree := v_tree || '*';
+    end loop;
+end;
+/
+
+/*
+7. 치환변수(&)를 사용하면 숫자를 입력하면 
+해당 구구단이 출력되도록 하시오.
+예) 2 입력시 아래와 같이 출력
+2 * 1 = 2
+2 * 2 = 4
+...
+
+*/
+
+declare
+    v_factor number(1, 0) := &factor;
+    v_cnt number(2, 0) := 1;
+begin
+    while v_cnt <= 9
+    loop
+        dbms_output.put_line(v_factor || '*' || v_cnt || '=' || v_factor * v_cnt);
+        v_cnt := v_cnt + 1;
+    end loop;
+end;
+/
+
+/*
+8. 구구단 2~9단까지 출력되도록 하시오.
+*/
+declare
+    v_factor number(2, 0) := 2;
+    v_last_num number(2, 0) := 9;
+    v_multiply number(2, 0) := 1;
+begin
+    while v_last_num >= v_factor loop
+        while v_multiply <= v_last_num loop
+            dbms_output.put_line(v_factor || '*' || v_multiply || '=' || v_factor * v_multiply);
+            v_multiply := v_multiply + 1;
+        end loop;
+        
+        v_factor := v_factor + 1;
+        v_multiply := 1;
+     end loop;
+end;
+/
+
+-- for loop: 지정된 범위 안 모든 정수의 개수만큼 루핑
+
+begin
+    for num in -1 .. 5 loop
+        dbms_output.put_line(num);
+    end loop;
+end;
+/
+
+-- 최대값보다 최소값이 크면 실행안됨
+declare
+    v_max number(1, 0) := &최대값;
+begin
+    for idx in 1 .. v_max loop
+        if idx = 3 then
+            continue;
+        else 
+            dbms_output.put_line(idx);
+        end if;
+    end loop;
+end;
+/
+
+-- 역순으로 루핑(내림차순)
+begin
+    for idx in reverse 1 .. 5 loop
+        dbms_output.put_line(idx);
+    end loop;
+end;
+/
+
+declare
+    v_sum number(2, 0) := 0;
+begin
+    for idx in 1 .. 10 loop
+        v_sum := v_sum + idx;
+    end loop;
+    dbms_output.put_line(v_sum);
+end;
+/
+
+DECLARE
+    v_tree varchar2(10) := '*';
+BEGIN
+    for star in 1 .. 5 loop
+        dbms_output.put_line(v_tree);
+        v_tree := v_tree || '*';
+    end loop;
+END;
+/
+
+BEGIN
+    for line in 1 .. 5 loop
+        for tree in 1 .. line loop
+            dbms_output.put('*');
+            end loop;
+        dbms_output.put_line('');
+    end loop;
+END;
+/
+
+declare
+    v_factor number(1, 0) := &factor;
+    v_cnt number(2, 0) := 1;
+begin
+    for idx in 1 .. 9 loop    
+        dbms_output.put_line(v_factor || '*' || v_cnt || '=' || v_factor * v_cnt);
+        v_cnt := v_cnt + 1;
+    end loop;
+end;
+/
+
+declare
+    v_factor number(2, 0) := 2;
+    v_last_num number(2, 0) := 9;
+    v_multiply number(2, 0) := 1;
+begin
+    for dan in v_factor .. v_last_num loop
+        for num in v_multiply .. v_last_num loop
+            dbms_output.put_line(v_factor || '*' || v_multiply || '=' || v_factor * v_multiply);
+            v_multiply := v_multiply + 1;
+        end loop;
+        
+        v_factor := v_factor + 1;
+        v_multiply := 1;
+     end loop;
+end;
+/
+
+
+
+
