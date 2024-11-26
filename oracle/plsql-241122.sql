@@ -69,7 +69,7 @@ FROM employees e
 -- 나오게 해주는 프로시저.
 -- off 하면 내부에서를 실행되지만 화면으로 출력은 안됨
 -- 고정되는 값이 아니라서 sql 시작할 때 필수 명령어~~
---set serveroutput on
+set serveroutput on
 
 -- /: 블럭의 끝. 컴파일과 실행을 동시에 함. 항상 새 줄에다가 쓰기
 begin
@@ -851,6 +851,47 @@ begin
 end;
 /
 
+/*
+2 ~ 9 단별로 세로로 배치
+*/
+begin
+    for num in 1 .. 9 loop
+        for dan in 2 .. 9 loop
+            dbms_output.put(dan || 'x' || num || ' = ' || dan * num || ' ');
+        end loop;
+        dbms_output.put_line(' ');
+    end loop;
+end;
+/
 
+
+/*
+9. 구구단 1~9단까지 출력되도록 하시오.
+   (단, 홀수단 출력)
+   나머지 연산자. 
+   ex) if mod(num, 2) = 0
+*/
+
+declare
+    v_factor number(2, 0) := 1;
+    v_last_num number(2, 0) := 9;
+    v_multiply number(2, 0) := 1;
+begin
+    for dan in v_factor .. v_last_num loop
+    
+        if mod(dan, 2) <> 0 then
+--        if mod(dan, 2) = 1 then
+            for num in v_multiply .. v_last_num loop
+                dbms_output.put(v_factor || '*' || v_multiply || '=' || v_factor * v_multiply || ' ');
+                v_multiply := v_multiply + 1;
+            end loop;
+        end if;    
+
+        dbms_output.put_line(' ');
+        v_factor := v_factor + 1;
+        v_multiply := 1;
+     end loop;
+end;
+/
 
 
