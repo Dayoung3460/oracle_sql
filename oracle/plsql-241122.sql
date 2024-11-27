@@ -357,7 +357,7 @@ end;
  --                     쿼리문 하나씩 가능. 이전 쿼리 메모리를 덮어씀
 --                     직접 접근 불가
 --                     속성- SQL%ROWCOUNT: 가장 최근 SQL 문이 적용된 행의 개수를 알 수 있음(dml 실행결과 확인) create insert update delete
- -- 명시적 커서: 이름 있. 재호출이 가능함. 
+ -- 명시적 커서: 이름 있. 재호출이 가능함. select문을 가지고 있는거임 테이블이 아니라
  
 begin
     delete from employees

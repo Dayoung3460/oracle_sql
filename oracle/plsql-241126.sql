@@ -571,3 +571,25 @@ BEGIN
 END;
 /
 
+
+DECLARE
+    cursor emp_salary_cursor is
+        select last_name, salary, (salary*12+(salary*nvl(commission_pct,0)*12)) salary_year
+        from employees
+        where department_id = &부서번호;
+        
+    v_emp_rec emp_salary_cursor%rowtype;
+BEGIN
+    open emp_salary_cursor;
+    
+    loop 
+        fetch emp_salary_cursor into v_emp_rec;
+        exit when emp_salary_cursor%notfound;
+      
+        dbms_output.put_line(v_emp_rec.last_name || ' ' || v_emp_rec.salary || ' ' || v_emp_rec.salary_year);
+    end loop;
+    
+    close emp_salary_cursor;
+
+END;
+/
