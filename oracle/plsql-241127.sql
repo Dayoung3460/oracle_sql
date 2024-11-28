@@ -498,23 +498,24 @@ drop procedure yedam_ju;
 단, 해당사원이 없는 경우 "해당사원이 없습니다." 출력
 예) EXECUTE TEST_PRO(176)
 */
-
-
+/*
+procedure에서는 치환변수 사용안함.
+객체로 등록할 때 치환변수 리터럴 값으로 등록됨
+*/ 
+drop procedure test_pro;
 
 create procedure test_pro
-(p_eid in number)
+(p_eid in employees.employee_id%type)
 is
-    e_emp_del_fail exception;
+    
 begin
     delete from employees
     where employee_id = p_eid;
     
+    -- dml일 경우 sql%rowcount
     if sql%rowcount = 0 then
-        raise e_emp_del_fail;
-    end if;
-exception
-    when e_emp_del_fail then
         dbms_output.put_line('해당사원이 없습니다');
+    end if;
 end;
 /
 
@@ -546,7 +547,8 @@ begin
     where employee_id = p_eid;
     
     -- \w: equivalent of [A-Za-z0-9_]
-    v_ename := substr(v_ename, 1, 1) || regexp_replace(substr(v_ename, 2), '\w', '*');
+--    v_ename := substr(v_ename, 1, 1) || regexp_replace(substr(v_ename, 2), '\w', '*');
+    v_ename := rpad(substr(v_ename, 1, 1), length(v_ename), '*');
     dbms_output.put_line(v_ename);
 end;
 /
@@ -568,26 +570,70 @@ select * from employees;
 실행) EXECUTE get_emp(30)
 */
 
+select employee_id, last_name, to_char(sysdate, 'yyyy') - to_char(hire_date, 'yyyy') + 1 year_count
+from employees
+where department_id = 90;
+        
+select employee_id, last_name, hire_date
+from employees
+where department_id = 90;
+
+drop procedure get_emp;
+
+-- 연차: 들어온지 6갤 ex) 1년차
+-- 경력: 개월수부터 시작 ex) 2년 3개월
+
+update employees
+set hire_date = '2010-10-22'
+where employee_id = 202;
+
+-- 들어온지 2년 4갤 ex) 3년차
+-- trunc 내림
+-- round 반올림
+-- ceil 올림
+select employee_id, hire_date, 
+        months_between(sysdate, hire_date) 총개월수,
+        ceil(months_between(sysdate, hire_date) / 12) 연차1, 
+        trunc(months_between(sysdate, hire_date) / 12, 0) + 1 연차2, --위와 같음. trunc(a, b) b가 0: 소수점 표시x, 1: 소수점 첫째자리 절사, -1: 1단위 절사
+        
+        trunc(months_between(sysdate, hire_date) / 12, 0) 년, -- 경력
+        mod(months_between(sysdate, hire_date), 12) 개월,
+        round(mod(months_between(sysdate, hire_date), 12)) "개월(일수반올림)"        
+from employees;
+
 create procedure get_emp
-(p_dept_id in number)
+(p_dept_id in employees.department_id%type)
 is
     cursor emp_dept_cursor is
-        select employee_id, last_name, (sysdate - hire_date) year_count
+        select employee_id, last_name, ceil(months_between(sysdate, hire_date) / 12) year_count
         from employees
-        where department_id = &p_dept_id;
+        where department_id = p_dept_id;
+    
+    v_emp_info emp_dept_cursor%rowtype;
+    
+    e_dept_found_fail exception;
         
 begin
---    for emp_rec in emp_dept_cursor loop
---        dbms_output.put_line(emp_rec.employee_id || ' ' || emp_rec.last_name || ' ' || emp_rec.year_count);
---    end loop;
+    open emp_dept_cursor;
     
-    open emp_dept_cursor
+    loop
+        fetch emp_dept_cursor into v_emp_info;
+            exit when emp_dept_cursor%notfound;
+            
+            dbms_output.put_line(v_emp_info.employee_id || ' ' || v_emp_info.last_name || ' ' || v_emp_info.year_count || '년차');
+    end loop;
     
-    fetch emp_dept_cursor into 
+    if emp_dept_cursor%rowcount = 0 then
+        raise e_dept_found_fail;
+    end if;
     
-    close emp_dept_cursor
+    close emp_dept_cursor;
     
-    
+exception
+    when e_dept_found_fail then
+        dbms_output.put_line('해당 부서에는 사원이 없습니다.');
+        -- 예외처리 이후에도 커서 닫아주면 좋음
+        close emp_dept_cursor;
 end;
 /
 
@@ -605,3 +651,40 @@ select * from employees;
 만약 입력한 사원이 없는 경우에는 ‘No search employee!!’라는 메시지를 출력하세요.(예외처리)
 실행) EXECUTE y_update(200, 10)
 */
+drop procedure y_update;
+
+create procedure y_update
+(p_eid in employees.employee_id%type,
+ p_raise_pct in number)
+is
+ 
+e_emp_not_found exception;
+ 
+begin
+    update employees
+    set salary = salary + (salary * (p_raise_pct / 100))
+    where employee_id = p_eid;
+    
+    if sql%rowcount = 0 then
+        raise e_emp_not_found;
+    end if;
+ 
+exception
+    when e_emp_not_found then
+        dbms_output.put_line('No search employee!!');
+end;
+/
+
+EXECUTE y_update(200, 10)
+
+declare
+    v_eid employees.employee_id%type := &사원번호;
+    v_raise_pct number(2, 0) := &급여증가치;
+begin
+    y_update(v_eid, v_raise_pct);
+end;
+/
+
+select * from employees;
+
+ 
