@@ -21,53 +21,53 @@ drop procedure add_plan_by_orders;
 -- 생산계획번호plan_num(count임), 생산계획명 plan_name, 제품코드 product_code, 계획수량 plan_qty
 -- 계획일자 plan_create_date(sysdate), 계획시작일자 plan_start_date, 계획종료일자 plan_end_date, 
 -- 계획진행상태 plan_status(default plan_waiting), 생산계획자 emp_num
-DELIMITER $$
-CREATE PROCEDURE add_plan_by_orders(
-	IN json_array TEXT,
-    IN p_plan_name varchar(50),
-    in p_product_code varchar(50),
-    in p_plan_qty int,
-    in p_plan_start_date datetime,
-    in p_plan_end_date datetime,
-    in p_emp_num int
-)
-BEGIN
-	DECLARE i INT DEFAULT 1;
-    DECLARE array_length INT;
-    DECLARE current_value TEXT;
+-- DELIMITER $$
+-- CREATE PROCEDURE add_plan_by_orders(
+-- 	IN json_array TEXT,
+--     IN p_plan_name varchar(50),
+--     in p_product_code varchar(50),
+--     in p_plan_qty int,
+--     in p_plan_start_date datetime,
+--     in p_plan_end_date datetime,
+--     in p_emp_num int
+-- )
+-- BEGIN
+-- 	DECLARE i INT DEFAULT 1;
+--     DECLARE array_length INT;
+--     DECLARE current_value TEXT;
 
-	DECLARE plan_num INT;
-    DECLARE order_num INT;
-    declare count int;
-    
-    SET array_length = JSON_LENGTH(json_array);
-    
-    select count(*)
-    into count
-    from order_plan_relation;
-    
-    set count = count + 1;
-    
-    -- 반복적으로 JSON 배열 요소 추출
-    WHILE i <= array_length DO
-        SET current_value = JSON_UNQUOTE(JSON_EXTRACT(json_array, CONCAT('$[', i - 1, ']')));
-        
-        INSERT INTO order_plan_relation (plan_num, order_num)
-        VALUES (count, current_value);
+-- 	DECLARE plan_num INT;
+--     DECLARE order_num INT;
+--     declare count int;
+--     
+--     SET array_length = JSON_LENGTH(json_array);
+--     
+--     select count(*)
+--     into count
+--     from order_plan_relation;
+--     
+--     set count = count + 1;
+--     
+--     -- 반복적으로 JSON 배열 요소 추출
+--     WHILE i <= array_length DO
+--         SET current_value = JSON_UNQUOTE(JSON_EXTRACT(json_array, CONCAT('$[', i - 1, ']')));
+--         
+--         INSERT INTO order_plan_relation (plan_num, order_num)
+--         VALUES (count, current_value);
 
-        SET i = i + 1;
-    END WHILE;
-    
-    -- 생산계획번호plan_num(count임), 생산계획명 plan_name, 제품코드 product_code, 계획수량 plan_qty
--- 계획일자 plan_create_date(sysdate), 계획시작일자 plan_start_date, 계획종료일자 plan_end_date, 
--- 계획진행상태 plan_status(default plan_waiting), 생산계획자 emp_num
-    
-    -- order_plan_relation의 plan_num이 production_plan의 plan_num에도 들어감
-    insert into production_plan(plan_num, plan_name, product_code, plan_qty, plan_start_date, plan_end_date, plan_emp)
-    value(count, p_plan_name, p_product_code, p_plan_qty, p_plan_start_date, p_plan_end_date, p_emp_num);
-END$$
+--         SET i = i + 1;
+--     END WHILE;
+--     
+--     -- 생산계획번호plan_num(count임), 생산계획명 plan_name, 제품코드 product_code, 계획수량 plan_qty
+-- -- 계획일자 plan_create_date(sysdate), 계획시작일자 plan_start_date, 계획종료일자 plan_end_date, 
+-- -- 계획진행상태 plan_status(default plan_waiting), 생산계획자 emp_num
+--     
+--     -- order_plan_relation의 plan_num이 production_plan의 plan_num에도 들어감
+--     insert into production_plan(plan_num, plan_name, product_code, plan_qty, plan_start_date, plan_end_date, plan_emp)
+--     value(count, p_plan_name, p_product_code, p_plan_qty, p_plan_start_date, p_plan_end_date, p_emp_num);
+-- END$$
 
-DELIMITER ;
+-- DELIMITER ;
 
 select * from employee;
 
