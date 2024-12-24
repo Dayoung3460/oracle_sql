@@ -39,3 +39,4 @@ select emp_num, name
   
 insert INTO employee(emp_num, name, birth, tel, job, job_num, position, employment_date, level)
 values(23423, '표하연', '1999-11-11', '010-1233-1233', '관리자', 6, '관리자', '2020-02-02', 3);
+

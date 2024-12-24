@@ -10,8 +10,8 @@ values(100, 100000, 'preparing', 1000, 'P031', 9);
 
 select * from orders;
 select * from orderlists;
-SELECT *, rownum() FROM production_plan; -- 6
-select * from order_plan_relation; -- 12
+SELECT *, rownum() FROM production_plan; 
+select * from order_plan_relation; 
 
 ALTER TABLE production_plan
 DROP plan_qty;
