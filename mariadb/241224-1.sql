@@ -256,3 +256,5 @@ END;
 DELIMITER ;
 
 commit;
+
+ CALL qc_p_packaging_input_list(32,3,7, @result);
