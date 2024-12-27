@@ -258,3 +258,46 @@ DELIMITER ;
 commit;
 
  CALL qc_p_packaging_input_list(32,3,7, @result);
+ 
+select ph.process_work_header_num, production_order_num, process_name, your_machine(pb.machine_num, 'machine_name')  
+from process_work_header ph join process_work_body pb
+on ph.process_work_header_num = pb.process_work_header_num;
+ 
+ select * from process_work_header;
+  select * from process_work_body;
+  
+  update process_work_header
+  set product_name = '포도17'
+  where process_work_header_num in (1, 2, 3, 4, 5, 6, 7, 8, 9, 13, 14, 15, 16, 17, 18, 19, 20, 21);
+  
+  
+select 
+	ph.process_work_header_num, 
+    production_order_num, 
+    process_name, 
+    your_machine(pb.machine_num, 'machine_name') as machine_name,    
+    your_employee(pb.emp_num, 'name') as emp_name,
+    ph.product_name,
+    ph.capacity,
+    pb.process_complete_qty,
+    pb.fail_qty,
+	pb.success_qty,
+    pb.partial_process_start_time,
+    pb.partial_process_end_time,
+    pb.partial_process_status
+from process_work_header ph join process_work_body pb
+on ph.process_work_header_num = pb.process_work_header_num
+where pb.partial_process_status = 'partial_process_complete';
+
+select * from qc_packaging;
+
+
+select * from product;
+
+select * from employee;
+
+select * from process_work_body;
+select * from process_work_header;
+
+-- [57,70,1]
+CALL qc_p_cleaning_input_list(57,70,1, @result);

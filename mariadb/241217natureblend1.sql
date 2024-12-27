@@ -285,3 +285,137 @@ select * from invalid_material
 where 
 
 commit;
+
+select * from production_order;
+select * from production_plan;
+select * from order_plan_relation;
+
+select * from process_work_header;
+select * from process_work_body;
+
+select * from 
+
+select 
+	production_order_num, 
+	production_order_name, 
+    pp.plan_name, 
+    your_product(po.product_code, 'product_name') as product_name,
+    po.work_date,
+    po.production_order_qty,
+    po.production_order_status
+from production_order po join production_plan pp
+where po.plan_num = pp.plan_num;
+
+
+
+select plan_name, p.plan_create_date, p.plan_start_date,p.plan_end_date, p.plan_status, p.plan_emp, p.plan_num, your_product(o.product_code, 'product_name') as product_name, o.product_code, o.plan_qty
+from production_plan p join order_plan_relation o
+where p.plan_num = o.plan_num;
+
+update production_plan
+set plan_status = ?
+where plan_num = ?;
+
+select 
+rownum(),
+        production_order_num, 
+        production_order_name, 
+        po.plan_num, 
+        po.product_code, 
+        p.product_name, 
+        DATE_FORMAT(work_date, '%Y-%m-%d') AS work_date, 
+        production_order_qty, 
+        production_order_date, 
+        emp_num, 
+        po.production_order_status,
+        o.order_plan_num
+    from production_order po inner join product p right join order_plan_relation o
+        on po.product_code = p.product_code
+        and o.plan_num = po.plan_num
+    where po.production_order_status in ('work_waiting', 'work_in_process');
+
+
+select 
+rownum(),
+        production_order_num, 
+        production_order_name, 
+        po.plan_num, 
+        po.product_code, 
+        p.product_name, 
+        DATE_FORMAT(work_date, '%Y-%m-%d') AS work_date, 
+        production_order_qty, 
+        production_order_date, 
+        emp_num, 
+        po.production_order_status
+    from production_order po inner join product p inner join production_plan pp
+        on po.product_code = p.product_code
+        and pp.plan_num = po.plan_num;
+        
+select * from material_lot_qty1;
+        
+drop procedure deductMaterial;
+
+DELIMITER //
+CREATE PROCEDURE `deductMaterial`(
+    IN p_production_order_num INT
+)
+BEGIN
+    -- 변수 선언
+    DECLARE v_material_code VARCHAR(50);
+    DECLARE v_lot_code VARCHAR(50);
+    DECLARE v_material_qty INT;
+    DECLARE done INT DEFAULT 0;
+
+    -- 커서 선언
+    DECLARE cur CURSOR FOR
+        SELECT material_code, lot_code, material_qty
+        FROM invalid_material
+        WHERE production_order_num = p_production_order_num;
+
+    -- 핸들러 선언
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+    -- 커서 열기
+    OPEN cur;
+
+    -- 레코드 순회
+    read_loop: LOOP
+        -- 커서에서 한 행씩 추출
+        FETCH cur INTO v_material_code, v_lot_code, v_material_qty;
+
+        -- 종료 조건
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+        -- 1. material_lot_qty1 테이블의 out_qty 업데이트
+        UPDATE material_lot_qty1
+        SET out_qty = out_qty + v_material_qty
+        WHERE material_code = v_material_code
+		  AND material_nomal = 'b1'
+          AND lot_code = v_lot_code;
+
+        -- 2. stok_qty 재계산
+        UPDATE material_lot_qty1
+        SET stok_qty = in_qty - out_qty
+        WHERE material_code = v_material_code
+          AND material_nomal = 'b1'
+          AND lot_code = v_lot_code;
+
+        -- 3. invalid_material 테이블의 is_out, out_date 업데이트
+        UPDATE invalid_material
+        SET is_out = TRUE,
+            out_date = NOW()
+        WHERE material_code = v_material_code
+          AND lot_code = v_lot_code
+          AND production_order_num = p_production_order_num;
+
+    END LOOP;
+
+    -- 커서 닫기
+    CLOSE cur;
+
+END//
+DELIMITER ;
+
+
