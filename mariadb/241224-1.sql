@@ -301,3 +301,64 @@ select * from process_work_header;
 
 -- [57,70,1]
 CALL qc_p_cleaning_input_list(57,70,1, @result);
+
+select 
+      plan_name, 
+      p.plan_create_date, 
+      p.plan_start_date,
+      p.plan_end_date, 
+      p.plan_status, 
+      p.plan_emp, 
+      p.plan_num,
+      your_product(o.product_code, 'product_name') as product_name,
+      o.plan_qty
+  from production_plan p join order_plan_relation o
+  where p.plan_num = o.plan_num
+   and product_code = 'P001'
+   and plan_start_date >= '2024-12-23'
+   and plan_end_date <= '2025-01-01';
+   
+   select 
+      plan_name, 
+      p.plan_create_date, 
+      p.plan_start_date,
+      p.plan_end_date, 
+      p.plan_status, 
+      p.plan_emp, 
+      p.plan_num,
+      your_product(o.product_code, 'product_name') as product_name,
+      o.plan_qty,
+      o.order_plan_num
+  from production_plan p join order_plan_relation o
+  where p.plan_num = o.plan_num;
+  
+  select * from order_plan_relation;
+  select * from production_plan;
+  
+  delete from order_plan_relation
+  where order_plan_num in (2, 3);
+  
+  SELECT 
+        product_code,
+          product_name,
+          expiration_date
+FROM product;
+  
+  
+select o.plan_num, o.order_plan_num
+from production_plan p join order_plan_relation o
+where p.plan_num = o.plan_num;
+
+-- plan_end_date, plan_name, plan_qty, plan_start_date, product_name 수정가능
+-- plan_start_date, plan_end_date, plan_name - production_plan에서 수정
+-- plan_qty, product_name - order_plan_relation에서 수정
+
+update production_plan
+set plan_start_date = '2024-12-13', plan_end_date = '2024-12-31', plan_name = '수정계획'
+where plan_num = 1;
+
+update order_plan_relation
+set plan_qty = 20, product_code = 'P002'
+where order_plan_num = 10;
+
+select * from employee;
