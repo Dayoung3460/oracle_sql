@@ -362,3 +362,143 @@ set plan_qty = 20, product_code = 'P002'
 where order_plan_num = 10;
 
 select * from employee;
+
+drop procedure getMaterialStock;
+
+DELIMITER $$
+CREATE PROCEDURE `getMaterialStock`(
+	IN p_material_code_json_array TEXT
+)
+BEGIN
+	DECLARE i INT DEFAULT 1;
+	DECLARE material_code_array_length INT;
+	DECLARE material_code_value TEXT;
+
+	-- 기존 테이블 삭제 및 새로 생성
+	DROP TEMPORARY TABLE IF EXISTS temp_result;
+
+	-- 임시 테이블 생성
+	CREATE TEMPORARY TABLE IF NOT EXISTS temp_result (
+		material_code VARCHAR(50),
+        lot_seq int,
+        material_name VARCHAR(50),
+		lot_code VARCHAR(50),
+		stok_qty INT,
+		limit_date DATE,
+        invalid_qty int
+	);
+
+	START TRANSACTION;
+
+	SET material_code_array_length = JSON_LENGTH(p_material_code_json_array);
+	
+    WHILE i <= material_code_array_length DO
+		SET material_code_value = JSON_UNQUOTE(JSON_EXTRACT(p_material_code_json_array, CONCAT('$[', i - 1, ']')));
+	
+		-- 결과값을 임시 테이블에 삽입
+		INSERT INTO temp_result (lot_seq, material_code, material_name, lot_code, stok_qty, limit_date, invalid_qty)
+		select 
+			m1.lot_seq,
+			m1.material_code, 
+			m2.material_name, 
+            m1.lot_code, 
+            stok_qty, 
+            limit_date,
+			(select sum(material_qty) 
+				from invalid_material i
+				where m1.lot_code = i.lot_code) as invalid_qty
+		from material_lot_qty1 m1 inner join material m2
+        on m1.material_code = m2.material_code
+		where material_nomal = 'b1' 
+			and material_lot_state = 'c1'
+			and m1.material_code = material_code_value;
+
+		SET i = i + 1;
+	END WHILE;
+
+	select lot_seq, material_code, material_name, lot_code, stok_qty, limit_date, invalid_qty from temp_result;
+    commit;
+END$$
+DELIMITER ;
+
+select * from invalid_material;
+
+ALTER TABLE invalid_material
+ADD lot_seq int;
+
+drop procedure deductMaterial;
+
+DELIMITER $$
+CREATE PROCEDURE `deductMaterial`(
+    IN p_production_order_num INT
+)
+BEGIN
+    -- 변수 선언
+    DECLARE v_material_code VARCHAR(50);
+    DECLARE v_lot_code VARCHAR(50);
+    DECLARE v_lot_seq int;
+    DECLARE v_material_qty INT;
+    DECLARE done INT DEFAULT 0;
+
+    -- 커서 선언
+    DECLARE cur CURSOR FOR
+        SELECT material_code, lot_code, lot_seq, material_qty
+        FROM invalid_material
+        WHERE production_order_num = p_production_order_num;
+
+    -- 핸들러 선언
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+    -- 커서 열기
+    OPEN cur;
+
+    -- 레코드 순회
+    read_loop: LOOP
+        -- 커서에서 한 행씩 추출
+        FETCH cur INTO v_material_code, v_lot_code, v_lot_seq, v_material_qty;
+
+        -- 종료 조건
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+        -- 1. material_lot_qty1 테이블의 out_qty 업데이트
+        UPDATE material_lot_qty1
+        SET out_qty = out_qty + v_material_qty
+        WHERE material_code = v_material_code
+		  AND material_nomal = 'b1'
+          AND lot_code = v_lot_code
+          and lot_seq = v_lot_seq;
+
+        -- 2. stok_qty 재계산
+        UPDATE material_lot_qty1
+        SET stok_qty = in_qty - out_qty
+        WHERE material_code = v_material_code
+          AND material_nomal = 'b1'
+          AND lot_code = v_lot_code
+          and lot_seq = v_lot_seq;
+
+        -- 3. invalid_material 테이블의 is_out, out_date 업데이트
+        UPDATE invalid_material
+        SET is_out = TRUE,
+            out_date = NOW()
+        WHERE material_code = v_material_code
+          AND lot_code = v_lot_code
+          and lot_seq = v_lot_seq
+          AND production_order_num = p_production_order_num;
+
+    END LOOP;
+
+    -- 커서 닫기
+    CLOSE cur;
+
+END$$
+DELIMITER ;
+
+commit;
+
+select * from bom_material;
+select * from bom;
+select * from process_chart;
+select * from production_order;
+select * from employee;

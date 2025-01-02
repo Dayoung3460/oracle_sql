@@ -1,4 +1,4 @@
-qc_packagingUSE natureblend;
+employeeemployeeqc_packagingUSE natureblend;
 
 CREATE TABLE `production_plan` (
 	`plan_code`	varchar(20)	NOT NULL,
