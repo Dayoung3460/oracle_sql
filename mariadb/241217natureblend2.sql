@@ -80,4 +80,4 @@ ALTER TABLE order_plan_relation DROP FOREIGN KEY order_num;
 select * from order_plan_relation;
 
 
-
+select * from material_lot_qty1;

@@ -418,4 +418,192 @@ BEGIN
 END//
 DELIMITER ;
 
+select * from employee;
+select * from process_work_header;
+select * from process_work_body;
+
+select * from production_plan;
+select * from order_plan_relation;
+
+delete from production_plan
+where plan_num >= 29;
+
+SELECT
+       o.order_num,
+       order_amount,
+       total_price,
+       order_status,
+       per_price,
+       o.product_code,
+       o.orderlist_num,
+       ol.order_date,
+       ol.due_date,
+       p.product_name
+     FROM orders o INNER JOIN orderlists ol INNER JOIN product p 
+           ON o.orderlist_num = ol.orderlist_num
+     and o.product_code = p.product_code
+       where o.product_code = 'P001';
+       
+select * from orders;
+select * from orderlists;
+select * from product;
+select * from order_plan_relation;
+
+SELECT
+ROW_NUMBER() OVER(ORDER BY o.order_num) AS rownum,
+       o.order_num,
+       order_amount,
+       total_price,
+       order_status,
+       per_price,
+       o.product_code,
+       o.orderlist_num,
+       ol.order_date,
+       ol.due_date,
+       p.product_name,
+       SUM(IFNULL(opr.plan_qty, 0)) AS plan_qty,
+       order_amount - SUM(IFNULL(opr.plan_qty, 0)) AS unplanned_qty
+     FROM orders o 
+     INNER JOIN orderlists ol 
+		ON o.orderlist_num = ol.orderlist_num
+     INNER JOIN product p 
+      on o.product_code = p.product_code
+     left join order_plan_relation opr
+       on opr.order_num = o.order_num 
+	where o.order_status != 'shipped'
+    and p.product_code = 'P001'
+    GROUP BY o.order_num, order_amount, total_price, order_status, 
+         per_price, o.product_code, o.orderlist_num, ol.order_date, 
+         ol.due_date, p.product_name
+ORDER BY o.order_num;
+
+select 
+      plan_name, 
+      p.plan_create_date, 
+      p.plan_start_date,
+      p.plan_end_date, 
+      p.plan_status, 
+      p.plan_emp, 
+      p.plan_num,
+      your_product(o.product_code, 'product_name') as product_name,
+      o.plan_qty,
+      o.order_plan_num,
+      o.product_code
+  from production_plan p join order_plan_relation o
+  where p.plan_num = o.plan_num
+  order by order_plan_num desc;
+  
+  select * from material_lot_qty1;
+  
+  select * from employee;
+  select * from invalid_material;
+  select * from process_work_header;
+  
+  select 
+        production_order_num, 
+        production_order_name, 
+        plan_num, 
+        po.product_code, 
+        p.product_name,
+        work_date, 
+        production_order_qty, 
+        production_order_date, 
+        emp_num, 
+        po.production_order_status
+    from production_order po inner join product p
+        on po.product_code = p.product_code
+    where po.production_order_status in ('work_completed')
+    order by production_order_num desc;
+    
+select * from production_order;
+  
+  delete from process_work_header
+  where process_work_header_num in (22, 23, 24, 33, 34);
+    
+select process_code, process_name from process;
+
+select
+        ph.product_name,
+        ph.capacity,
+        ph.product_code
+    from process_work_header ph
+             join process_work_body pb
+                  on ph.process_work_header_num = pb.process_work_header_num
+    where pb.partial_process_status = 'partial_process_complete'
+	group by product_name, capacity
+    order by production_order_num desc;
+
+select * from process_work_header;
+select * from process_work_body;
+
+delete from process_work_header
+where process_work_header_num in (1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+select * from product;
+
+select
+        rownum() as no,
+        ph.process_work_header_num,
+        production_order_num,
+        process_name,
+        process_code,
+        your_machine(pb.machine_num, 'machine_name') as machine_name,
+        your_employee(pb.emp_num, 'name') as emp_name,
+        pb.process_complete_qty,
+        pb.fail_qty,
+        pb.success_qty,
+        pb.partial_process_start_time,
+        pb.partial_process_end_time,
+        ph.product_name,
+        ph.product_code,
+        ph.capacity
+    from process_work_header ph
+             join process_work_body pb
+                  on ph.process_work_header_num = pb.process_work_header_num
+    where pb.partial_process_status = 'partial_process_complete'
+    order by production_order_num desc;
+    
+    select
+        production_order_num,
+        process_name,
+        process_code,
+        your_machine(pb.machine_num, 'machine_name') as machine_name,
+        your_employee(pb.emp_num, 'name') as emp_name,
+        pb.process_complete_qty,
+        pb.fail_qty,
+        pb.success_qty,
+        pb.partial_process_start_time,
+        pb.partial_process_end_time,
+        ph.product_name,
+        ph.capacity,
+        pb.partial_process_status
+    from process_work_header ph
+             join process_work_body pb
+                  on ph.process_work_header_num = pb.process_work_header_num
+    where pb.partial_process_status = 'partial_process_complete'
+    and production_order_num = 24;
+    
+select * from process_work_header;
+select * from process_work_body;
+
+delete from process_work_header
+where process_work_header_num in (35, 36, 37, 38, 39);
+
+select * from material_lot_qty1;
+
+select * from production_order;
+select * from material_input;
+select * from material;
+
+delete from production_order
+where production_order_num in (31, 32);
+
+
+delete from process_work_header
+where process_work_header_num in (52, 53 ,54, 55, 56, 57);
+
+select * from employee;
+select * from invalid_material; 
+
+select * from employee;
 
