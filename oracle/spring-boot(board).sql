@@ -69,3 +69,5 @@ select /*+index_desc(TBL_BOARD PK_BOARD)*/ ROWNUM RN, BNO, TITLE, WRITER, REGDAT
 -- delete from tbl_board where bno > 500;
 
 truncate table tbl_board;
+
+select * from departments;
