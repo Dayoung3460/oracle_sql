@@ -1,5 +1,10 @@
 select * from grpwr_in_approval;
 
+ALTER TABLE STDR_DOCUMENT 
+MODIFY DOCUMENT_TEMPLATE VARCHAR2(4000);
+
+commit;
+
 CREATE SEQUENCE stdr_doc_seq
 START WITH 1       
 INCREMENT BY 1     
@@ -89,3 +94,41 @@ WHERE employee_id = 'emp003';
 select cmmn_code
         from hr_employee h
                  join cmmn c on (h.authority = c.cmmn_code);
+                 
+select * from stdr_dept;
+
+update stdr_dept
+set company_num = 1;
+
+CREATE TABLE stdr_dept (
+    dept_no   NUMBER PRIMARY KEY,       -- 번호 (기본 키)
+    dept_name VARCHAR2(50) NOT NULL,    -- 부서명
+    branch    VARCHAR2(50) NOT NULL,    -- 지점명
+    address   VARCHAR2(255) NOT NULL    -- 주소
+);
+INSERT INTO stdr_dept (dept_no, dept_name, branch, address) VALUES (1, '영업', '본사', '서울특별시 중구 중앙대로 101');
+INSERT INTO stdr_dept (dept_no, dept_name, branch, address) VALUES (2, '제품', '본사', '서울특별시 중구 중앙대로 101');
+INSERT INTO stdr_dept (dept_no, dept_name, branch, address) VALUES (3, '지점', '중구', '대구 중구 중앙대로 403');
+INSERT INTO stdr_dept (dept_no, dept_name, branch, address) VALUES (4, '지점', '남구', '대구 남구 남대로 50');
+
+CREATE SEQUENCE stdr_dept_seq 
+    START WITH 1      -- 1부터 시작
+    INCREMENT BY 1    -- 1씩 증가
+    NOCACHE           -- 캐시 없이 사용
+    NOCYCLE;          -- 최대값 도달 시 초기화 안 함
+
+commit;
+
+ALTER TABLE STDR_DEPT 
+ADD company_num NUMBER(8,0);
+
+SELECT CONSTRAINT_NAME, TABLE_NAME
+FROM USER_CONSTRAINTS
+WHERE TABLE_NAME = 'STDR_DEPT' AND CONSTRAINT_TYPE = 'P';
+
+ALTER TABLE STDR_DEPT DROP PRIMARY KEY;
+ALTER TABLE STDR_DEPT 
+ADD CONSTRAINT pk_stdr_dept PRIMARY KEY (dept_no);
+
+select * from grpwr_in_approval;
+select * from stdr_document;
