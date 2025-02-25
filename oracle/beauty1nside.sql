@@ -1,5 +1,5 @@
 select * from grpwr_in_approval;
-
+select * from stdr_document;
 CREATE SEQUENCE stdr_doc_seq
 START WITH 1       
 INCREMENT BY 1     
@@ -17,8 +17,8 @@ INSERT INTO GRPWR_IN_APPROVAL (
     IN_APPROVAL_FILE_PATH, COMPANY_NUM
 ) VALUES 
 (
-    grpwr_apprv_seq.NEXTVAL, 5, 3, SYSDATE, 
-    'WAITING', '<p>Approval request for project A</p>', NULL, 
+    grpwr_apprv_seq.NEXTVAL, 5, 1, SYSDATE, 
+    'WAITING', '<p>????????????</p>', NULL, 
     NULL, 1
 );
 commit;

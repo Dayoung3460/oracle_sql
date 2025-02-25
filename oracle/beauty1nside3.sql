@@ -1,5 +1,19 @@
-select * from grpwr_in_approval;
+select * from grpwr_in_approval where employee_num = 1;
 
+update hr_employee
+set employee_pw = '$2a$10$CN.xGP4ObA.BQfiBW935YuHvmDZn9o9KyUVh0bL5PBZg09A2Rk.am'
+where employee_id = 240103001;
+
+commit;
+
+select * from stdr_document;
+select * from stdr_dept;
+select * from grpwr_in_approval where company_num = 1;
+
+update stdr_dept
+set branch = '남구점' where dept_no = 4;
+
+select * from hr_employee;
 ALTER TABLE STDR_DOCUMENT 
 MODIFY DOCUMENT_TEMPLATE VARCHAR2(4000);
 
@@ -122,6 +136,11 @@ commit;
 ALTER TABLE STDR_DEPT 
 ADD company_num NUMBER(8,0);
 
+ALTER TABLE GRPWR_IN_APPROVAL 
+MODIFY IN_APPROVAL_REQUEST_CONTENT VARCHAR2(2000);
+
+
+
 SELECT CONSTRAINT_NAME, TABLE_NAME
 FROM USER_CONSTRAINTS
 WHERE TABLE_NAME = 'STDR_DEPT' AND CONSTRAINT_TYPE = 'P';
@@ -132,3 +151,6 @@ ADD CONSTRAINT pk_stdr_dept PRIMARY KEY (dept_no);
 
 select * from grpwr_in_approval;
 select * from stdr_document;
+select * from hr_department;
+
+select * from cmmn where cmmn_code like 'PO%';
