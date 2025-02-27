@@ -6,6 +6,24 @@ where employee_id = 240103001;
 
 commit;
 
+select * from hr_employee;
+select * from erp_company;
+select * from erp_user_accounts;
+
+select rowId, msg_id, msg_content from grpwr_chat_message
+order by rowId;
+
+SELECT
+            msg_id,
+            room_id,
+            employee_num,
+            msg_content,
+            send_date
+        FROM grpwr_chat_message
+        WHERE msg_id = (SELECT MAX(msg_id) FROM grpwr_chat_message);
+
+select * from cmmn;
+
 select * from stdr_document;
 select * from stdr_dept;
 select * from grpwr_in_approval where company_num = 1;
