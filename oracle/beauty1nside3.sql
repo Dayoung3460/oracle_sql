@@ -6,9 +6,16 @@ where employee_id = 240103001;
 
 commit;
 
+select * from hr_department
+where company_num = 45 and department_name like '%팀'
+;
+select * from stdr_dept;
 select * from hr_employee;
 select * from erp_company;
 select * from erp_user_accounts;
+
+select * from stdr_warehouse;
+select * from cmmn;
 
 select rowId, msg_id, msg_content from grpwr_chat_message
 order by rowId;
